@@ -1,5 +1,5 @@
 #' ----
-#' Title: Biological and economical characteristics of groundfish fisheries of the United States West Coast
+#' Title: Spatial data regarding US West Coast groundfish fisheries
 #' Author: Kelli Faye Johnson
 #' ----
 #+ setup, include = FALSE
@@ -8,7 +8,6 @@ library(knitr)
 opts_chunk$set(fig.path = "figure/map-", fig.align = "center",
   fig.show = "hold")
 options(formatR.arrow = TRUE, width = 90)
-library(knitr)
 library(ggmap)
 dir.old <- getwd()
 load(file.path("data", "wcd_data_raw.Rdata"))
