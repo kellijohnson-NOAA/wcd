@@ -1,0 +1,64 @@
+,Data Annotations
+,
+1.),"All indices are computed using the design-based estimation technique (algebraic expansion of haul species weights and counts to strata level projections).  In general, the standard five INPFC areas and depth ranges 30 to 100 to 300 to 700 fathoms were used to stratify the region.  However, the results of stratification analyses from previous or current assessment activities were substituted if formalized as the preferred for a specific species."
+,
+2.),Fishery index data fields are defined as follows:
+,> Species: Species common name
+,> Scientific Name: Species scientific name
+,> Species Code: Numeric species identifier.  The base list was taken from the AFSC RACE list and has been augmented with NWFSC codes as new species have been identified in survey catches.
+,> Survey Year: Survey cycle
+,> Project: The survey type indicating continental slope sampling only prior to the 2003 survey cycle and slope/shelf sampling thereafter.
+,> Computed Strata Area Version: Version of strata area determinations used; these areas are updated as significant improvements to available bathymetry arise
+,> Area Set Identifier: Geographic stratification used for bounding fishery index estimations
+,> Area Name: Individual geographic stratum name
+,> Depth Strata Set: Depth stratification used for bounding fishery index estimations
+,> Min Stratum Depth (m): Individual depth stratum minimum in meters
+,> Max Stratum Depth (m): Individual depth stratum maximum in meters
+,> Stratum Area (sq m): Stratum Area in square meters
+,> Biomass (kg): Stratum biomass index estimate in kilograms
+,> Abundance (Numbers): Stratum abundance index estimate in numbers of individuals
+,> Cpue Weight Variance: Stratum variance in catch per unit effort relative to haul species weights
+,> Cpue Count Variance: Stratum variance catch per unit effort relative to haul species counts
+,> Biomass Variance: Stratum biomass variance
+,> Biomass CV: Stratum biomass coefficient of variation
+,> N (Stratum): Total number of assessment acceptable tows conducted within each stratum
+,> N (Stratum Bio): Total number of assessment acceptable tows conducted within each stratum and for which total haul species weight for the species of interest and the total fished area are both available.  
+,> N (Stratum Positive): Total number of assessment acceptable tows conducted within each stratum whose catch included the species of interest. 
+,> N (Stratum Bio Positive):  Total number of assessment acceptable tows conducted within each stratum whose catch included a non-zero total weight measurement for the species of interest and a fished area estimate. 
+,> N (Stratum Lengths):  Total number of assessment acceptable tows conducted within each stratum whose catch included both a non-zero total weight measurement and length measurements for the species of interest and a fished area estimate. 
+,> Length Category (cm) [LengthComps page]: Distinct length magnitude reported for a stratum within a survey cycle
+,> Number of Females [LengthComps page]: Number species females estimated for a length category within a stratum for a survey cycle
+,> Number of Males [LengthComps page]: Number species males estimated for a length category within a stratum for a survey cycle
+,> Number of Unsexed [LengthComps page]: Number of species individuals estimated for a length category within a stratum for a survey cycle and for which sex identification was not reported.  This includes individuals for which sex could not be determined or simply was not observed
+,> Length Tally (Stratum) [Lengths-StratumTowTallies page]: Total number of lengths contributing to the length composition estimates for a stratum
+,> N Tow Tally (Stratum) [Lengths-StratumTowTallies page]: Total number of assessment acceptable tows conducted within each stratum whose catch included both a non-zero total weight measurement and length measurements for the species of interest and a fished area estimate. 
+,> Age [AgeComps page]: Age category in integer years
+,> Female Numbers [AgeComps page]: Number species females estimated for a length/age category within a stratum for a survey cycle
+,> Male Numbers [AgeComps page]: Number of species males estimated for a length-age category within a stratum for a survey cycle
+,> Unsexed Numbers [AgeComps page]: Number of species individuals estimated for a length-age category within a stratum for a survey cycle and for which sex identification was not reported.  This includes individuals for which sex could not be determined or simply was not observed
+,> Length Age Tally [AgeComps page]: Full Stratum: Number of reported ages per lengthed age category upon which age composition estimates were based.
+,> Age Tally: Female [AgeComps page]: Number of reported female ages per lengthed age category upon which age composition estimates were based.
+,> Age Tally: Male [AgeComps page]: Number of reported male ages per lengthed age category upon which age composition estimates were based.
+,> Age Tally: Unsexed [AgeComps page]: Number of reported unsexed ages per lengthed age category upon which age composition estimates were based.
+,> Number of Tows (Female) [Ages-SexBasedTowTallies page]: Total number of assessment acceptable tows conducted within each stratum whose age readings contributed to the female age composition estimates.
+,> Number of Tows (Male) [Ages-SexBasedTowTallies page]: Total number of assessment acceptable tows conducted within each stratum whose age readings contributed to the male age composition estimates.
+,> Number of Tows (Unsexed) [Ages-SexBasedTowTallies page]: Total number of assessment acceptable tows conducted within each stratum whose age readings contributed to the unsexed age composition estimates.
+,> Number of Tows (w/o respect to sex) [Ages-SexBasedTowTallies page]: Total number of assessment acceptable tows conducted within each stratum whose age readings contributed to the age composition estimates.
+,> Number of Tows (Female) [Ages-LengthAndSexTowTallies page]: Total number of assessment acceptable tows conducted within a stratum whose age readings contributed to the age composition estimates for a single female length category.
+,> Number of Tows (Male) [Ages-LengthAndSexTowTallies page]: Total number of assessment acceptable tows conducted within a stratum whose age readings contributed to the age composition estimates for a single male length category.
+,> Number of Tows (Unsexed) [Ages-LengthAndSexTowTallies page]: Total number of assessment acceptable tows conducted within a stratum whose age readings contributed to the age composition estimates for a single unsexed length category.
+,> Number of Tows (w/o respect to sex) [Ages-LengthAndSexTowTallies page]: Total number of assessment acceptable tows conducted within a stratum whose age readings contributed to the age composition estimates for a single length category without respect to sex category.
+,
+3.),"Note that an individual haul is included in every haul tally (stratum partition N) to which it contributes lengthed-ages on the Ages-SexBasedTowTallies and Ages-LengthAndSexTowTallies pages.  Consequently, overall haul tallies can not be computed as simple sums of partition haul tallies (eg, summing haul tallies for females, males, and unsexed to obtain a stratum haul tally without respect to sex category).  Doing so would effectively ignore the fact that an individual haul may contribute lengthed ages to each of these sex categories, which would thereby be counted multiple times within the overall sum."
+,
+4.),Individual haul and individual organism data annotations:
+,"> The best trawl position available has been provided annotated with its type.  Preference is given to any observed gear position, usually an estimate of the onbottom midpoint: [(start_lat+end_lat)/2,  (start_lon+end_lon)/2].  If no acceptable onbottom gear position can be determined, a vessel position is provided, usually a similarly determined trawl midpoint estimate for the vessel.  If no acceptable vessel position can be determined, position data recorded for the defined station is provided.  If needed, more details can be obtained from the data manager."
+,"> The best bottom depth estimate available has been provided annotated with its type.  This is generally the surface to headrope distance augmented by the net headrope height as recorded by net mensuration sensors.  When these data are not available or are otherwise unacceptable, other, less precise estimates are provided, generally derived from vessel sounder depths as either a mean of readings or of hand transcriptions recorded by field scientific crew."
+,> Tow durations (DURATION_START2END_HR) represent the time elapsed between net touchdown and net liftoff
+,"> The seafloor area swept by the trawl net (AREA_SWEPT_HA) was computed as the product of the net width and fished distance point estimates, then converted from square meters to hectares."
+,"> Species haul weight is reported in kilograms.  Rarely, when the total catch is too large to process fully, species haul weights are estimated from subsample weights expanded linearly to total weight."
+,> Average individual weight (kg) was computed as the ratio of subsample weights and counts.
+,
+5.),"The assessment indices and accompanying haul and measurement lists in this data package are limited to the set of groundfish survey hauls conducted in areas that have been open to sampling throughout the survey history.  The intent of this limitation is to base standard assessment data products on a set of trawl samples that represent that part of the coast that has been eligible for selection over the full course of the shelf-slope survey (2003 to present).  This evaluation was first accomplished for the 2011 fishery assessment cycle and was based on hauls falling within or without the absolute boundaries of protected and hazardous areas.   On 2/7/2012 this analysis was revisited and the criterion for haul removal altered to focus on hauls falling inside or outside the set of grid cells eligible for survey sampling.   This activity resulted in a slightly different set of haul removals from the overall set, due to both the change in criterion and small additions and expansions of protected areas since the 2011 analysis.  As in the 2011 analysis, hauls that were previously conducted within blocks that are no longer permitted for trawl sampling have been identified, marked, and filtered out of all data reports in this assessment data package. This process of retrospective removal of survey grid cell stations and the trawl operations conducted there over the course of the survey continues forward on each survey cycle as new protected areas are established."
+,
+6.),Note that the Assumed Spawner field on the SexedLgthWtAge page has been deprecated as of 5/1/2015.  It currently delivers that status within the field and will be entirely deleted at a future date.

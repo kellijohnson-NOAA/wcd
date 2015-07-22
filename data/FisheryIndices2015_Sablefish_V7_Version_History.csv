@@ -1,0 +1,8 @@
+Package Status,Version,Date,Version Description
+Initial,V1,10/5/2014,Initial sablefish bottom trawl survey data package (1998 - 2013) for the 2015 assessment cycle.
+Preliminary,V2,2/5/2015,Updated with 2014 survey data - no new age data to date.
+Preliminary,V3,2/9/2015,Updated all length composition and age composition pages to include 1998-2002 data (inadvertently left out of V2)
+Preliminary,V4,2/17/2015,Updates those 2014 seafloor depths that did not include net height as part of the depth estimate.
+Preliminary,V5,3/17/2015,"Added survey 2013 age determinations; Age Composition pages (all 4) and Length/Weight/Age/Maturity page have been updated.  Ageing results for survey seasons 2011, 2012, and 2014 still pending."
+Preliminary,V6,4/7/2015,"Survey season 2011 and 2014 ages added to the Age Composition and SexedLengthWeightAge pages.  Survey season 2012 ages still pending - may not arrive in time for inclusion in final models, so this may be effectively the final version."
+Final,V7,5/5/2015,Survey season 2012 ages added to the Age Composition and SexedLengthWeightAge pages.  This constitutes the final release of this data package.
