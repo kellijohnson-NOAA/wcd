@@ -3,12 +3,11 @@
 #' Author: Kelli Faye Johnson
 #' ----
 #+ setup, include = FALSE
-library(knitr)
 # set global chunk options
 opts_chunk$set(fig.path = "figure/map-", fig.align = "center",
   fig.show = "hold")
 options(formatR.arrow = TRUE, width = 90)
-library(ggmap)
+
 dir.old <- getwd()
 load(file.path("data", "wcd_data_raw.Rdata"))
 dir.create("maps", showWarnings = FALSE)

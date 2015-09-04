@@ -34,7 +34,7 @@ species <- c("sablefish",
 #' Packages
 #' Set the CRAN mirror and install packages that are not currently installed
 options("repos" = "http://R-Forge.R-project.org")
-pckg.need <- c("censReg", "devtools", "nwfscDeltaGLM" "xlsx")
+pckg.need <- c("censReg", "devtools", "ggmap", "knitr", "nwfscDeltaGLM", "xlsx")
 pckg.have <- installed.packages()[, "Package"]
 pckg.inst <- pckg.need[!pckg.need %in% pckg.have]
 for (pckg in pckg.inst){
