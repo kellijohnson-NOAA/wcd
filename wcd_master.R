@@ -23,6 +23,13 @@ dir.results <- file.path(my.dir, "results")
 file.surveyspp <- "2009To2012CatchForSeminar.xlsx"
 file.surveydata <- "FisheryIndices2015_Sablefish_V7.xlsx"
 #' Inputs
+# Species of interest and four overfished species.
+# cowcod is excluded because rockfish conservation areas are successful in
+# eliminating bycatch therefore they should not dictate fishermen's choice
+# on whether or not they should switch gear.
+species <- c("sablefish",
+  "bocaccio", "darkblotched.rockfish", "Pacific.ocean.perch", "yelloweye.rockfish")
+
 #' Packages
 #' Set the CRAN mirror and install packages that are not currently installed
 options("repos" = "http://R-Forge.R-project.org")

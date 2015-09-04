@@ -31,7 +31,6 @@ parallel <- FALSE
 #+ loadsbl, echo = FALSE
 # Loading data requires using system and running a visual basic script
 # that will open the excel file and save each worksheet as an individual csv
-species <- "sablefish"
 file.spp <- file.path(dir.data, file.surveyspp)
 file.dat <- file.path(dir.data, file.surveydata)
 file.spu <- gsub(".xlsx", paste0("_", sheet.surveyspp, ".csv"), file.spp)
