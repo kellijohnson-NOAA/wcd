@@ -55,4 +55,8 @@ for (pckg in pckg.need) {
 risk <- c("Washington" = 4, "San Francisco and Bodega Bay" = 2,
   "Fort Bragg" = 4, "Monterey and Morro Bay" = 4)
 
+#' Source working files
+if (file.exists(file.path(dir.data, "wcd_data_raw.RData"))) {
+  load(file.path(dir.data, "wcd_data_raw.RData"))
+} else source("wcd_readdata.R")
 source("wcd_survey.R")
