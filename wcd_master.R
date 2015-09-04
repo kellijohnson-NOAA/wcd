@@ -48,4 +48,11 @@ for (pckg in pckg.inst){
 for (pckg in pckg.need) {
   library(pckg, character.only = TRUE, quietly = !verbose, verbose = verbose)
 }
+
+#' Risk pool measure
+#' Using a literature search the following level of risk pool participation
+#' per port group was generated.
+risk <- c("Washington" = 4, "San Francisco and Bodega Bay" = 2,
+  "Fort Bragg" = 4, "Monterey and Morro Bay" = 4)
+
 source("wcd_survey.R")
