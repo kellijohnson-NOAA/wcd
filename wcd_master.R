@@ -23,6 +23,7 @@ dir.results <- file.path(my.dir, "results")
 file.surveyspp <- "2009To2012CatchForSeminar.xlsx"
 file.surveydata <- "FisheryIndices2015_Sablefish_V7.xlsx"
 #' Inputs
+verbose <- TRUE
 # Species of interest and four overfished species.
 # cowcod is excluded because rockfish conservation areas are successful in
 # eliminating bycatch therefore they should not dictate fishermen's choice
@@ -40,8 +41,8 @@ for (pckg in pckg.inst){
   if (pckg %in% c("nwfscDeltaGLM")) {
     devtools::install_github("nwfsc-assess/nwfscDeltaGLM", ref = "1.0.0")
   }
-  install.packages(pckg, quiet = verbose, verbose = verbose)
+  install.packages(pckg, quiet = !verbose, verbose = verbose)
 }
 for (pckg in pckg.need) {
-  library(pckg, character.only = TRUE, quietly = verbose, verbose = verbose)
+  library(pckg, character.only = TRUE, quietly = !verbose, verbose = verbose)
 }
