@@ -13,14 +13,6 @@ file.script <- file.path("c:", "users", "kelli", "Google Drive",
 sheet.surveyspp  <- "CatchData2009To2012"
 sheet.surveydata <- "HaulCatchWt&Effort"
 
-# Packages
-options("repos" = "http://R-Forge.R-project.org")
-if (!"devtools" %in% installed.packages()[, 1]) {
-  install.packages("devtools")
-}
-devtools::install_github("nwfsc-assess/nwfscDeltaGLM", ref = "1.0.0")
-library(nwfscDeltaGLM, quietly = TRUE)
-
 #' The Northwest Fisheries Science Center (NWFSC) Shelf/Slope bottom trawl
 #' survey data are collected to inform management of United States (U.S.)
 #' West Coast groundfish fisheries. Standardized survey data is available

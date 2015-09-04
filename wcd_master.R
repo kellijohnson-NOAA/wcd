@@ -26,3 +26,15 @@ file.surveydata <- "FisheryIndices2015_Sablefish_V7.xlsx"
 #' Packages
 #' Set the CRAN mirror and install packages that are not currently installed
 options("repos" = "http://R-Forge.R-project.org")
+pckg.need <- c("censReg", "devtools", "nwfscDeltaGLM" "xlsx")
+pckg.have <- installed.packages()[, "Package"]
+pckg.inst <- pckg.need[!pckg.need %in% pckg.have]
+for (pckg in pckg.inst){
+  if (pckg %in% c("nwfscDeltaGLM")) {
+    devtools::install_github("nwfsc-assess/nwfscDeltaGLM", ref = "1.0.0")
+  }
+  install.packages(pckg, quiet = verbose, verbose = verbose)
+}
+for (pckg in pckg.need) {
+  library(pckg, character.only = TRUE, quietly = verbose, verbose = verbose)
+}
