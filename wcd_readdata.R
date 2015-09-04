@@ -16,13 +16,6 @@ dir.data <- file.path(my.dir, "data")
 dir.curr <- getwd()
 setwd(dir.data)
 
-if("xlsx" %in% rownames(installed.packages())){
-  library(xlsx)
-} else {
-  install.packages("xlsx", repos = 'http://cran.stat.sfu.ca/')
-  library(xlsx)
-  }
-
 data.srvy <- read.xlsx("2009To2012CatchForSeminar.xlsx",
   sheetName = "CatchData2009To2012", startRow = 10, endRow = 2804,
   header = TRUE, colIndex = 1:87)
@@ -41,10 +34,6 @@ data.vess <- read.xlsx("econ4osu.xlsx", sheetName = "VesselCharacteristics")
 data.days <- read.xlsx("econ4osu.xlsx", sheetName = "dayscrewfuelspeeddays")
 data.cost <- read.xlsx("econ4osu.xlsx", sheetName = "Costs")
 data.netrev <- read.xlsx("econ4osu.xlsx", sheetName = "NetRevenue")
-
-data.hake.haul <- read.xlsx("2014-05_FinalData.xlsx", sheetName = "Hauls")
-data.hake.catch <- read.xlsx("2014-05_FinalData.xlsx", sheetName = "Catch")
-data.hake.bioms <- read.xlsx("2014-05_FinalData.xlsx", sheetName = "Biomass")
 
 data.tac.after <- read.xlsx("wcd_allocation.xlsx", sheetName = "after")
 data.tac.before <- read.csv("wc_tac_v3.csv")
