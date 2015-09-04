@@ -22,6 +22,8 @@ dir.results <- file.path(my.dir, "results")
 #' Files
 file.surveyspp <- "2009To2012CatchForSeminar.xlsx"
 file.surveydata <- "FisheryIndices2015_Sablefish_V7.xlsx"
+file.index <- "index.csv"
+
 #' Inputs
 verbose <- TRUE
 # Species of interest and four overfished species.
@@ -46,3 +48,4 @@ for (pckg in pckg.inst){
 for (pckg in pckg.need) {
   library(pckg, character.only = TRUE, quietly = !verbose, verbose = verbose)
 }
+source("wcd_survey.R")

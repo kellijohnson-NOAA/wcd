@@ -54,40 +54,41 @@ if (!file.exists(file.spu)) {
 
 data.spp  <- read.table(file.spu, skip = 9, header = TRUE, sep = ",")
 data.spp <- data.spp[, !apply(data.spp, 2, function(x) all(is.na(x)))]
-
-data.orig <- read.table(file.csv, skip = 8, header = TRUE, sep = ",")
-data.orig <- data.orig[, !apply(data.orig, 2, function(x) all(is.na(x)))]
-
-data.spp$YEAR <- sapply(strsplit(as.character(data.spp$Survey.Cycle), "Cycle "), "[", 2)
-data.spp$Date <- format(as.Date(
+data.spp$Survey.Cycle <- sapply(strsplit(as.character(data.spp$Survey.Cycle), "Cycle "), "[", 2)
+data.spp$Trawl.Start.Time <- format(as.Date(
   as.character(data.spp$Trawl.Start.Time), format = "%m/%d/%Y"), "%Y-%m-%d")
 colnames(data.spp)[which(colnames(data.spp) == "Trawl.Latitude..dd.")] <- "BEST_LAT_DD"
 colnames(data.spp)[which(colnames(data.spp) == "Trawl.Id")] <- "HAUL_IDENTIFIER"
+colnames(data.spp)[which(colnames(data.spp) == "Survey.Cycle")] <- "YEAR"
+colnames(data.spp)[which(colnames(data.spp) == "Trawl.Start.Time")] <- "Date"
+colnames(data.spp)[which(colnames(data.spp) == "Trawl.Depth..m.")] <- "BEST_DEPTH_M"
+data.spp <- data.spp[, !colnames(data.spp) %in%
+  c("Survey", "Position.Type", "Depth.Type", "Trawl.Longitude..dd.")]
 
-data.orig$Date <- format(as.Date(data.orig$CAPTURE_DATE, format = "%m/%d/%Y"), "%Y-%m-%d")
-data.orig$YEAR <- substring(data.orig$Date, 1, 4)
+data.orig <- read.table(file.csv, skip = 8, header = TRUE, sep = ",")
+data.orig <- data.orig[, !apply(data.orig, 2, function(x) all(is.na(x)))]
+data.orig$CAPTURE_DATE <- format(as.Date(data.orig$CAPTURE_DATE, format = "%m/%d/%Y"), "%Y-%m-%d")
+data.orig$YEAR <- substring(data.orig$CAPTURE_DATE, 1, 4)
+data.orig$AREA_SWEPT_HA <- data.orig$AREA_SWEPT_HA * 1000
+colnames(data.orig)[which(colnames(data.orig) == "SURVEY_PASS")] <- "PASS"
+colnames(data.orig)[which(colnames(data.orig) == "DURATION_START2END_HR")] <- "DURATION"
+colnames(data.orig)[which(colnames(data.orig) == "CAPTURE_DATE")] <- "Date"
+colnames(data.orig)[which(colnames(data.orig) == "AREA_SWEPT_HA")] <- "AREA_SWEPT_MSQ"
+data.orig <- data.orig[, !colnames(data.orig) %in%
+  c("PROJECT", "PROJECT_CYCLE", "SCIENTIFIC_NAME", "SPECIES", "HAUL_WT_KG",
+  "BEST_LON_DD", "BEST_POSITION_TYPE", "BEST_DEPTH_TYPE", "AVG_WT_KG")]
 
-data.master <- merge(data.orig, data.spp, by = c("Date", "HAUL_IDENTIFIER"), all.y = TRUE)
+masterDat <- merge(data.orig, data.spp,  all.y = TRUE,
+  by = c("YEAR", "Date", "HAUL_IDENTIFIER", "BEST_DEPTH_M", "BEST_LAT_DD"))
+masterDat$HAUL_WT_KG <- masterDat$sablefish
 
-masterDat <- data.orig
-
-
-masterDat$sablefish <- masterDat$HAUL_WT_KG
-masterDat$AREA_SWEPT_MSQ <- masterDat$AREA_SWEPT_HA * 10000
-colnames(masterDat)[which(colnames(masterDat) == "SURVEY_PASS")] <- "PASS"
-colnames(masterDat)[which(colnames(masterDat) == "DURATION_START2END_HR")] <- "DURATION"
-
-#' Remove all information prior to 2003, which used simimlar but different methods
-#' and covered a different spatial extent.
-#' Also remove tows from 2013 pass 2 because they did not survey the entire area
+#' Remove tows from 2013 pass 2 because they did not survey the entire area
 #' less than approximately 40.5 degrees latitude due to the government shutdown.
 #+ subset
-masterDat <- subset(masterDat, YEAR > 2002,
-  select = c("VESSEL", "YEAR", "BEST_LAT_DD", "BEST_DEPTH_M", "DURATION",
-  species, "AREA_SWEPT_HA", "AREA_SWEPT_MSQ", "HAUL_IDENTIFIER", "Date", "PASS"))
-subDat <- masterDat[-which(masterDat$YEAR == 2013 & masterDat$PASS == 2 &
-  masterDat$BEST_LAT_DD < 40.5), ]
-masterDat <- chooseDat <- subDat
+removed <- with(masterDat, (YEAR == 2013 & PASS == 2 & BEST_LAT_DD < 40.5))
+masterDat <- masterDat[!removed, ]
+removed <- with(masterDat, is.na(PASS))
+chooseDat <- masterDat <- masterDat[!removed, ]
 
 ###############################################################################
 ###############################################################################
@@ -113,9 +114,11 @@ nX.pos <- nX.binomial <- 1
 Covariates = list(positive = TRUE, binomial = TRUE)
 
 # Preliminary data processing
+setwd(dir.results)
 processData()
 attach(chooseDat)
 on.exit(detach(chooseDat))
+setwd(my.dir)
 
 #+ modelstructure
 modelStructures <- list()
@@ -185,35 +188,32 @@ modelStructures[[5]] <-  list("StrataYear.positiveTows" = "correlated",
                               "Vessel.zeroTows"         = "zero")
 
 #+ mods
+years <- unique(masterDat$YEAR)
+strat <- strata.limits$STRATA
+index <- data.frame(
+  "year" = rep(years, times = length(strat)),
+  "strat" = rep(strat, each = length(years)))
 mods = list()
-# Run the models and place them in the list titled "mods"
+waic <- list()
+
+for (sp in seq_along(species)){
 setwd(dir.results)
-dir.create(species)
-setwd(species)
+  dir.create(species[sp], showWarnings = verbose)
+  setwd(species[sp])
+  message(paste("Running", species[sp], "Model 1"))
   for(it in seq_along(modelStructures)){
     mods[[it]] <- fitDeltaGLM(modelStructure = modelStructures[[it]],
-      mcmc.control = mcmc.control, Parallel = parallel, Species = species,
+      mcmc.control = mcmc.control, Parallel = parallel, Species = species[sp],
       likelihood = "gamma", model.name = as.character(it),
       covariates = Covariates)
     }
-
-###############################################################################
-###############################################################################
-#### Step 06
-#### Run diagnostics, which are automatically placed in a folder
-###############################################################################
-###############################################################################
-# # Process MCMC output
-# # Make sure that Data is attached prior to running
-doMCMCDiags(dir.results, mods)
-# lapply(mods, logDensity)
-# # Get the WAIC values
-WAIC <- matrix(nrow = 2, ncol = length(mods))
-for (mod in 1:length(mods)){
-  Folder <- file.path(getwd(),
-    paste(species, "FinalDiagnostics", sep = "_"), paste0("Model=", mod))
-  WAIC[, mod] <- read.csv(file.path(Folder, "WAIC.csv"))$WAIC
-}
+  doMCMCDiags(file.path(dir.results, species[sp]), mods)
+  WAIC <- matrix(nrow = 2, ncol = length(modelStructures))
+  for (mod in 1:length(mods)){
+    Folder <- file.path(getwd(),
+      paste(species[sp], "FinalDiagnostics", sep = "_"), paste0("Model=", mod))
+    WAIC[, mod] <- read.csv(file.path(Folder, "WAIC.csv"))$WAIC
+  }
 
 # DIC
 DIC <- cbind("DIC" = sapply(mods, FUN = function(List) {List$BUGSoutput$DIC}),
@@ -221,239 +221,20 @@ DIC <- cbind("DIC" = sapply(mods, FUN = function(List) {List$BUGSoutput$DIC}),
   "StrataYear" = sapply(mods, FUN = function(List){List$modelStructure$StrataYear.zeroTows}))
 DIC <- cbind(DIC,
   "DeltaDIC" = as.numeric(DIC[, "DIC"]) - min(as.numeric(DIC[, "DIC"])))
-write.csv(DIC, file = file.path(dir.results, "DIC_table.csv"))
-DIC_table <- read.csv(file.path(dir.results, "DIC_table.csv"), header = TRUE)
+DIC <- as.data.frame(DIC)
+write.csv(DIC, file = file.path(dir.results, species[sp], "DIC.csv"))
+bestmod <- which(DIC$DeltaDIC == 0)
 
-if (check_prev == TRUE){
-  ### through 2010 only
-  reconstruction_file <- dir(file.path(dir.results,
-    paste(species, "FinalDiagnostics", sep = "_"), "Model=1"),
-    pattern = "ResultsByYear.csv", full.names = TRUE)
-  res_reconstruct <- read.csv(reconstruction_file, header = TRUE)
-  res_reconstruct$Raw <- res_reconstruct$Raw / 1000
-  res_reconstruct$IndexMedian <- res_reconstruct$IndexMedian / 1000
-  res_reconstruct$IndexMean <- res_reconstruct$IndexMean / 1000
-  write.csv(res_reconstruct,
-    file.path(dir.results, "bestmodel_index_reconstruct.csv"))
-}
-detach(chooseDat)
-setwd(dir.check)
-} # End of loop for check_prev
-
-###############################################################################
-###############################################################################
-#### Step 07
-#### Create a plot with the results compared to the previous assessment
-###############################################################################
-###############################################################################
-### Figure 12
-files2get <- sapply(1:length(modelStructures), function(x) {
-  dir(file.path(dir.data, paste(species, "FinalDiagnostics", sep = "_"),
-  paste0("Model=", x)), pattern = "ResultsByYear.csv", full.names = TRUE)
-})
+files2get <- list.files(pattern = "ResultsByYearAndStrata\\.csv",
+  all.files = TRUE, recursive = TRUE, full.names = TRUE)
 indexbyyear <- do.call("rbind", lapply(files2get, function(x) {
   results <- read.csv(x, header = TRUE)
   results$model <- substr(strsplit(x, "=")[[1]][[2]], 1, 1)
   return(results)
 }))
-
-# Pull out summary information from 2011 assessment results wrt GLMM results
-# for the NWFSC survey trawl: "NWFSC combo GLMM Good"
-file.oldindex <- file.path(dir.data.prev, "Survey series.xlsx")
-file.oldindexcsv <- gsub(".xlsx", "_Sheet1.csv", file.oldindex)
-if (!file.exists(file.oldindexcsv)) {
-  system(paste0("cscript \"",
-    gsub("/", "\\", file.script, fixed = TRUE), "\" \"",
-    gsub("/", "\\", file.oldindex, fixed = TRUE), "\\"))
+indexspp <- subset(indexbyyear, model == bestmod)
+index[match(paste(indexspp$Year, indexspp$Strata), paste(index$year, index$strat)), species[sp]] <-
+  indexspp$IndexMedian
 }
-if (!file.exists(file.oldindexcsv)) {
-  stop(paste("Data file,", file.oldindexcsv, "does not exist.",
-             "I am guessing the visual basic script did not run.",
-             "Check that", file.script, "exists"))
-}
-oldindex <- read.table(file.oldindexcsv, skip = 42, sep = ",",
-  stringsAsFactors = FALSE)[1:9, 1:10]
-colnames(oldindex) <- as.character(oldindex[1, ])
-oldindex <- oldindex[-1, ]
-oldindex <- as.data.frame(apply(oldindex, 2,
-  function(x) as.numeric(gsub(",", "", x))))
 
-## Sum the absolute value of the differences between the median MT of the new
-## model with the chosen GLMM from 2011.
-## variance used the differences between the standard deviation of the log MT
-indexbyyear_match <- indexbyyear[-which(indexbyyear$Year > 2010),]
-indexdiffs <- do.call("rbind", tapply(seq(dim(indexbyyear_match)[1]),
-  indexbyyear_match$model, function(x) {
-  mtdiff <- indexbyyear_match$IndexMedian[x] / 1000 - oldindex$"Mean centered"
-  cvdiff <- indexbyyear_match$SdLog[x] - oldindex$SD.of.log.MT
-  return(cbind(sum(abs(mtdiff)), sum(abs(cvdiff))))
-}))
-colnames(indexdiffs) <- c("Median.MT", "sdLog")
-similar_model <- which(indexdiffs[, 1] == min(indexdiffs[, 1]))
-DIC_model <- which(DIC_table$DeltaDIC == min(DIC_table$DeltaDIC))
-best_model <- DIC_model
-# mods[[bestmodel]]$modelStructure
-
-# Generate plot "modelComparison"
-png(file.path(dir.data, "modelComparison.png"))
-par(mar = c(6, 5, 4, 4))
-with(subset(indexbyyear, model == best_model), plot(Year, IndexMedian / 1000,
-  las = 1, ylab = "", main = "", pch = 19, col = "blue", type = "o",
-  ylim = c(min(c(IndexMedian / 1000, oldindex$Median.MT)),
-           max(c(IndexMedian / 1000, oldindex$Median.MT))),
-  xlab = "Year"))
-# with(subset(indexbyyear, model == best_model), lines(Year, IndexMedian/1000,
-#      las = 1, ylab = "", main = "", pch = 19, col="forestgreen", type="o",
-#      ylim = c(min(c(IndexMedian/1000, oldindex$Median.MT)),
-#               max(c(IndexMedian/1000, oldindex$Median.MT))),
-#      xlab = "Year"))
-# mtext(side = 1, text = "Differences between estimates from the GLMM used in 2011 and tested GLMMs for 2015",
-#       line = 4)
-mtext(side = 2, text = "Median metric tons", line = 4)
-with(oldindex, points(YEAR, Median.MT, pch = 15, col="red", type="o"))
-for(i in (1:5)[-best_model]){
-	sub <- indexbyyear[which(indexbyyear[,"model"]==i),]
-	points(sub$Year, sub$IndexMedian/1000, pch=i)
-}
-legend("topright", legend = c("2011 GLMM", "Best GLMM 2015"),
-  pch = c(15, 19), bty = "n", col = c("red", "blue"))
-text(x = 2008, y = 125000, col = "blue", paste(names(modelStructures[[3]]),
-  collapse = "\n"))
-text(x = 2012, y = 125000, col = "blue",
-  paste(as.vector(unlist(modelStructures[[3]])), collapse = "\n"))
-dev.off()
-
-###############################################################################
-###############################################################################
-#### Step
-#### Create plot of this years model, best model, and last model
-###############################################################################
-###############################################################################
-png(file.path(dir.data, "modelComparison_35old.png"), res = 300,
-  height = 6, width = 8, units = "in")
-par(mgp = c(3, 0.3, 0), oma = rep(0, 4), las = 0, mar = c(2, 4, 1, 1))
-with(subset(indexbyyear, model == best_model), plot(Year, IndexMedian / 1000,
-  ylab = "", main = "", pch = 19, col = "blue", type = "o",
-  ylim = c(min(c(IndexMedian / 1000, oldindex$Median.MT)),
-           max(c(IndexMedian / 1000, oldindex$Median.MT))),
-  xlab = ""))
-with(subset(indexbyyear, model == 3), points(Year, IndexMedian / 1000,
-  pch = 19, col = "black", type = "o"))
-with(oldindex, points(YEAR, Median.MT, pch = 15, col = "red", type="o"))
-legend("topright", legend = c("2011 delta-GLMM", "2015 delta-GLMM DIC",
-  "2015 delta-GLMM used"), pch = c(15, 19, 19), col = c("red", "blue", "black"),
-  lty = 1, bty = "n")
-text(x = 2008, y = 135000, col = "black", paste(c("-2015 model structure-\n",
-  names(modelStructures[[3]])), collapse = "\n"))
-mtext("Median metric tons", side=2, line=2)
-dev.off()
-
-png(file.path(dir.data, "modelComparison_old.png"), res = 300,
-  height = 6, width = 8, units = "in")
-par(mgp = c(3, 0.3, 0), oma = rep(0, 4), las = 0, mar = c(2, 4, 1, 1))
-with(subset(indexbyyear, model == 3), plot(Year, IndexMedian / 1000,
-  ylab = "", main = "", pch = 19, col = "black", type = "o",
-  ylim = c(min(c(IndexMedian / 1000, oldindex$Median.MT)),
-           max(c(IndexMedian / 1000, oldindex$Median.MT))),
-  xlab = ""))
-with(oldindex, points(YEAR, Median.MT, pch = 15, col = "red", type="o"))
-legend("topright", legend = c("2011 delta-GLMM", "2015 delta-GLMM"),
-  pch = c(15, 19, 19), col = c("red", "black"),
-  lty = 1, bty = "n")
-text(x = 2008, y = 135000, col = "black", paste(c("-2015 model structure-\n",
-  names(modelStructures[[3]])), collapse = "\n"))
-mtext("Median metric tons", side=2, line=2)
-dev.off()
-
-###############################################################################
-###############################################################################
-#### Step 08
-#### plots that match assessment
-###############################################################################
-###############################################################################
-### Figure 9
-length.csv <- gsub(".xlsx", "_Lengths.csv", file.dat)
-data.lengths <- read.table(length.csv, skip = 8, header = TRUE, sep = ",")
-maxdepth <- strata.limits[1:3, "MaxDepth"]
-slat <- unique(strata.limits$SLat)[c(1, 2, 4)]
-png(file.path(dir.data, "lengths_depth.png"), width = 620, height = 480)
-par(mar = c(6, 5, 4, 4))
-with(data.lengths, plot(x = DEPTH_M, y = LENGTH_CM, pch = 16, col = "#80808070",
-  xlab = "Depth (m)", ylab = "Length (cm)"))
-loess_depth <- with(data.lengths,
-  loess.smooth(x = DEPTH_M, y = LENGTH_CM, family = "gaussian"))
-lines(x = loess_depth$x, y = loess_depth$y, lwd = 4, col = "green")
-invisible(sapply(maxdepth,
-  function(x) abline(v = x, col = "darkblue", lwd = 3)))
-dev.off()
-
-### Figure 10
-png(file.path(dir.data, "lengths_lat.png"), width = 620, height = 480)
-par(mar = c(6, 5, 4, 4))
-with(data.lengths, plot(x = HAUL_LATITUDE_DD, y = LENGTH_CM, pch = 16,
-  col = "#80808070", xlab = "Latitude", ylab = "Length (cm)"))
-loess_lat <- with(data.lengths,
-  loess.smooth(x = HAUL_LATITUDE_DD, y = LENGTH_CM, family = "gaussian"))
-lines(x = loess_lat$x, y = loess_lat$y, lwd = 4, col = "green")
-invisible(sapply(slat,
-  function(x) abline(v = x, col = "darkblue", lwd = 3)))
-dev.off()
-
-### Figure 11
-files2get <- sapply(1:length(modelStructures), function(x) {
-  dir(file.path(dir.data, paste(species, "FinalDiagnostics",
-  sep = "_"), paste0("Model=", x)), pattern = "ResultsByYear.csv",
-  full.names = TRUE)
-})
-indexbyyear <- do.call("rbind", lapply(files2get, function(x) {
-  results <- read.csv(x, header = TRUE)
-  results$model <- substr(strsplit(x, "=")[[1]][[2]], 1, 1)
-  return(results)
-}))
-index_adjusted <- indexbyyear
-index_adjusted$IndexMedian <- indexbyyear$IndexMedian / 1000
-index_adjusted$IndexMean <- indexbyyear$IndexMean / 1000
-index_adjusted$Raw <- indexbyyear$Raw / 1000
-write.csv(index_adjusted, file.path(dir.results, "indexbyyear_adjusted.csv"))
-### best model == 3
-### WAIC, and compared to previous assessment (see Section 7 above)
-### DIC chooses model 5
-### USE SdLog
-### CONVERT TO CORRECT UNITS
-### Also look at Results by Year and Strata, not just ResultsByYear
-res <- subset(index_adjusted, model == 3)
-write.csv(res, file.path(dir.results, "bestmodel_index.csv"))
-res$sd <- res$CvMedian*res$IndexMedian
-res$lci <- qnorm(0.025, res$IndexMedian, res$sd)
-res$lci2 <- qnorm(0.25, res$IndexMedian, res$sd)
-res$uci <- qnorm(0.975, res$IndexMedian, res$sd)
-res$uci2 <- qnorm(0.75, res$IndexMedian, res$sd)
-yaxis <- c(0, max(res$uci)*1.15)
-ylab <- c("0", "50,000", "100,000", "150,000", "200,000")
-png(file.path(dir.data, "bestModel2015.png"))
-par(mfrow = c(1, 1), mar = c(4, 5, 2, 2), omi = c(0.4, 0.4, 0, 0))
-plot(x = 1, y = 1, type = "n",
-  xlim = c(res$Year[1] - 1, res$Year[nrow(res)] + 1), ylim = yaxis,
- xaxs = "i", yaxs = "i", xlab = "", ylab = "", yaxt = "n", font.lab = 2)
-axis(side = 2, at = c(0, 50000, 100000, 150000, 200000), labels = ylab,
-  las = 2)
-polygon(x = c(res$Year[1]:res$Year[nrow(res)], res$Year[nrow(res)]:res$Year[1]),
-  y = c(res$lci, rev(res$uci)), col = "#88888850", border = NA)
-polygon(x = c(res$Year[1]:res$Year[nrow(res)], res$Year[nrow(res)]:res$Year[1]),
-  y = c(res$lci2, rev(res$uci2)), col = "#888888AA", border = NA)
-lines(x = res$Year, y = res$IndexMedian, lwd = 2, type = "o", pch = 19,
-  cex = 1.5)
-my.colors <- c("black", "#88888850", "#888888AA")
-legend("topright", col = my.colors, pch = 15,
-  legend = c("Median", "95% CI", "50% CI"), cex = 1.3, bty = "n")
-mtext(side = 2, "Survey Index", line = 5, font = 2, cex = 1.5)
-mtext(side = 1, "Year", line = 3, font = 2, cex = 1.5)
-dev.off()
-
-###############################################################################
-###############################################################################
-#### Step 09
-#### upon exit set the directory to the old working directory
-###############################################################################
-###############################################################################
-setwd(dir.check)
+write.csv(index, file.path(dir.results, file.index), row.names = FALSE)
