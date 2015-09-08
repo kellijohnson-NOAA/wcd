@@ -58,3 +58,4 @@ if (file.exists(file.path(dir.data, "wcd_data_raw.RData"))) {
   load(file.path(dir.data, "wcd_data_raw.RData"))
 } else source("wcd_readdata.R")
 source("wcd_survey.R")
+# source("wcd_model.R")
