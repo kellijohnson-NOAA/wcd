@@ -1,7 +1,7 @@
 #' ----
 #' Title: NWFSC Shelf/Slope bottom trawl survey of US West Coast groundfish
 #' Author: Kelli Faye Johnson
-#' Date: 2015-07-21
+#' Date: 2015-09-08
 #' ----
 
 #+ files, echo = FALSE
@@ -27,77 +27,7 @@ sheet.surveydata <- "HaulCatchWt&Effort"
 #+ setup
 mcmc.control <- list(chains = 5, thin = 100, burnin = 5000, iterToSave = 2000)
 parallel <- FALSE
-
-#+ loadsbl, echo = FALSE
-# Loading data requires using system and running a visual basic script
-# that will open the excel file and save each worksheet as an individual csv
-file.spp <- file.path(dir.data, file.surveyspp)
-file.dat <- file.path(dir.data, file.surveydata)
-file.spu <- gsub(".xlsx", paste0("_", sheet.surveyspp, ".csv"), file.spp)
-file.csv <- gsub(".xlsx", paste0("_", sheet.surveydata, ".csv"), file.dat)
-
-# Partition out the csv file if it does not already exist.
-if (!file.exists(file.csv)) {
-  # Must escape the forward slash to get it to work on windows
-  # Fix formatting issues with Windows and R file path names and run the
-  # visual basic script
-  system(paste0("cscript \"", gsub("/", "\\\\", file.script),
-    "\" \"", gsub("/", "\\\\", file.dat), "\\"))
-}
-if (!file.exists(file.spu)) {
-  # Must escape the forward slash to get it to work on windows
-  # Fix formatting issues with Windows and R file path names and run the
-  # visual basic script
-  system(paste0("cscript \"", gsub("/", "\\\\", file.script),
-    "\" \"", gsub("/", "\\\\", file.spp), "\\"))
-}
-
-data.spp  <- read.table(file.spu, skip = 9, header = TRUE, sep = ",")
-data.spp <- data.spp[, !apply(data.spp, 2, function(x) all(is.na(x)))]
-data.spp$Survey.Cycle <- sapply(strsplit(as.character(data.spp$Survey.Cycle), "Cycle "), "[", 2)
-data.spp$Trawl.Start.Time <- format(as.Date(
-  as.character(data.spp$Trawl.Start.Time), format = "%m/%d/%Y"), "%Y-%m-%d")
-colnames(data.spp)[which(colnames(data.spp) == "Trawl.Latitude..dd.")] <- "BEST_LAT_DD"
-colnames(data.spp)[which(colnames(data.spp) == "Trawl.Id")] <- "HAUL_IDENTIFIER"
-colnames(data.spp)[which(colnames(data.spp) == "Survey.Cycle")] <- "YEAR"
-colnames(data.spp)[which(colnames(data.spp) == "Trawl.Start.Time")] <- "Date"
-colnames(data.spp)[which(colnames(data.spp) == "Trawl.Depth..m.")] <- "BEST_DEPTH_M"
-data.spp <- data.spp[, !colnames(data.spp) %in%
-  c("Survey", "Position.Type", "Depth.Type", "Trawl.Longitude..dd.")]
-
-data.orig <- read.table(file.csv, skip = 8, header = TRUE, sep = ",")
-data.orig <- data.orig[, !apply(data.orig, 2, function(x) all(is.na(x)))]
-data.orig$CAPTURE_DATE <- format(as.Date(data.orig$CAPTURE_DATE, format = "%m/%d/%Y"), "%Y-%m-%d")
-data.orig$YEAR <- substring(data.orig$CAPTURE_DATE, 1, 4)
-data.orig$AREA_SWEPT_HA <- data.orig$AREA_SWEPT_HA * 1000
-colnames(data.orig)[which(colnames(data.orig) == "SURVEY_PASS")] <- "PASS"
-colnames(data.orig)[which(colnames(data.orig) == "DURATION_START2END_HR")] <- "DURATION"
-colnames(data.orig)[which(colnames(data.orig) == "CAPTURE_DATE")] <- "Date"
-colnames(data.orig)[which(colnames(data.orig) == "AREA_SWEPT_HA")] <- "AREA_SWEPT_MSQ"
-data.orig <- data.orig[, !colnames(data.orig) %in%
-  c("PROJECT", "PROJECT_CYCLE", "SCIENTIFIC_NAME", "SPECIES", "HAUL_WT_KG",
-  "BEST_LON_DD", "BEST_POSITION_TYPE", "BEST_DEPTH_TYPE", "AVG_WT_KG")]
-
-masterDat <- merge(data.orig, data.spp,  all.y = TRUE,
-  by = c("YEAR", "Date", "HAUL_IDENTIFIER", "BEST_DEPTH_M", "BEST_LAT_DD"))
-masterDat$HAUL_WT_KG <- masterDat$sablefish
-
-#' Remove tows from 2013 pass 2 because they did not survey the entire area
-#' less than approximately 40.5 degrees latitude due to the government shutdown.
-#+ subset
-removed <- with(masterDat, (YEAR == 2013 & PASS == 2 & BEST_LAT_DD < 40.5))
-masterDat <- masterDat[!removed, ]
-removed <- with(masterDat, is.na(PASS))
-chooseDat <- masterDat <- masterDat[!removed, ]
-
-###############################################################################
-###############################################################################
-#### Step 04
-#### Modify data slightly
-###############################################################################
-###############################################################################
-# Get strata from table 8 of the stock assessment document
-# strata is specific to species
+# Set up strata
 nn <- 9
 strata.limits <- data.frame(
   STRATA = LETTERS[1:nn],
@@ -106,23 +36,11 @@ strata.limits <- data.frame(
   MinDepth = rep(54.864, nn),
   MaxDepth = rep(1280, nn)
   )
-
-# Set up covariates
-# pass_1 = (-0.5); pass_2 = (0.5)
-X.bin <- X.pos <- as.matrix(chooseDat[, "PASS", drop = FALSE]) - 1.5
 nX.pos <- nX.binomial <- 1
 Covariates = list(positive = TRUE, binomial = TRUE)
 
-# Preliminary data processing
-setwd(dir.results)
-processData()
-attach(chooseDat)
-on.exit(detach(chooseDat))
-setwd(my.dir)
-
 #+ modelstructure
 modelStructures <- list()
-
 # Model 1 only strata and year effects estimated, vessel-years as random
 # no strata-yr interactions
 modelStructures[[1]] <- list("StrataYear.positiveTows" = "zero",
@@ -187,7 +105,94 @@ modelStructures[[5]] <-  list("StrataYear.positiveTows" = "correlated",
                               "Vessel.positiveTows"     = "zero",
                               "Vessel.zeroTows"         = "zero")
 
+#+ loadsbl, echo = FALSE
+# Loading data requires using system and running a visual basic script
+# that will open the excel file and save each worksheet as an individual csv
+file.spp <- file.path(dir.data, file.surveyspp)
+file.dat <- file.path(dir.data, file.surveydata)
+file.spu <- gsub(".xlsx", paste0("_", sheet.surveyspp, ".csv"), file.spp)
+file.csv <- gsub(".xlsx", paste0("_", sheet.surveydata, ".csv"), file.dat)
+
+# Partition out the csv file if it does not already exist.
+if (!file.exists(file.csv)) {
+  # Must escape the forward slash to get it to work on windows
+  # Fix formatting issues with Windows and R file path names and run the
+  # visual basic script
+  system(paste0("cscript \"", gsub("/", "\\\\", file.script),
+    "\" \"", gsub("/", "\\\\", file.dat), "\\"))
+}
+if (!file.exists(file.spu)) {
+  # Must escape the forward slash to get it to work on windows
+  # Fix formatting issues with Windows and R file path names and run the
+  # visual basic script
+  system(paste0("cscript \"", gsub("/", "\\\\", file.script),
+    "\" \"", gsub("/", "\\\\", file.spp), "\\"))
+}
+
+data.svy  <- read.table(file.spu, skip = 9, header = TRUE, sep = ",")
+data.svy <- data.svy[, !apply(data.svy, 2, function(x) all(is.na(x)))]
+data.svy$Survey.Cycle <- sapply(strsplit(as.character(data.svy$Survey.Cycle), "Cycle "), "[", 2)
+data.svy$Trawl.Start.Time <- format(as.Date(
+  as.character(data.svy$Trawl.Start.Time), format = "%m/%d/%Y"), "%Y-%m-%d")
+colnames(data.svy)[which(colnames(data.svy) == "Trawl.Latitude..dd.")] <- "BEST_LAT_DD"
+colnames(data.svy)[which(colnames(data.svy) == "Trawl.Id")] <- "HAUL_IDENTIFIER"
+colnames(data.svy)[which(colnames(data.svy) == "Survey.Cycle")] <- "YEAR"
+colnames(data.svy)[which(colnames(data.svy) == "Trawl.Start.Time")] <- "Date"
+colnames(data.svy)[which(colnames(data.svy) == "Trawl.Depth..m.")] <- "BEST_DEPTH_M"
+data.svy <- data.svy[, !colnames(data.svy) %in%
+  c("Survey", "Position.Type", "Depth.Type", "Trawl.Longitude..dd.")]
+
+data.orig <- read.table(file.csv, skip = 8, header = TRUE, sep = ",")
+data.orig <- data.orig[, !apply(data.orig, 2, function(x) all(is.na(x)))]
+data.orig$CAPTURE_DATE <- format(as.Date(data.orig$CAPTURE_DATE, format = "%m/%d/%Y"), "%Y-%m-%d")
+data.orig$YEAR <- substring(data.orig$CAPTURE_DATE, 1, 4)
+data.orig$AREA_SWEPT_HA <- data.orig$AREA_SWEPT_HA * 1000
+colnames(data.orig)[which(colnames(data.orig) == "SURVEY_PASS")] <- "PASS"
+colnames(data.orig)[which(colnames(data.orig) == "DURATION_START2END_HR")] <- "DURATION"
+colnames(data.orig)[which(colnames(data.orig) == "CAPTURE_DATE")] <- "Date"
+colnames(data.orig)[which(colnames(data.orig) == "AREA_SWEPT_HA")] <- "AREA_SWEPT_MSQ"
+data.orig <- data.orig[, !colnames(data.orig) %in%
+  c("PROJECT", "PROJECT_CYCLE", "SCIENTIFIC_NAME", "SPECIES", "HAUL_WT_KG",
+  "BEST_LON_DD", "BEST_POSITION_TYPE", "BEST_DEPTH_TYPE", "AVG_WT_KG")]
+
+data.keep <- merge(data.orig, data.svy,  all.y = TRUE,
+  by = c("YEAR", "Date", "HAUL_IDENTIFIER", "BEST_DEPTH_M", "BEST_LAT_DD"))
+
+#' Remove tows from 2013 pass 2 because they did not survey the entire area
+#' less than approximately 40.5 degrees latitude due to the government shutdown.
+#+ subset
+remove <- with(data.keep, (YEAR == 2013 & PASS == 2 & BEST_LAT_DD < 40.5))
+data.keep <- data.keep[!remove, ]
+remove <- with(data.keep, is.na(PASS))
+data.keep <- data.keep[!remove, ]
+
+###############################################################################
+###############################################################################
+#### Step 04
+#### Run individual models
+###############################################################################
+###############################################################################
 #+ mods
+oldvariables <- c(ls(), "oldvariables", "sp")
+
+for (sp in seq_along(my.spp)) {
+  # Remove all of the variables created while running a model
+  rm(list = ls()[!ls() %in% oldvariables])
+data.keep$HAUL_WT_KG <- data.keep[, which(colnames(data.keep) == my.spp[sp])]
+
+chooseDat <- masterDat <- data.keep
+
+# Set up covariates; pass_1 = (-0.5); pass_2 = (0.5)
+X.bin <- X.pos <- as.matrix(chooseDat[, "PASS", drop = FALSE]) - 1.5
+
+# Preliminary data processing
+species <- my.spp[sp]
+setwd(dir.results)
+  dir.create(my.spp[sp], showWarnings = verbose)
+  setwd(my.spp[sp])
+processData()
+attach(chooseDat)
+
 years <- unique(masterDat$YEAR)
 strat <- strata.limits$STRATA
 index <- data.frame(
@@ -196,22 +201,18 @@ index <- data.frame(
 mods = list()
 waic <- list()
 
-for (sp in seq_along(species)){
-setwd(dir.results)
-  dir.create(species[sp], showWarnings = verbose)
-  setwd(species[sp])
-  message(paste("Running", species[sp], "Model 1"))
   for(it in seq_along(modelStructures)){
+    message(paste("Running", my.spp[sp], "Model", it))
     mods[[it]] <- fitDeltaGLM(modelStructure = modelStructures[[it]],
-      mcmc.control = mcmc.control, Parallel = parallel, Species = species[sp],
+      mcmc.control = mcmc.control, Parallel = parallel, Species = my.spp[sp],
       likelihood = "gamma", model.name = as.character(it),
       covariates = Covariates)
     }
-  doMCMCDiags(file.path(dir.results, species[sp]), mods)
+  doMCMCDiags(file.path(dir.results, my.spp[sp]), mods)
   WAIC <- matrix(nrow = 2, ncol = length(modelStructures))
   for (mod in 1:length(mods)){
     Folder <- file.path(getwd(),
-      paste(species[sp], "FinalDiagnostics", sep = "_"), paste0("Model=", mod))
+      paste(my.spp[sp], "FinalDiagnostics", sep = "_"), paste0("Model=", mod))
     WAIC[, mod] <- read.csv(file.path(Folder, "WAIC.csv"))$WAIC
   }
 
@@ -222,7 +223,7 @@ DIC <- cbind("DIC" = sapply(mods, FUN = function(List) {List$BUGSoutput$DIC}),
 DIC <- cbind(DIC,
   "DeltaDIC" = as.numeric(DIC[, "DIC"]) - min(as.numeric(DIC[, "DIC"])))
 DIC <- as.data.frame(DIC)
-write.csv(DIC, file = file.path(dir.results, species[sp], "DIC.csv"))
+write.csv(DIC, file = file.path(dir.results, my.spp[sp], "DIC.csv"))
 bestmod <- which(DIC$DeltaDIC == 0)
 
 files2get <- list.files(pattern = "ResultsByYearAndStrata\\.csv",
@@ -233,8 +234,11 @@ indexbyyear <- do.call("rbind", lapply(files2get, function(x) {
   return(results)
 }))
 indexspp <- subset(indexbyyear, model == bestmod)
-index[match(paste(indexspp$Year, indexspp$Strata), paste(index$year, index$strat)), species[sp]] <-
+index[match(paste(indexspp$Year, indexspp$Strata), paste(index$year, index$strat)), my.spp[sp]] <-
   indexspp$IndexMedian
+
+detach(chooseDat)
+setwd(my.dir)
 }
 
 write.csv(index, file.path(dir.results, file.index), row.names = FALSE)
