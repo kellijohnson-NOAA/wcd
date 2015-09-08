@@ -37,9 +37,7 @@ my.spp <- c("sablefish",
 #' Set the CRAN mirror and install packages that are not currently installed
 options("repos" = "http://R-Forge.R-project.org")
 pckg.need <- c("censReg", "devtools", "ggmap", "knitr", "nwfscDeltaGLM", "xlsx")
-pckg.have <- installed.packages()[, "Package"]
-pckg.inst <- pckg.need[!pckg.need %in% pckg.have]
-for (pckg in pckg.inst){
+for (pckg in pckg.need[!pckg.need %in% installed.packages()[, "Package"]]){
   if (pckg %in% c("nwfscDeltaGLM")) {
     devtools::install_github("nwfsc-assess/nwfscDeltaGLM", ref = "1.0.0")
   }
