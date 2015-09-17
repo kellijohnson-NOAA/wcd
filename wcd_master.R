@@ -11,8 +11,6 @@
 #' Set variable inputs
 my.dir <- "c:/wcd"
 if (!file.exists(my.dir)) my.dir <- "d:/wcd"
-
-#' Create folder structures
 setwd(my.dir)
 
 #' Directories
@@ -27,9 +25,7 @@ file.index <- "index.csv"
 #' Inputs
 verbose <- TRUE
 # Species of interest and four overfished species.
-# cowcod is excluded because rockfish conservation areas are successful in
-# eliminating bycatch therefore they should not dictate fishermen's choice
-# on whether or not they should switch gear.
+# exclude cowcod bc RCAs are successful in eliminating bycatch
 my.spp <- c("sablefish",
   "bocaccio", "darkblotched.rockfish", "Pacific.ocean.perch", "yelloweye.rockfish")
 
