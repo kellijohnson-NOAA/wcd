@@ -19,9 +19,6 @@ dir.create("maps", showWarnings = FALSE)
 #' * Pacific Ocean Perch (POP) - rebuilt but included b/c high bycatch
 #'
 #+ raw_survey, echo = FALSE, warning = FALSE, include = FALSE, cache = TRUE, message = FALSE>>=
-my.spp <- c("bocaccio", "canary", "darkblotch", "POP",
-  "sablefish", "widow", "yelloweye")
-my.spp <- c("darkblotch", "POP","sablefish")
 colnames(data.bio)[which(colnames(data.bio) == "Pacific.oc")] <- "POP"
 sppgood <- sapply(strsplit(colnames(data.bio), "\\."), "[", 1)
 data.need <- data.bio[, c(which(colnames(data.bio) %in% c("X", "Y", "Survey_Cyc")),
