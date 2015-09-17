@@ -29,6 +29,11 @@ verbose <- TRUE
 my.spp <- c("sablefish",
   "bocaccio", "darkblotched.rockfish", "Pacific.ocean.perch", "yelloweye.rockfish")
 
+# Plot
+resolution <- 100
+width <- 700
+height <- width
+
 #' Packages
 #' Set the CRAN mirror and install packages that are not currently installed
 options("repos" = "http://R-Forge.R-project.org")
