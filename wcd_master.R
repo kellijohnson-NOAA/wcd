@@ -23,6 +23,7 @@ file.surveydata <- "FisheryIndices2015_Sablefish_V7.xlsx"
 file.index <- "index.csv"
 file.econ <- "econ4osu2009-2013.xlsx"
 file.script <- file.path(dir.data, "saveAllTabsAsCSV.vbs")
+ignore <- mapply(source, list.files("R", full.names = TRUE))
 
 #' Inputs
 verbose <- TRUE
