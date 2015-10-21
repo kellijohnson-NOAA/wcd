@@ -16,12 +16,16 @@ dir.data <- file.path(my.dir, "data")
 dir.curr <- getwd()
 setwd(dir.data)
 
-data.srvy <- read.xlsx("2009To2012CatchForSeminar.xlsx",
-  sheetName = "CatchData2009To2012", startRow = 10, endRow = 2804,
-  header = TRUE, colIndex = 1:87)
-## may need to specify column classes
-## argument example for xlsx::read.xlsx
-## colClasses = c(rep("character", 2), rep("numeric", 3))
+## Survey data
+fp.srvy <- file.path(dir.data, file.surveyspp)
+# Partition out the csv file if it does not already exist.
+filetotest <- gsub(".xlsx", paste0("_", "HaulWeight&Effort", ".csv"), fp.srvy)
+if (!file.exists(filetotest)) {
+  system(paste0("cscript \"", gsub("/", "\\\\", file.script),
+    "\" \"", gsub("/", "\\\\", file.surveyspp), "\\"))
+}
+
+data.srvy <- read.csv(filetotest, skip = 9)
 
 data.bio <- read.csv("trawl_surveys2.csv")
 
