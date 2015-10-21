@@ -18,7 +18,7 @@ dir.data <- file.path(my.dir, "data")
 dir.results <- file.path(my.dir, "results")
 
 #' Files
-file.surveyspp <- "2009To2012CatchForSeminar.xlsx"
+file.surveyspp <- "JohnsonK_BocSablPopCowYeye_2003To2014.xlsx"
 file.surveydata <- "FisheryIndices2015_Sablefish_V7.xlsx"
 file.index <- "index.csv"
 file.econ <- "econ4osu2009-2013.xlsx"

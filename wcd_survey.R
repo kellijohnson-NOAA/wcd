@@ -37,58 +37,13 @@ Covariates = list(positive = TRUE, binomial = TRUE)
 #+ modelstructure
 modelStructures <- create_modelstructures()
 
-#+ loadsbl, echo = FALSE
-# Loading data requires using system and running a visual basic script
-# that will open the excel file and save each worksheet as an individual csv
-file.spp <- file.path(dir.data, file.surveyspp)
-file.dat <- file.path(dir.data, file.surveydata)
-file.spu <- gsub(".xlsx", paste0("_", sheet.surveyspp, ".csv"), file.spp)
-file.csv <- gsub(".xlsx", paste0("_", sheet.surveydata, ".csv"), file.dat)
+data.svy  <- data.srvy
+data.svy$PROJECT_CYCLE <- sapply(strsplit(as.character(data.svy$PROJECT_CYCLE), "Cycle "), "[", 2)
+data.svy$Date <- format(as.Date(
+  as.character(data.svy$CAPTURE_DATE), format = "%m/%d/%Y"), "%Y-%m-%d")
+colnames(data.svy)[which(colnames(data.svy) == "PROJECT_CYCLE")] <- "YEAR"
 
-# Partition out the csv file if it does not already exist.
-if (!file.exists(file.csv)) {
-  # Must escape the forward slash to get it to work on windows
-  # Fix formatting issues with Windows and R file path names and run the
-  # visual basic script
-  system(paste0("cscript \"", gsub("/", "\\\\", file.script),
-    "\" \"", gsub("/", "\\\\", file.dat), "\\"))
-}
-if (!file.exists(file.spu)) {
-  # Must escape the forward slash to get it to work on windows
-  # Fix formatting issues with Windows and R file path names and run the
-  # visual basic script
-  system(paste0("cscript \"", gsub("/", "\\\\", file.script),
-    "\" \"", gsub("/", "\\\\", file.spp), "\\"))
-}
-
-data.svy  <- read.table(file.spu, skip = 9, header = TRUE, sep = ",")
-data.svy <- data.svy[, !apply(data.svy, 2, function(x) all(is.na(x)))]
-data.svy$Survey.Cycle <- sapply(strsplit(as.character(data.svy$Survey.Cycle), "Cycle "), "[", 2)
-data.svy$Trawl.Start.Time <- format(as.Date(
-  as.character(data.svy$Trawl.Start.Time), format = "%m/%d/%Y"), "%Y-%m-%d")
-colnames(data.svy)[which(colnames(data.svy) == "Trawl.Latitude..dd.")] <- "BEST_LAT_DD"
-colnames(data.svy)[which(colnames(data.svy) == "Trawl.Id")] <- "HAUL_IDENTIFIER"
-colnames(data.svy)[which(colnames(data.svy) == "Survey.Cycle")] <- "YEAR"
-colnames(data.svy)[which(colnames(data.svy) == "Trawl.Start.Time")] <- "Date"
-colnames(data.svy)[which(colnames(data.svy) == "Trawl.Depth..m.")] <- "BEST_DEPTH_M"
-data.svy <- data.svy[, !colnames(data.svy) %in%
-  c("Survey", "Position.Type", "Depth.Type", "Trawl.Longitude..dd.")]
-
-data.orig <- read.table(file.csv, skip = 8, header = TRUE, sep = ",")
-data.orig <- data.orig[, !apply(data.orig, 2, function(x) all(is.na(x)))]
-data.orig$CAPTURE_DATE <- format(as.Date(data.orig$CAPTURE_DATE, format = "%m/%d/%Y"), "%Y-%m-%d")
-data.orig$YEAR <- substring(data.orig$CAPTURE_DATE, 1, 4)
-data.orig$AREA_SWEPT_HA <- data.orig$AREA_SWEPT_HA * 1000
-colnames(data.orig)[which(colnames(data.orig) == "SURVEY_PASS")] <- "PASS"
-colnames(data.orig)[which(colnames(data.orig) == "DURATION_START2END_HR")] <- "DURATION"
-colnames(data.orig)[which(colnames(data.orig) == "CAPTURE_DATE")] <- "Date"
-colnames(data.orig)[which(colnames(data.orig) == "AREA_SWEPT_HA")] <- "AREA_SWEPT_MSQ"
-data.orig <- data.orig[, !colnames(data.orig) %in%
-  c("PROJECT", "PROJECT_CYCLE", "SCIENTIFIC_NAME", "SPECIES", "HAUL_WT_KG",
-  "BEST_LON_DD", "BEST_POSITION_TYPE", "BEST_DEPTH_TYPE", "AVG_WT_KG")]
-
-data.keep <- merge(data.orig, data.svy,  all.y = TRUE,
-  by = c("YEAR", "Date", "HAUL_IDENTIFIER", "BEST_DEPTH_M", "BEST_LAT_DD"))
+data.keep <- data.svy
 
 #' Remove tows from 2013 pass 2 because they did not survey the entire area
 #' less than approximately 40.5 degrees latitude due to the government shutdown.
@@ -176,7 +131,7 @@ setwd(my.dir)
 write.csv(index, file.path(dir.results, file.index), row.names = FALSE)
 index_long <- reshape(data = index, direction = "long", varying = colnames(index)[3:NCOL(index)],
   times = colnames(index)[3:NCOL(index)], timevar = "species", v.names = "index",
-  new.row.names = 1:1000000)
+  new.row.names = 1:1000000000000000)
 
 index_long$species <- factor(index_long$species, levels = unique(index_long$species),
   labels = tolower(gsub("\\.", " ", unique(index_long$species))))
