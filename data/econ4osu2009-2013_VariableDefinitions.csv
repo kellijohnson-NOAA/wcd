@@ -1,0 +1,17 @@
+variable,definition
+SPGRP,"Species group, see specieslist sheet for the list of species included in each group by year"
+GEAR,"Gear type - trawl includes both bottom and midwater trawl, fixed gear includes both pot and longline gear"
+YEAR,Year - year in which the activity occurred
+portgrp,portgrp - the port group
+FuelCapacity,Fuel capacity - fuel capacity of the vessel in gallons
+HorsePower,Horsepower - horsepower of vessel main engine
+Length,Vessel length (ft)
+Crew,Number or crew - does not include captain
+Fuel,Fuel - average fuel use per day (gallons)
+Speed,Speed - average speed while fishing (knots)
+Days,"Days at sea - number of days spent fishing, participants are instructed to count partial days as full days"
+Variable costs,"Variable costs include expenses on:  Bait, Captain, Communications, Crew, Fishing association dues, Food, Freight, Fuel and lubrication, Ice, License fees, Observer costs, Offloading, Supplies, Travel, and Trucking"
+Fixed costs,"Fixed costs include expenses on: Processing equipment, Vessel and on-board equipment, Insurance premium payments, and Moorage"
+TotRev,Total revenue from fishing in the IFQ fisheries
+VarCostNetRev,Variable cost net revenue - total revenue from fishing minus variable costs (see definition of variable costs above)
+TotCostNetRev,Total cost net revenue - total revenue from fishing minus variable and fixed costs (see definition of costs above)

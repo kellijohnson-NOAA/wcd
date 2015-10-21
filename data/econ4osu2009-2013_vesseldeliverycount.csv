@@ -1,0 +1,134 @@
+portgrp,SPGRP,GEAR,2009,2010,2011,2012,2013
+Astoria and Tillamook,Dover sole,Fixed gear,33,29,-999,22,19
+Astoria and Tillamook,Dover sole,Trawl,33,29,20,22,19
+Astoria and Tillamook,Flatfish,Fixed gear,33,28,-999,-999,-999
+Astoria and Tillamook,Flatfish,Trawl,33,28,20,21,18
+Astoria and Tillamook,Other groundfish,Fixed gear,31,27,20,22,-999
+Astoria and Tillamook,Other groundfish,Trawl,31,27,20,22,17
+Astoria and Tillamook,Pacific whiting,Trawl,-999,5,18,17,14
+Astoria and Tillamook,Petrale sole,Fixed gear,-999,27,-999,-999,-999
+Astoria and Tillamook,Petrale sole,Trawl,-999,27,19,21,18
+Astoria and Tillamook,Rockfish,Fixed gear,32,29,21,24,21
+Astoria and Tillamook,Rockfish,Trawl,32,29,21,24,21
+Astoria and Tillamook,Sablefish,Fixed gear,33,29,21,25,21
+Astoria and Tillamook,Sablefish,Trawl,33,29,21,25,21
+Astoria and Tillamook,"Sharks, skates and rays",Fixed gear,30,27,-999,-999,16
+Astoria and Tillamook,"Sharks, skates and rays",Trawl,30,27,19,20,16
+Astoria and Tillamook,Thornyheads,Fixed gear,31,28,20,24,21
+Astoria and Tillamook,Thornyheads,Trawl,31,28,20,24,21
+Brookings and Crescent City,Dover sole,Trawl,16,15,10,7,9
+Brookings and Crescent City,Flatfish,Trawl,16,14,10,7,9
+Brookings and Crescent City,Other groundfish,Trawl,16,10,-999,6,7
+Brookings and Crescent City,Pacific whiting,Trawl,#N/A,#N/A,-999,-999,-999
+Brookings and Crescent City,Petrale sole,Trawl,15,13,9,7,-999
+Brookings and Crescent City,Rockfish,Trawl,16,12,9,7,9
+Brookings and Crescent City,Sablefish,Trawl,16,15,10,7,9
+Brookings and Crescent City,"Sharks, skates and rays",Trawl,14,12,9,-999,9
+Brookings and Crescent City,Thornyheads,Trawl,16,15,10,7,9
+Coos Bay,Dover sole,Fixed gear,23,22,-999,-999,-999
+Coos Bay,Dover sole,Trawl,23,22,16,19,18
+Coos Bay,Flatfish,Fixed gear,23,22,-999,-999,-999
+Coos Bay,Flatfish,Trawl,23,22,16,19,-999
+Coos Bay,Other groundfish,Fixed gear,20,-999,-999,-999,-999
+Coos Bay,Other groundfish,Trawl,20,20,16,16,-999
+Coos Bay,Pacific whiting,Trawl,#N/A,-999,-999,-999,-999
+Coos Bay,Petrale sole,Fixed gear,23,21,-999,17,-999
+Coos Bay,Petrale sole,Trawl,23,21,15,17,-999
+Coos Bay,Rockfish,Fixed gear,23,22,-999,-999,-999
+Coos Bay,Rockfish,Trawl,23,22,16,19,-999
+Coos Bay,Sablefish,Fixed gear,23,22,-999,-999,-999
+Coos Bay,Sablefish,Trawl,23,22,16,20,17
+Coos Bay,"Sharks, skates and rays",Fixed gear,21,22,-999,-999,-999
+Coos Bay,"Sharks, skates and rays",Trawl,21,22,16,19,-999
+Coos Bay,Thornyheads,Fixed gear,22,21,-999,-999,-999
+Coos Bay,Thornyheads,Trawl,22,21,15,19,16
+Eureka,Dover sole,Trawl,12,12,-999,-999,-999
+Eureka,Flatfish,Trawl,12,11,-999,11,11
+Eureka,Other groundfish,Trawl,12,10,-999,9,-999
+Eureka,Pacific whiting,Trawl,-999,-999,-999,-999,-999
+Eureka,Petrale sole,Trawl,11,12,-999,11,9
+Eureka,Rockfish,Trawl,-999,12,-999,-999,-999
+Eureka,Sablefish,Trawl,12,12,-999,-999,-999
+Eureka,"Sharks, skates and rays",Trawl,-999,-999,-999,-999,10
+Eureka,Thornyheads,Trawl,-999,-999,-999,-999,-999
+Fort Bragg,Dover sole,Trawl,7,7,6,5,6
+Fort Bragg,Flatfish,Trawl,7,7,6,5,6
+Fort Bragg,Other groundfish,Fixed gear,7,7,-999,5,6
+Fort Bragg,Other groundfish,Trawl,7,7,7,5,6
+Fort Bragg,Pacific whiting,Trawl,#N/A,#N/A,-999,-999,-999
+Fort Bragg,Petrale sole,Trawl,7,7,6,5,6
+Fort Bragg,Rockfish,Fixed gear,7,7,-999,-999,6
+Fort Bragg,Rockfish,Trawl,7,7,7,6,6
+Fort Bragg,Sablefish,Fixed gear,7,7,-999,-999,-999
+Fort Bragg,Sablefish,Trawl,7,7,7,6,7
+Fort Bragg,"Sharks, skates and rays",Trawl,6,-999,6,5,6
+Fort Bragg,Thornyheads,Trawl,7,7,6,5,6
+Monterey and Morro Bay,Dover sole,Fixed gear,3,-999,-999,11,8
+Monterey and Morro Bay,Dover sole,Trawl,3,-999,-999,11,8
+Monterey and Morro Bay,Flatfish,Fixed gear,4,2,-999,-999,6
+Monterey and Morro Bay,Flatfish,Trawl,4,-999,4,5,6
+Monterey and Morro Bay,Other groundfish,Fixed gear,3,5,-999,9,8
+Monterey and Morro Bay,Other groundfish,Trawl,3,-999,-999,9,8
+Monterey and Morro Bay,Pacific whiting,Trawl,#N/A,#N/A,#N/A,-999,-999
+Monterey and Morro Bay,Petrale sole,Fixed gear,4,2,3,-999,-999
+Monterey and Morro Bay,Petrale sole,Trawl,4,-999,3,4,4
+Monterey and Morro Bay,Rockfish,Fixed gear,7,6,11,10,9
+Monterey and Morro Bay,Rockfish,Trawl,7,-999,11,10,9
+Monterey and Morro Bay,Sablefish,Fixed gear,6,8,15,14,9
+Monterey and Morro Bay,Sablefish,Trawl,6,-999,15,14,9
+Monterey and Morro Bay,"Sharks, skates and rays",Fixed gear,4,-999,-999,-999,-999
+Monterey and Morro Bay,"Sharks, skates and rays",Trawl,4,-999,4,4,5
+Monterey and Morro Bay,Thornyheads,Fixed gear,6,7,12,13,9
+Monterey and Morro Bay,Thornyheads,Trawl,6,-999,12,13,9
+Newport,Dover sole,Fixed gear,-999,-999,-999,-999,-999
+Newport,Dover sole,Trawl,-999,-999,-999,-999,10
+Newport,Flatfish,Fixed gear,-999,-999,-999,11,-999
+Newport,Flatfish,Trawl,-999,-999,-999,11,10
+Newport,Other groundfish,Fixed gear,22,-999,11,11,-999
+Newport,Other groundfish,Trawl,22,-999,11,11,10
+Newport,Pacific whiting,Trawl,#N/A,-999,5,-999,3
+Newport,Petrale sole,Fixed gear,-999,-999,-999,-999,-999
+Newport,Petrale sole,Trawl,-999,-999,-999,11,-999
+Newport,Rockfish,Fixed gear,25,19,14,11,-999
+Newport,Rockfish,Trawl,25,19,14,11,11
+Newport,Sablefish,Fixed gear,-999,-999,15,-999,12
+Newport,Sablefish,Trawl,-999,-999,15,-999,12
+Newport,"Sharks, skates and rays",Fixed gear,23,-999,-999,-999,-999
+Newport,"Sharks, skates and rays",Trawl,23,-999,-999,-999,10
+Newport,Thornyheads,Fixed gear,-999,-999,-999,-999,12
+Newport,Thornyheads,Trawl,-999,-999,-999,-999,12
+San Francisco and Bodega Bay,Dover sole,Fixed gear,7,8,-999,-999,-999
+San Francisco and Bodega Bay,Dover sole,Trawl,7,8,6,-999,-999
+San Francisco and Bodega Bay,Flatfish,Fixed gear,9,8,4,4,-999
+San Francisco and Bodega Bay,Flatfish,Trawl,9,8,4,4,5
+San Francisco and Bodega Bay,Other groundfish,Fixed gear,8,5,-999,2,-999
+San Francisco and Bodega Bay,Other groundfish,Trawl,8,5,-999,-999,-999
+San Francisco and Bodega Bay,Pacific whiting,Trawl,#N/A,#N/A,#N/A,#N/A,-999
+San Francisco and Bodega Bay,Petrale sole,Fixed gear,9,8,-999,-999,4
+San Francisco and Bodega Bay,Petrale sole,Trawl,9,8,4,5,4
+San Francisco and Bodega Bay,Rockfish,Fixed gear,9,8,-999,-999,-999
+San Francisco and Bodega Bay,Rockfish,Trawl,9,8,6,4,6
+San Francisco and Bodega Bay,Sablefish,Fixed gear,7,7,6,-999,-999
+San Francisco and Bodega Bay,Sablefish,Trawl,7,7,6,4,4
+San Francisco and Bodega Bay,"Sharks, skates and rays",Fixed gear,7,7,4,4,-999
+San Francisco and Bodega Bay,"Sharks, skates and rays",Trawl,7,7,4,4,4
+San Francisco and Bodega Bay,Thornyheads,Fixed gear,6,7,-999,-999,-999
+San Francisco and Bodega Bay,Thornyheads,Trawl,6,7,5,-999,-999
+Washington,Dover sole,Fixed gear,10,11,13,-999,-999
+Washington,Dover sole,Trawl,10,11,13,7,7
+Washington,Flatfish,Fixed gear,10,11,12,-999,-999
+Washington,Flatfish,Trawl,10,11,12,6,7
+Washington,Other groundfish,Fixed gear,10,-999,10,9,-999
+Washington,Other groundfish,Trawl,10,-999,10,9,7
+Washington,Pacific whiting,Fixed gear,-999,-999,3,-999,-999
+Washington,Pacific whiting,Trawl,-999,-999,3,-999,5
+Washington,Petrale sole,Fixed gear,10,10,-999,-999,-999
+Washington,Petrale sole,Trawl,10,10,9,7,7
+Washington,Rockfish,Fixed gear,10,11,13,8,-999
+Washington,Rockfish,Trawl,10,11,13,8,7
+Washington,Sablefish,Fixed gear,10,11,14,9,-999
+Washington,Sablefish,Trawl,10,11,14,9,7
+Washington,"Sharks, skates and rays",Fixed gear,10,11,-999,-999,-999
+Washington,"Sharks, skates and rays",Trawl,10,11,9,6,7
+Washington,Thornyheads,Fixed gear,9,11,-999,8,-999
+Washington,Thornyheads,Trawl,9,11,-999,8,-999

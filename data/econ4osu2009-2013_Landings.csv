@@ -1,0 +1,134 @@
+SPGRP,portgrp,GEAR,2009,2010,2011,2012,2013
+Dover sole,Astoria and Tillamook,Fixed gear,0,0,-999,92,250
+Dover sole,Astoria and Tillamook,Trawl,7203475,6514637,5637557,4777387,6287929
+Dover sole,Brookings and Crescent City,Trawl,2782405.652,2104570.16,1656801.81,1495514,1807112
+Dover sole,Coos Bay,Fixed gear,0,0,-999,-999,-999
+Dover sole,Coos Bay,Trawl,3920686,4151023,2510754,2282098,1671881
+Dover sole,Eureka,Trawl,3468709.995,3195464,-999,-999,-999
+Dover sole,Fort Bragg,Trawl,1581267.981,1507410.757,1235388.888,971740.1175,1048927.479
+Dover sole,Monterey and Morro Bay,Fixed gear,0,-999,-999,3907,1150
+Dover sole,Monterey and Morro Bay,Trawl,69538.5013,-999,-999,1240703.756,355468.3289
+Dover sole,Newport,Fixed gear,0,0,-999,-999,-999
+Dover sole,Newport,Trawl,-999,-999,-999,-999,1649084
+Dover sole,San Francisco and Bodega Bay,Fixed gear,0,0,-999,-999,-999
+Dover sole,San Francisco and Bodega Bay,Trawl,549939.2467,599855.3434,348215,-999,-999
+Dover sole,Washington,Fixed gear,0,0,503.001,-999,-999
+Dover sole,Washington,Trawl,2194387.19,1823825.12,1248383.69,1374579.29,1086565.325
+Flatfish,Astoria and Tillamook,Fixed gear,0,0,-999,-999,-999
+Flatfish,Astoria and Tillamook,Trawl,6186435,4886688,4010997,3572271,3837590
+Flatfish,Brookings and Crescent City,Trawl,231122.3481,135427.8404,246995.1904,118675,216813
+Flatfish,Coos Bay,Fixed gear,0,0,-999,-999,0
+Flatfish,Coos Bay,Trawl,788773,990980,484642,541749,-999
+Flatfish,Eureka,Trawl,283434.2527,204843.0833,-999,245427,331309.9359
+Flatfish,Fort Bragg,Trawl,68418.0191,24770.2434,63007.7474,101711.9385,139682.3877
+Flatfish,Monterey and Morro Bay,Fixed gear,0,0,-999,-999,8
+Flatfish,Monterey and Morro Bay,Trawl,54892.0387,-999,59542.0558,39871.4612,25731.5411
+Flatfish,Newport,Fixed gear,0,0,-999,159,-999
+Flatfish,Newport,Trawl,-999,-999,-999,233311,515655
+Flatfish,San Francisco and Bodega Bay,Fixed gear,0,0,0,0,-999
+Flatfish,San Francisco and Bodega Bay,Trawl,74038.2095,66521.4088,58682,42733,41068
+Flatfish,Washington,Fixed gear,0,0,265,-999,-999
+Flatfish,Washington,Trawl,2206501.41,1957483.209,1184799.69,1534180.26,552993.6406
+Other groundfish,Astoria and Tillamook,Fixed gear,0,0,2678,414.5,-999
+Other groundfish,Astoria and Tillamook,Trawl,190809,184722,837919,1314354,755344
+Other groundfish,Brookings and Crescent City,Trawl,24984,21006,-999,39666,9824
+Other groundfish,Coos Bay,Fixed gear,0,-999,-999,-999,0
+Other groundfish,Coos Bay,Trawl,109161,103094,59244,67924,-999
+Other groundfish,Eureka,Trawl,51696,67562,-999,42552,-999
+Other groundfish,Fort Bragg,Fixed gear,0,0,-999,0,0
+Other groundfish,Fort Bragg,Trawl,50374,50846,15146.292,23054.2,30161
+Other groundfish,Monterey and Morro Bay,Fixed gear,0,922,-999,1450.7,297
+Other groundfish,Monterey and Morro Bay,Trawl,52872,-999,-999,58833,71296
+Other groundfish,Newport,Fixed gear,0,0,802,672.5,-999
+Other groundfish,Newport,Trawl,21841,-999,8792,6728,7464
+Other groundfish,San Francisco and Bodega Bay,Fixed gear,0,0,0,0,-999
+Other groundfish,San Francisco and Bodega Bay,Trawl,4992,4544,-999,-999,-999
+Other groundfish,Washington,Fixed gear,0,0,2325,3280,-999
+Other groundfish,Washington,Trawl,118506,-999,233904,269188,216726
+Pacific whiting,Astoria and Tillamook,Trawl,-999,4044,41106,31404,113001
+Pacific whiting,Brookings and Crescent City,Trawl,0,0,-999,-999,-999
+Pacific whiting,Coos Bay,Trawl,0,-999,-999,-999,-999
+Pacific whiting,Eureka,Trawl,-999,-999,-999,-999,-999
+Pacific whiting,Fort Bragg,Trawl,0,0,-999,-999,-999
+Pacific whiting,Monterey and Morro Bay,Trawl,0,0,0,-999,-999
+Pacific whiting,Newport,Trawl,0,-999,379,-999,158
+Pacific whiting,San Francisco and Bodega Bay,Trawl,0,0,0,0,-999
+Pacific whiting,Washington,Fixed gear,0,0,0,0,-999
+Pacific whiting,Washington,Trawl,-999,-999,4228,-999,6180.9876
+Petrale sole,Astoria and Tillamook,Fixed gear,0,0,-999,-999,-999
+Petrale sole,Astoria and Tillamook,Trawl,-999,491193,695562,861149,1715533
+Petrale sole,Brookings and Crescent City,Trawl,247358,101332,97414,53855,-999
+Petrale sole,Coos Bay,Fixed gear,0,0,-999,0,0
+Petrale sole,Coos Bay,Trawl,582653,304493,242577,364596,-999
+Petrale sole,Eureka,Trawl,339583.7519,122074.3529,-999,173132,498861.2885
+Petrale sole,Fort Bragg,Trawl,356211,124192,102614.8254,128351.944,220931.1335
+Petrale sole,Monterey and Morro Bay,Fixed gear,0,0,0,-999,-999
+Petrale sole,Monterey and Morro Bay,Trawl,116423.46,-999,79553.963,88728.9173,128551.13
+Petrale sole,Newport,Fixed gear,0,0,0,-999,0
+Petrale sole,Newport,Trawl,-999,-999,-999,200616,-999
+Petrale sole,San Francisco and Bodega Bay,Fixed gear,0,0,-999,-999,0
+Petrale sole,San Francisco and Bodega Bay,Trawl,203037.1974,127879.2683,39587,44239,106368
+Petrale sole,Washington,Fixed gear,0,0,-999,-999,-999
+Petrale sole,Washington,Trawl,340941,116612,239671,313386,521659.1277
+Rockfish,Astoria and Tillamook,Fixed gear,0,0,1793,9158,6128
+Rockfish,Astoria and Tillamook,Trawl,303111.96,373383.7524,940847.0069,1065522.012,852271.8759
+Rockfish,Brookings and Crescent City,Trawl,22834.29469,33824.3728,18477,4477.005474,24532.74203
+Rockfish,Coos Bay,Fixed gear,0,0,-999,-999,0
+Rockfish,Coos Bay,Trawl,68354.0242,121491.6074,63662.17511,68670,-999
+Rockfish,Eureka,Trawl,-999,20674.3283,-999,-999,-999
+Rockfish,Fort Bragg,Fixed gear,0,0,-999,-999,0
+Rockfish,Fort Bragg,Trawl,501715,561329.5837,606423.816,547317.7575,754516.9209
+Rockfish,Monterey and Morro Bay,Fixed gear,1167,15739.298,3396,16007.7,36951
+Rockfish,Monterey and Morro Bay,Trawl,257656,-999,76189.8792,138592.5063,98938
+Rockfish,Newport,Fixed gear,0,0,14742.4595,10815,-999
+Rockfish,Newport,Trawl,157586.0128,166610.0878,57339.80589,50802.86513,153682.503
+Rockfish,San Francisco and Bodega Bay,Fixed gear,0,0,-999,-999,-999
+Rockfish,San Francisco and Bodega Bay,Trawl,179699,253648.9613,34762,68672,76581
+Rockfish,Washington,Fixed gear,0,0,2725.4379,19165.44,-999
+Rockfish,Washington,Trawl,90757.4712,85198.9875,187038.7704,692221.4166,145466.7315
+Sablefish,Astoria and Tillamook,Fixed gear,0,0,94032.2,544181.6,256965
+Sablefish,Astoria and Tillamook,Trawl,1601661,1427270.8,1015368,638949,797587
+Sablefish,Brookings and Crescent City,Trawl,678977,569289.2,357925,411368.4,337707
+Sablefish,Coos Bay,Fixed gear,0,0,-999,-999,-999
+Sablefish,Coos Bay,Trawl,926759.8,880801.4,536701,571118.2,407397.2
+Sablefish,Eureka,Trawl,722158,749437,-999,-999,-999
+Sablefish,Fort Bragg,Fixed gear,0,0,-999,-999,-999
+Sablefish,Fort Bragg,Trawl,639137,538829,351300.831,304205.8,352186.4
+Sablefish,Monterey and Morro Bay,Fixed gear,107062,390093,1002223.6,471265.8,177143.6
+Sablefish,Monterey and Morro Bay,Trawl,111418,-999,136019.2,114919.2,79019
+Sablefish,Newport,Fixed gear,0,0,554624.2,-999,375848
+Sablefish,Newport,Trawl,-999,-999,244006,-999,401398.8
+Sablefish,San Francisco and Bodega Bay,Fixed gear,0,0,116964,-999,-999
+Sablefish,San Francisco and Bodega Bay,Trawl,126777.5,83682,40440,12473,75337
+Sablefish,Washington,Fixed gear,0,0,554221.04,447660.6,-999
+Sablefish,Washington,Trawl,434082.8,245039.9363,436299.6,288211,171173.7112
+"Sharks, skates and rays",Astoria and Tillamook,Fixed gear,0,0,-999,-999,0
+"Sharks, skates and rays",Astoria and Tillamook,Trawl,1009670,991775.4,1385165,1304349,1118721
+"Sharks, skates and rays",Brookings and Crescent City,Trawl,85422.884,84170,100179,-999,100187
+"Sharks, skates and rays",Coos Bay,Fixed gear,0,0,-999,-999,0
+"Sharks, skates and rays",Coos Bay,Trawl,491614,544474,286944,263827,-999
+"Sharks, skates and rays",Eureka,Trawl,-999,-999,-999,-999,196070
+"Sharks, skates and rays",Fort Bragg,Trawl,100102.0812,-999,107379.6639,110445,113189
+"Sharks, skates and rays",Monterey and Morro Bay,Fixed gear,0,-999,-999,-999,-999
+"Sharks, skates and rays",Monterey and Morro Bay,Trawl,47176,-999,30797,58379,36046
+"Sharks, skates and rays",Newport,Fixed gear,0,0,0,-999,-999
+"Sharks, skates and rays",Newport,Trawl,728571,-999,-999,-999,234877
+"Sharks, skates and rays",San Francisco and Bodega Bay,Fixed gear,0,0,0,0,-999
+"Sharks, skates and rays",San Francisco and Bodega Bay,Trawl,10110.8464,72246,27639,11314,26245
+"Sharks, skates and rays",Washington,Fixed gear,0,0,-999,-999,-999
+"Sharks, skates and rays",Washington,Trawl,296060.54,171795,199471,270865,182476.0327
+Thornyheads,Astoria and Tillamook,Fixed gear,0,0,678,8624,1770
+Thornyheads,Astoria and Tillamook,Trawl,1212697.04,1313599.248,716548.9931,576410.9875,701140.1241
+Thornyheads,Brookings and Crescent City,Trawl,559675.7053,445619.6272,317517,416350.9945,440538.258
+Thornyheads,Coos Bay,Fixed gear,0,0,-999,-999,-999
+Thornyheads,Coos Bay,Trawl,801368.9758,876183.3926,445385.8249,398857,463082.1131
+Thornyheads,Eureka,Trawl,-999,-999,-999,-999,-999
+Thornyheads,Fort Bragg,Trawl,443997,602992.4163,452002.7005,447110.2425,661854.0791
+Thornyheads,Monterey and Morro Bay,Fixed gear,1927,25693.502,41085,2886.7,12109.4
+Thornyheads,Monterey and Morro Bay,Trawl,162675,-999,319861.1208,493141.3597,328268
+Thornyheads,Newport,Fixed gear,0,0,-999,-999,368
+Thornyheads,Newport,Trawl,-999,-999,-999,-999,291365.497
+Thornyheads,San Francisco and Bodega Bay,Fixed gear,0,0,-999,-999,-999
+Thornyheads,San Francisco and Bodega Bay,Trawl,141665,72835.0182,36581,-999,-999
+Thornyheads,Washington,Fixed gear,0,0,-999,17043.56,-999
+Thornyheads,Washington,Trawl,247652.5288,171848.0129,-999,262808.5834,-999
