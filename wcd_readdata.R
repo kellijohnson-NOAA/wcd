@@ -25,15 +25,24 @@ data.srvy <- read.xlsx("2009To2012CatchForSeminar.xlsx",
 
 data.bio <- read.csv("trawl_surveys2.csv")
 
-data.spp <- read.xlsx(file.econ, sheetName = "specieslist")
-data.vcount <- read.xlsx(file.econ, sheetName = "vesseldeliverycount")
-data.bcount <- read.xlsx(file.econ, sheetName = "fishbuyercount")
-data.rev <- read.xlsx(file.econ, sheetName = "Revenue")
-data.land <- read.xlsx(file.econ, sheetName = "Landings")
-data.vess <- read.xlsx(file.econ, sheetName = "VesselCharacteristics")
-data.days <- read.xlsx(file.econ, sheetName = "dayscrewfuelspeeddays")
-data.cost <- read.xlsx(file.econ, sheetName = "Costs")
-data.netrev <- read.xlsx(file.econ, sheetName = "NetRevenue")
+## Econ data
+fp.econ <- file.path(dir.data, file.econ)
+# Partition out the csv file if it does not already exist.
+filetotest <- gsub(".xlsx", paste0("_", "specieslist", ".csv"), file.econ)
+if (!file.exists(filetotest)) {
+  system(paste0("cscript \"", gsub("/", "\\\\", file.script),
+    "\" \"", gsub("/", "\\\\", file.econ), "\\"))
+}
+
+data.spp <- read.csv(gsub(".xlsx", paste0("_", "specieslist", ".csv"), file.econ))
+data.vcount <- read.csv(gsub(".xlsx", paste0("_", "vesseldeliverycount", ".csv"), file.econ))
+data.bcount <- read.csv(gsub(".xlsx", paste0("_", "fishbuyercount", ".csv"), file.econ))
+data.rev <- read.csv(gsub(".xlsx", paste0("_", "Revenue", ".csv"), file.econ))
+data.land <- read.csv(gsub(".xlsx", paste0("_", "Landings", ".csv"), file.econ))
+data.vess <- read.csv(gsub(".xlsx", paste0("_", "VesselCharacteristics", ".csv"), file.econ))
+data.days <- read.csv(gsub(".xlsx", paste0("_", "dayscrewfuelspeeddays", ".csv"), file.econ))
+data.cost <- read.csv(gsub(".xlsx", paste0("_", "Costs", ".csv"), file.econ))
+data.netrev <- read.csv(gsub(".xlsx", paste0("_", "NetRevenue", ".csv"), file.econ))
 
 data.tac.after <- read.xlsx("wcd_allocation.xlsx", sheetName = "after")
 data.tac.before <- read.csv("wc_tac_v3.csv")
