@@ -4,11 +4,6 @@
 #' Date: 2015-09-08
 #' ----
 
-#+ files, echo = FALSE
-# Files
-file.script <- file.path("c:", "users", "kelli", "Google Drive",
-  "references", "saveAllTabsAsCSV.vbs")
-
 # Sheets
 sheet.surveyspp  <- "CatchData2009To2012"
 sheet.surveydata <- "HaulCatchWt&Effort"

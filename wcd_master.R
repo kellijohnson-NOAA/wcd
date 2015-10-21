@@ -22,6 +22,7 @@ file.surveyspp <- "2009To2012CatchForSeminar.xlsx"
 file.surveydata <- "FisheryIndices2015_Sablefish_V7.xlsx"
 file.index <- "index.csv"
 file.econ <- "econ4osu2009-2013.xlsx"
+file.script <- file.path(dir.data, "saveAllTabsAsCSV.vbs")
 
 #' Inputs
 verbose <- TRUE
