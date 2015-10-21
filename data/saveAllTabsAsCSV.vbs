@@ -9,7 +9,7 @@ Const xlXMLSpreadsheet = 46
 Const xlCSV = 6
 
 '* Declare variables
-Dim args, objFSO, xl, wb, ws
+Dim args, objFSO, theext, xl, wb, ws
 
 '* Set the input arguments used on the command line to args
 '* If there is more than one or less than one argument produce an error
@@ -22,6 +22,10 @@ End If
 '* Get the folder name
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 
+'* Determine if an xlsx file (theext > 0) or an xls file (theext = 0)
+'* to be used later in the code
+theext = Instr(args(0), ".xlsx")
+
 '* Create an excel object that can be opened in the following line
 Set xl = CreateObject("Excel.Application")
 Set wb = xl.Workbooks.Open(objFSO.GetAbsolutePathName(args(0)))
@@ -30,7 +34,7 @@ Set wb = xl.Workbooks.Open(objFSO.GetAbsolutePathName(args(0)))
 xl.DisplayAlerts = TRUE
 For Each ws In wb.Worksheets
  ws.activate
- If objFSO.GetAbsolutePathName(args(0)).Contains("xlsx") Then
+ If theext > 0 Then
      wb.SaveAs Replace(objFSO.GetAbsolutePathName(args(0)), ".xlsx", "_") & Replace(ws.Name, " ", "_") & ".csv", xlCSV
    Else
      wb.SaveAs Replace(objFSO.GetAbsolutePathName(args(0)), ".xls", "_") & Replace(ws.Name, " ", "_") & ".csv", xlCSV
