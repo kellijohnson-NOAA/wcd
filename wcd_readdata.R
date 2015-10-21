@@ -48,8 +48,15 @@ data.days <- read.csv(gsub(".xlsx", paste0("_", "dayscrewfuelspeeddays", ".csv")
 data.cost <- read.csv(gsub(".xlsx", paste0("_", "Costs", ".csv"), file.econ))
 data.netrev <- read.csv(gsub(".xlsx", paste0("_", "NetRevenue", ".csv"), file.econ))
 
-data.tac.after <- read.xlsx("wcd_allocation.xlsx", sheetName = "after")
-data.tac.before <- read.csv("wc_tac_v3.csv")
+# TAC data
+fp.alloc <- file.path(dir.data, file.alloc)
+filetotest <- gsub(".xlsx", paste0("_", "after", ".csv"), fp.alloc)
+if (!file.exists(filetotest)) {
+  system(paste0("cscript \"", gsub("/", "\\\\", file.script),
+    "\" \"", gsub("/", "\\\\", fp.alloc), "\\"))
+}
+data.tac.after <- read.csv(filetotest)
+data.tac.before <- read.csv(file.path(dir.data, file.tac))
 
 ###############################################################################
 #### Save data in data dir and return to old working directory upon exit
