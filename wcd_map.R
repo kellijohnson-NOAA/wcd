@@ -19,20 +19,27 @@ dir.create("maps", showWarnings = FALSE)
 #' * Pacific Ocean Perch (POP) - rebuilt but included b/c high bycatch
 #'
 #+ raw_survey, echo = FALSE, warning = FALSE, include = FALSE, cache = TRUE, message = FALSE>>=
-colnames(data.bio)[which(colnames(data.bio) == "Pacific.oc")] <- "POP"
-sppgood <- sapply(strsplit(colnames(data.bio), "\\."), "[", 1)
-data.need <- data.bio[, c(which(colnames(data.bio) %in% c("X", "Y", "Survey_Cyc")),
-  which(sppgood %in% my.spp == TRUE))]
+data.plot <- data.srvy
+colnames(data.plot)[grep("Pacific\\.oc", colnames(data.plot))] <- "POP"
+colnames(data.plot)[grep("LAT", colnames(data.plot))] <- "Y"
+colnames(data.plot)[grep("LON", colnames(data.plot))] <- "X"
 
-data.plot <- reshape(data.need, idvar = c("X", "Y", "Survey_Cyc"),
-  varying = list(4:NCOL(data.need)), v.name = "weight", direction = "long")
-rownames(data.plot) <- NULL
-colnames(data.plot)[3] <- "year"
+data.plot <- data.plot[,
+  c(which(colnames(data.plot) %in% c("X", "Y", "PROJECT_CYCLE")),
+    (max(grep("_", colnames(data.plot))) + 1):NCOL(data.plot))]
+
+temp <- data.plot[, c("X", "Y", "PROJECT_CYCLE")]
+temp <- lapply((NCOL(temp) + 1):NCOL(data.plot), function(x) {
+  data.frame(temp, "weight" = data.plot[, x],
+    "species" = gsub("\\.rockfish", "", colnames(data.plot))[x])
+})
+data.plot <- do.call("rbind", temp)
+rm(temp)
+
+colnames(data.plot)[grep("PROJECT_CYCLE", colnames(data.plot))] <- "year"
 data.plot$year <- as.numeric(sapply(strsplit(as.character(data.plot$year),
   " "), "[", 2))
 data.plot <- subset(data.plot, weight > 0)
-data.plot$species <- factor(data.plot$time, levels = 1:length(my.spp),
-  labels = colnames(data.need)[-c(1:3)])
 
 #+plot_raw_survey, echo = FALSE, warning = FALSE, message = FALSE
 p <- ggmap(get_map("Redding, California", maptype = "terrain", zoom = 5, source = "google"))
