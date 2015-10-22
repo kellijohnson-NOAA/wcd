@@ -38,10 +38,13 @@ Covariates = list(positive = TRUE, binomial = TRUE)
 modelStructures <- create_modelstructures()
 
 data.svy  <- data.srvy
+data.svy$DURATION <- data.svy$DURATION_START2END_HR
+data.svy$AREA_SWEPT_MSQ <- data.svy$AREA_SWEPT_HA * 10000
 data.svy$PROJECT_CYCLE <- sapply(strsplit(as.character(data.svy$PROJECT_CYCLE), "Cycle "), "[", 2)
 data.svy$Date <- format(as.Date(
   as.character(data.svy$CAPTURE_DATE), format = "%m/%d/%Y"), "%Y-%m-%d")
 colnames(data.svy)[which(colnames(data.svy) == "PROJECT_CYCLE")] <- "YEAR"
+colnames(data.svy)[which(colnames(data.svy) == "SURVEY_PASS")] <- "PASS"
 
 data.keep <- data.svy
 
