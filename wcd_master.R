@@ -42,7 +42,8 @@ height <- width
 #' Packages
 #' Set the CRAN mirror and install packages that are not currently installed
 options("repos" = "http://R-Forge.R-project.org")
-pckg.need <- c("devtools", "gamlss", "ggmap", "knitr", "nwfscDeltaGLM", "raster")
+pckg.need <- c("devtools", "gamlss", "ggmap", "ggplot2", "grid",
+  "knitr", "nwfscDeltaGLM", "raster")
 for (pckg in pckg.need[!pckg.need %in% installed.packages()[, "Package"]]){
   if (pckg %in% c("nwfscDeltaGLM")) {
     devtools::install_github("nwfsc-assess/nwfscDeltaGLM", ref = "1.0.0")
