@@ -44,7 +44,8 @@ data.bcount <- read.csv(gsub(".xlsx", paste0("_", "fishbuyercount", ".csv"), fil
 data.rev <- read.csv(gsub(".xlsx", paste0("_", "Revenue", ".csv"), file.econ))
 data.land <- read.csv(gsub(".xlsx", paste0("_", "Landings", ".csv"), file.econ))
 data.vess <- read.csv(gsub(".xlsx", paste0("_", "VesselCharacteristics", ".csv"), file.econ))
-data.days <- read.csv(gsub(".xlsx", paste0("_", "dayscrewfuelspeeddays", ".csv"), file.econ))
+data.days <- read.csv(gsub(".xlsx", paste0("_", "dayscrewfuelspeeddays", ".csv"),
+  file.econ), stringsAsFactors = FALSE)
 data.cost <- read.csv(gsub(".xlsx", paste0("_", "Costs", ".csv"), file.econ))
 data.netrev <- read.csv(gsub(".xlsx", paste0("_", "NetRevenue", ".csv"), file.econ))
 
