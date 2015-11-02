@@ -85,7 +85,7 @@ pp <- p +
   geom_path(data = ca.provinces, aes(x = long, y = lat, group = group), size = small) +
   coord_map() +
   geom_hline(yintercept = getstrata[-length(getstrata)], lty = 2) +
-  annotate("text", x = -122.2, y = 40.433, label = "Cape Mendocino", size = 3) +
+  annotate("text", x = -122.2, y = 40.410, label = "Cape Mendocino", size = 3) +
   annotate("text", x = -122.9, y = 42.833, label = "Cape Blanco", size = 3) +
   annotate("text", x = -125.5, y = getstrata + 0.5,
            label = paste0("(", letters[1:9], ")"), size = 3)
@@ -116,5 +116,3 @@ dev.off()
 ###############################################################################
 
 #### endoffile
-setwd(dir.old)
-rm(dir.old)
