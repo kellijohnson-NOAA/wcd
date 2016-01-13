@@ -22,9 +22,10 @@ mod <- hclust(res)
 #' Create the figure used in the publication
 png(file.path(dir.results, "dendrogram.png"),
   res = resolution, width = width, height = height / 2)
-par(mar = c(2, 2.5, 0.25, 0.25), las = 1)
+par(mar = c(2, 3.5, 0.25, 0.25), las = 1)
 plot(mod, labels = props$year,
   xlab = "", ylab = "", main = "")
 mtext(side = 1, line = 0.5, "year")
+title(ylab = "dissimilarity", line = 2.5, las = 1)
 rect.hclust(mod, k = 6, border = 1)
 dev.off()
