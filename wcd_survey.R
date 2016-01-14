@@ -26,8 +26,8 @@ parallel <- FALSE
 nn <- 9
 strata.limits <- data.frame(
   STRATA = LETTERS[1:nn],
-  NLat = c(48.5, 46.5, 45, 44, 43, 41.5, 40.5, 39, 37),
-  SLat = c(46.5, 45, 44, 43, 41.5, 40.5, 39, 37, 32),
+  NLat = c(48.5, 46.5, 45, 44, 43, 41.5, 40.1666667, 39, 37),
+  SLat = c(46.5, 45, 44, 43, 41.5, 40.1666667, 39, 37, 32),
   MinDepth = rep(54.864, nn),
   MaxDepth = rep(1280, nn)
   )
