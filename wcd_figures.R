@@ -1,3 +1,8 @@
+#' ----
+#' Title: Plots for west coast drivers
+#' Author: Kelli Faye Johnson
+#' Date: 2016-01-14
+#' ----
 ###############################################################################
 #### Figure: sablefishlandings
 ####
