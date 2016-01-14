@@ -38,6 +38,16 @@ my.spp <- c("sablefish",
 resolution <- 100
 width <- 700
 height <- width
+theme <-   theme_bw() +
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        strip.background = element_blank(),
+        panel.border = element_rect(colour = "black"),
+        legend.key = element_rect(colour = "white"),
+        legend.title = element_text(size = 7, face = "bold"),
+        legend.text = element_text(size = 7, face = "bold")
+  )
 
 #' Packages
 #' Set the CRAN mirror and install packages that are not currently installed
