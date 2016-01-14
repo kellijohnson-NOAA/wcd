@@ -24,6 +24,7 @@ file.index <- "index.csv"
 file.econ <- "econ4osu2009-2013.xlsx"
 file.alloc <- "wcd_allocation.xlsx"
 file.tac <- "wc_tac_v3.csv"
+file.land <- "catchbyyearfleet.csv"
 file.script <- file.path(dir.data, "saveAllTabsAsCSV.vbs")
 ignore <- mapply(source, list.files("R", full.names = TRUE))
 
@@ -52,7 +53,8 @@ theme <-   theme_bw() +
 #' Packages
 #' Set the CRAN mirror and install packages that are not currently installed
 options("repos" = "http://R-Forge.R-project.org")
-pckg.need <- c("devtools", "gamboostLSS", "gamlss", "ggmap", "ggplot2", "grid",
+pckg.need <- c("devtools", "gamboostLSS", "gamlss",
+  "ggdendro", "ggmap", "ggplot2", "grid",
   "knitr", "nwfscDeltaGLM", "raster", "xtable")
 for (pckg in pckg.need[!pckg.need %in% installed.packages()[, "Package"]]){
   if (pckg %in% c("nwfscDeltaGLM")) {
@@ -73,5 +75,6 @@ risk <- c("Washington" = 4, "San Francisco and Bodega Bay" = 2,
 #' Source working files
 source("wcd_readdata.R")
 source("wcd_map.R")
+source("wcdwcd_cluster.R")
 source("wcd_survey.R")
 source("wcd_model.R")
