@@ -58,6 +58,7 @@ if (!file.exists(filetotest)) {
 }
 data.tac.after <- read.csv(filetotest)
 data.tac.before <- read.csv(file.path(dir.data, file.tac))
+data.acl <- read.csv(file.acl)
 data.landbygear <- read.csv(file.land)
 
 ###############################################################################

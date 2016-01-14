@@ -24,6 +24,7 @@ file.index <- "index.csv"
 file.econ <- "econ4osu2009-2013.xlsx"
 file.alloc <- "wcd_allocation.xlsx"
 file.tac <- "wc_tac_v3.csv"
+file.acl <- "pfmc_ACL_Sablefish.csv"
 file.land <- "catchbyyearfleet.csv"
 file.script <- file.path(dir.data, "saveAllTabsAsCSV.vbs")
 ignore <- mapply(source, list.files("R", full.names = TRUE))
