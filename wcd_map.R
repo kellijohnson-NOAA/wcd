@@ -44,17 +44,6 @@ us.bbox <- bbox(us.states)
 xlim <- c(min(us.bbox[1, 1]) * 1.02, max(us.bbox[1, 2]))
 ylim <- c(min(us.bbox[2, 1]) * 0.98, max(us.bbox[2, 2]))
 
-#### ggplot theme
-theme <-   theme_bw() +
-  theme(plot.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        strip.background = element_blank(),
-        panel.border = element_rect(colour = "black"),
-        legend.key = element_rect(colour = "white"),
-        legend.title = element_text(size = 7, face = "bold"),
-        legend.text = element_text(size = 7, face = "bold")
-  )
 
 p <- ggplot() +
   theme +
