@@ -44,7 +44,7 @@ plots <- c(list(
     geom_rect(data = rect, aes(xmin = X1 - 0.3,
       xmax = X2 + 0.3, ymin = 0, ymax = ymax),
       color = "black", fill = NA, lty = 2),
-  fviz_nbclust(props, hcut, method = "wss") +
+  fviz_nbclust(props, hcut, method = "wss", linecolor = "black") +
     theme +
     geom_vline(xintercept = 3, linetype = 2) +
     ylab("Total w/i SS") +
