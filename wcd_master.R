@@ -40,16 +40,6 @@ my.spp <- c("sablefish",
 resolution <- 100
 width <- 700
 height <- width
-theme <-   theme_bw() +
-  theme(plot.background = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        strip.background = element_blank(),
-        panel.border = element_rect(colour = "black"),
-        legend.key = element_rect(colour = "white"),
-        legend.title = element_text(size = 7, face = "bold"),
-        legend.text = element_text(size = 7, face = "bold")
-  )
 
 #' Packages
 #' Set the CRAN mirror and install packages that are not currently installed
@@ -66,6 +56,18 @@ for (pckg in pckg.need[!pckg.need %in% installed.packages()[, "Package"]]){
 for (pckg in pckg.need) {
   library(pckg, character.only = TRUE, quietly = !verbose, verbose = verbose)
 }
+
+#' Create ggplot theme
+theme <-   theme_bw() +
+  theme(plot.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        strip.background = element_blank(),
+        panel.border = element_rect(colour = "black"),
+        legend.key = element_rect(colour = "white"),
+        legend.title = element_text(size = 7, face = "bold"),
+        legend.text = element_text(size = 7, face = "bold")
+  )
 
 #' Risk pool measure
 #' Using a literature search the following level of risk pool participation
