@@ -6,83 +6,78 @@
 
 #' order of port groups
 portgrouporder <- c(9, 1, 7, 3, 2, 4, 5, 8, 6)
+
+#' read in index of abundance data
 data.index <- read.csv(file.path(dir.results, file.index))
 data.index$strat <- factor(data.index$strat, levels(data.index$strat),
   levels(data.cost$portgrp)[portgrouporder])
 colnames(data.index)[which(colnames(data.index) == "strat")] <- "portgrp"
 good <- c("portgrp", "year", "GEAR")
-#' Scale down the index data by 1000
-docolumns <- !colnames(data.index) %in% c("year", "portgrp")
-data.index[, docolumns] <- data.index[, docolumns] / 1000000
 
-colnames(data.cost)[which(colnames(data.cost) == "YEAR")] <- "year"
-data.cost <- split(data.cost, data.cost$GEAR)$Trawl
-days.days <- split(data.days, data.days$GEAR)$Trawl
+#' Change from -999 to NA and fix "year" column name
 data.cost[data.cost == -999] <- NA
 data.days[data.days == -999] <- NA
+colnames(data.cost)[1] <- tolower(colnames(data.cost))[1]
 colnames(data.days)[1] <- tolower(colnames(data.days))[1]
 colnames(data.netrev)[1] <- tolower(colnames(data.netrev))[1]
 
+#' Subset the landings information for sablefish
+data.md <- data.land[data.land$SPGRP == "Sablefish", ]
+colnames(data.md) <- gsub("^X", "", colnames(data.md))
+
+#' Switch landings information from wide to long
+data.md <- reshape(data.md, direction = "long",
+  varying = list(which(colnames(data.md) %in% my.years)),
+  v.names = "land",
+  times = my.years, timevar = "year",
+  new.row.names = 1:1000000, drop = "SPGRP")[, -5]
+
+#' switch revenue information from wide to long
+data.rev <- data.rev[data.rev$SPGRP == "Sablefish", ]
+colnames(data.rev) <- gsub("^X", "", colnames(data.rev))
+data.rev <- reshape(data.rev, direction = "long",
+  varying = list(which(colnames(data.rev) %in% my.years)),
+  v.names = "revenue",
+  times = my.years, timevar = "year",
+  new.row.names = 1:1000000, drop = "SPGRP")[, -5]
+data.rev$revenue[data.rev$revenue == -999] <- NA
+
+#' Add in port groups with zero landings
+all <- expand.grid(unique(data.md$portgrp),
+  unique(data.md$year), unique(data.md$GEAR))
+colnames(all) <- c("portgrp", "year", "GEAR")
+data.md <- merge(data.md, all, all.y = TRUE)
+rm(all)
+data.md$land[is.na(data.md$land)] <- 0
+data.md$land[data.md$land == -999] <- NA
+
+#' Create the management variable
+data.md$management <- ifelse(as.character(data.md$year) <= 2010,
+  "before", "after")
+
 #' Calculate the proportion of landings from the trawl fishery as compared
 #' to fixed gear from the landings data supplied by EDC
-data.md <- subset(data.land, SPGRP == "Sablefish")
-data.md <- data.md[, -which(colnames(data.md) == "SPGRP")]
-data.md <- reshape(data.md, direction = "long",
-  varying = grep("X", colnames(data.md)), v.names = "land",
-  times = gsub("X", "", grep("X", colnames(data.md), value = TRUE)))
-colnames(data.md)[colnames(data.md) == "time"] <- "year"
-mode(data.md$year) <- "numeric"
-data.md <- data.md[, -which(colnames(data.md) == "id")]
-data.md$land[data.md$land == -999] <- NA
-data.md$management <- ifelse(as.character(data.md$year) <= 2010, "before", "after")
-rownames(data.md) <- NULL
-#' Proportion
-data.md$proportion <- NA
-for(yr in unique(data.md$year)) {
-  subs <- subset(data.md, year == yr)
-  # Make sure trawl and fixed gear exist
-  for (pg in levels(subs$portgrp)) {
-    temp <- subset(subs, portgrp == pg)
-    if (NROW(temp) == 1) {
-      use <- ifelse(temp$GEAR == "Trawl", "Fixed gear", "Trawl")
-      subs <- rbind(subs, c(pg, use, temp$year, 0, temp$management, NA))
-    }
-  }
-  mode(subs$land) <- "numeric"
-  sums <- tapply(subs$land, subs[, c("portgrp", "GEAR")], sum)
-  sums <- t(apply(sums, 1, function(x) x/sum(x)))
-  matches <- match(paste0(yr, rownames(sums), "Trawl"),
-    apply(data.md[, c("year", "portgrp", "GEAR")], 1, paste, collapse = ""))
-  data.md[matches, "proportion"] <- sums[, "Trawl"]
-}
-data.md <- subset(data.md, GEAR == "Trawl")
+temp <- aggregate(land ~ year + portgrp, data = data.md, function(x) {
+  x[2] / sum(x) })
+colnames(temp)[colnames(temp) == "land"] <- "proportion"
+temp$GEAR <- "Trawl"
+data.md <- merge(data.md, temp)
+rm(temp)
+data.md <- data.md[data.md$GEAR == "Trawl", ]
 
-data.md <- cbind(data.md, data.index[match(paste0(data.md$portgrp, data.md$year),
-  paste0(data.index$portgrp, data.index$year)), -c(1:2)])
-
-data.md <- merge(data.md, long(data.rev, colname = "revenue", change = NA),
-  by = good, all.x = TRUE)
+#' bring in the other data
+data.md <- merge(data.md, data.index)
+data.md <- merge(data.md, data.rev, all.x = TRUE)
 data.md <- merge(data.md, data.cost,   by = good, all.x = TRUE)
 data.md <- merge(data.md, data.days,   by = good, all.x = TRUE)
 data.md <- merge(data.md, data.netrev, by = good, all.x = TRUE)
 mode(data.md$Speed) <- "numeric"
+data.md <- data.md[, -which(colnames(data.md) == "Number.of.vessels.y")]
+data.md[data.md == -999] <- NA
 
-#### Add in acl data
-head(data.md)
-head(data.acl)
-test <- merge(data.md, data.acl, by.x = "year", by.y = "Year")
-test$y <- test$land / (test$letrawl * 2204.62)
-hist(test$y)
-qqnorm(test$y)
-qqplot(rnorm(1000), test$y, main = "standard normal Q-Q Plot",
-   ylab = "Sample Quantiles")
-qqline(test$y)
-
-betafit <- MASS::fitdistr(test$y[!is.na(test$y)], "beta", start = list(shape1 = 0.5, shape2 = 0.5))
-qqplot(rbeta(1000, betafit$estimate[1], betafit$estimate[2]),
-  test$y, xlab = "Beta quantiles", ylab = "Sample Quantiles")
-abline(0, 1)
-
+#' add acl data
+data.md <- merge(data.md, data.acl, by.x = "year", by.y = "Year")
+data.md$letprop <- data.md$land / (data.md$letrawl * 2204.62)
 
 ###############################################################################
 ###############################################################################
@@ -91,25 +86,12 @@ abline(0, 1)
 #' -3 to 3.
 ###############################################################################
 ###############################################################################
-nona <- droplevels(subset(data.md, !is.na(proportion)))
+nona <- droplevels(subset(data.md, !is.na(proportion) &
+  portgrp != "Monterey and Morro Bay"))
 nona$management <- factor(nona$management, levels = c("before", "after"))
-####
-#' report results before z scoring
-econstuff <- aggregate(
-  cbind(Fixed.costs, Variable.costs, Crew, Fuel, Speed) ~ portgrp,
-  data = data.md, mean)
-econstuff <- cbind(aggregate(proportion ~ portgrp, nona, length),
-  econstuff[, -1])
-econstuff <- econstuff[portgrouporder, ]
-colnames(econstuff) <- gsub("proportion", "n", colnames(econstuff))
-colnames(econstuff) <- gsub("\\.", " ", colnames(econstuff))
-colnames(econstuff) <- gsub("grp", " group", colnames(econstuff))
 
-sink(file.path(dir.results, "econ.tex"))
-print(xtable(econstuff, digits = 2), include.rownames = FALSE)
-sink()
-system(paste("pandoc", file.path(dir.results, "econ.tex"), "-o", file.path(dir.results, "econ.docx")))
-####
 initialcol <- grep("proportion", colnames(nona))
-nona[, (initialcol + 1):NCOL(nona)] <-
-  apply(nona[, -c(1:initialcol)], 2, function(x) (x - mean(x)) / sd(x))
+finalcol <- grep("VarCostNetRev", colnames(nona))
+nona[, (initialcol + 1):finalcol] <-
+  apply(nona[, (initialcol + 1):finalcol], 2,
+  function(x) (x - mean(x)) / sd(x))
