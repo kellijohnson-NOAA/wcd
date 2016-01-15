@@ -95,8 +95,10 @@ indexlong$species[indexlong$species == "Pacific"] <- "POP"
 levels(data.cost$portgrp)[c(9, 1, 7, 3, 2, 4, 5, 8, 6)]
 
 pp <- ggplot() + theme +
-  geom_line(data = subset(indexlong, year %in% 2009:2013),
+  geom_line(data = subset(indexlong, year %in% 2009:2013 &
+    strat != "I"),
     aes(x = year, y = weight)) +
+  ylab("relative index of abundance") +
   facet_grid(species ~ strat, scales = "free") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.2))
 ggsave(filename = "indexlines.png", pp, path = dir.results, scale = 1,
