@@ -35,6 +35,7 @@ verbose <- TRUE
 # exclude cowcod bc RCAs are successful in eliminating bycatch
 my.spp <- c("sablefish",
   "bocaccio", "darkblotched.rockfish", "Pacific.ocean.perch", "yelloweye.rockfish")
+my.years <- 2009:2013
 
 # Plot
 resolution <- 100
@@ -44,9 +45,9 @@ height <- width
 #' Packages
 #' Set the CRAN mirror and install packages that are not currently installed
 options("repos" = "http://R-Forge.R-project.org")
-pckg.need <- c("devtools", "gamboostLSS", "gamlss",
+pckg.need <- c("devtools", "factoextra", "gamboostLSS", "gamlss",
   "ggdendro", "ggmap", "ggplot2", "grid",
-  "knitr", "nwfscDeltaGLM", "raster", "xtable")
+  "knitr", "nwfscDeltaGLM", "raster", "vegan", "xtable")
 for (pckg in pckg.need[!pckg.need %in% installed.packages()[, "Package"]]){
   if (pckg %in% c("nwfscDeltaGLM")) {
     devtools::install_github("nwfsc-assess/nwfscDeltaGLM", ref = "1.0.0")
