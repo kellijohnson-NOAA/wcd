@@ -22,15 +22,21 @@ sheet.surveydata <- "HaulCatchWt&Effort"
 #+ setup
 mcmc.control <- list(chains = 5, thin = 100, burnin = 5000, iterToSave = 2000)
 parallel <- FALSE
+
 # Set up strata
-nn <- 9
+tops <- c(49.0, 46.0, 43, 40)
+bottoms <- c(tops[-1], 34.5)
+#' in fathoms -> m
+depths <- c(30, 100, 300, 700) * 1.8288
+
 strata.limits <- data.frame(
-  STRATA = LETTERS[1:nn],
-  NLat = c(48.5, 46.5, 45, 44, 43, 41.5, 40.1666667, 39, 37),
-  SLat = c(46.5, 45, 44, 43, 41.5, 40.1666667, 39, 37, 32),
-  MinDepth = rep(54.864, nn),
-  MaxDepth = rep(1280, nn)
+  STRATA = LETTERS[1:(length(tops) * (length(depths) - 1))],
+  NLat = rep(tops, each = length(depths) - 1),
+  SLat = rep(bottoms, each = length(depths) - 1),
+  MinDepth = rep(depths[-length(depths)], length(tops)),
+  MaxDepth = rep(depths[-1], length(tops))
   )
+
 nX.pos <- nX.binomial <- 1
 Covariates = list(positive = TRUE, binomial = TRUE)
 
