@@ -110,7 +110,7 @@ points(below, rep( par("usr")[3], length(below)), pch = 19,
 dev.off()
 
 #' Multidimensional scaling analysis
-nmds <- metaMDS(log(fed[, c("HKL", "POT", "TWL")]), k = 2,
+nmds <- metaMDS(props[, c("HKL", "POT", "TWL")], k = 2,
   wascores = TRUE, autotransform = FALSE)
 
 png(file.path(dir.results, "nmds.png"),
@@ -120,5 +120,3 @@ orditorp(nmds, display = "species", col = "black", air = 0.01, cex = 1.5)
 orditorp(nmds, display = "sites", col = "black", air = 0.01)
 abline(v = 0, h = 0, lty = 2)
 dev.off()
-
-plot(hclust())
