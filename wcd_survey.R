@@ -139,14 +139,12 @@ setwd(my.dir)
 
 write.csv(index, file.path(dir.results, file.index), row.names = FALSE)
 index_long <- reshape(data = index, direction = "long", varying = colnames(index)[3:NCOL(index)],
-  times = colnames(index)[3:NCOL(index)], timevar = "species", v.names = "index",
-  new.row.names = 1:1000000000000000)
+  times = colnames(index)[3:NCOL(index)], timevar = "species",
+  v.names = "index")
 
 index_long$species <- factor(index_long$species, levels = unique(index_long$species),
   labels = tolower(gsub("\\.", " ", unique(index_long$species))))
-index_long$strat <- factor(index_long$strat, levels = unique(index_long$strat),
-  labels = c("Washington", "Astoria", "Newport", "Coos Bay", "Brookings", "Eureka", "Fort Bragg",
-             "San Francisco", "Monterey"))
+
 png(file.path(dir.results, "index_speciesbystrata.png"),
   width = width * 2, height = height, res = resolution)
 ggplot(index_long, aes(x = year, y = index, group = strat)) +
