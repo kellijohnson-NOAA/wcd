@@ -78,6 +78,8 @@ index <- data.frame(
 oldvariables <- c(ls(), "oldvariables", "sp")
 
 for (sp in seq_along(my.spp)) {
+  if (my.spp[sp] == "yelloweye.rockfish") next
+
   # Remove all of the variables created while running a model
   rm(list = ls()[!ls() %in% oldvariables])
 data.keep$HAUL_WT_KG <- data.keep[, which(colnames(data.keep) == my.spp[sp])]
