@@ -75,10 +75,17 @@ index <- data.frame(
 ###############################################################################
 ###############################################################################
 #+ mods
+strata.all <- strata.limits
 oldvariables <- c(ls(), "oldvariables", "sp")
 
 for (sp in seq_along(my.spp)) {
   if (my.spp[sp] == "yelloweye.rockfish") next
+
+  if (max(data.srvy[data.srvy[, my.spp[sp]] > 0, "BEST_DEPTH_M"]) <
+    tail(depths, 2)[1]) {
+    strata.limits <-
+      strata.limits[strata.limits$MaxDepth != max(strata.limits$MaxDepth), ]
+  }
 
   # Remove all of the variables created while running a model
   rm(list = ls()[!ls() %in% oldvariables])
@@ -137,6 +144,7 @@ index[match(paste(indexspp$Year, indexspp$Strata), paste(index$year, index$strat
 
 detach(chooseDat)
 setwd(my.dir)
+strata.limits <- strata.all
 }
 
 write.csv(index, file.path(dir.results, file.index), row.names = FALSE)
