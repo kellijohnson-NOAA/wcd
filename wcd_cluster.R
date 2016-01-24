@@ -6,7 +6,7 @@
 #' Read in the catch data as provided for the stock assessment
 #' Catches are grouped according to gear that was used while fishing
 #' not permit type held while fishing.
-catch <- read.csv(file.path(dir.data, "catchbyyearfleet.csv"))
+catch <- read.csv(file.path(dir.data, file.land))
 catch <- aggregate(catch ~ year + fleet, data = catch, sum)
 catch <- reshape(catch, direction = "wide", timevar = "fleet", idvar = "year")
 colnames(catch) <- gsub("catch\\.", "", colnames(catch))
@@ -37,7 +37,7 @@ clust.df <- data.frame(label = rownames(props), cluster = factor(clust))
 
 dendr <- dendro_data(mod)
 dendr$labels <- merge(dendr$"labels", clust.df, by = "label")
-rect <- aggregate(x ~ cluster, label(dendr), range)
+rect <- aggregate(x ~ cluster, dendr$labels, range)
 rect <- data.frame(rect$cluster, rect$x)
 ymax <- mean(mod$height[length(mod$height) - ((k - 2):(k - 1))])
 
