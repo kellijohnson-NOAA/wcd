@@ -54,6 +54,14 @@ p <- ggplot() +
   xlim(xlim) + ylim(ylim) + xlab("") + ylab("")
 
 #### Start individual maps
+
+###############################################################################
+###############################################################################
+#### Plot of raw survey data for each species, including those not included
+#### in the model for relative indexes of abundance due to lack of data.
+####
+####
+###############################################################################
 ###############################################################################
 pp <- p +
   geom_point(data = data.plot,
@@ -70,6 +78,13 @@ ggsave(filename = "abundance.png", pp, path = dir.results,
   dpi = 300, limitsize = TRUE)
 ###############################################################################
 
+###############################################################################
+###############################################################################
+#### Plot of study area with the strata for relative indexes of abundance
+#### marked with dashed lines and the strata for sablefish management
+#### marked with a solid line. Each included city in the port groups are
+#### also listed.
+###############################################################################
 ###############################################################################
 pp <- p +
   theme(legend.position = "none",
@@ -103,21 +118,27 @@ dev.off()
 ###############################################################################
 
 ###############################################################################
+###############################################################################
+#### Plot of relative index of abundance by species for each year included
+#### in the driver model. Species are summed across depth within a latitudinal
+#### strata.
+#### Todo: Add confidence intervals and raw fits
+###############################################################################
+###############################################################################
+temp <- my.spp[my.spp %in% colnames(data.yrin)[-c(1:2)]]
 indexlong <- reshape(data.yrin,
-  direction = "long", varying = my.spp, v.name = "weight",
-  timevar = "species", times = my.spp)
+  direction = "long", varying = temp, v.name = "weight",
+  timevar = "species", times = temp)
 rownames(indexlong) <- NULL
 indexlong$species <- sapply(strsplit(indexlong$species, "\\."), "[", 1)
 indexlong$species[indexlong$species == "Pacific"] <- "POP"
-# Print correct levels for letters
-levels(data.cost$portgrp)[c(9, 1, 7, 3, 2, 4, 5, 8, 6)]
 
 pp <- ggplot() + theme +
   geom_line(data = subset(indexlong, year %in% 2009:2013 &
     strat != "I"),
     aes(x = year, y = weight)) +
   ylab("relative index of abundance") +
-  facet_grid(species ~ strat, scales = "free") +
+  facet_grid(species ~ strat, scales = "fixed") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.2))
 ggsave(filename = "indexlines.png", pp, path = dir.results, scale = 1,
   dpi = 300, limitsize = TRUE)
