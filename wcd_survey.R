@@ -85,6 +85,7 @@ for (sp in seq_along(my.spp)) {
     tail(depths, 2)[1]) {
     strata.limits <-
       strata.limits[strata.limits$MaxDepth != max(strata.limits$MaxDepth), ]
+      strata.limits$STRATA <- LETTERS[1:NROW(strata.limits)]
   }
 
   # Remove all of the variables created while running a model
@@ -131,6 +132,9 @@ DIC <- as.data.frame(DIC)
 write.csv(DIC, file = file.path(dir.results, my.spp[sp], "DIC.csv"))
 bestmod <- which(DIC$DeltaDIC == 0)
 
+strata.limits <- merge(strata.all, strata.limits,
+  by = colnames(strata.limits)[-1], all.x = TRUE)
+
 files2get <- list.files(pattern = "ResultsByYearAndStrata\\.csv",
   all.files = TRUE, recursive = TRUE, full.names = TRUE)
 indexbyyear <- do.call("rbind", lapply(files2get, function(x) {
@@ -139,19 +143,33 @@ indexbyyear <- do.call("rbind", lapply(files2get, function(x) {
   return(results)
 }))
 indexspp <- subset(indexbyyear, model == bestmod)
-index[match(paste(indexspp$Year, indexspp$Strata), paste(index$year, index$strat)), my.spp[sp]] <-
-  indexspp$IndexMedian
+head(strata.limits)
+indexspp$Strata <- strata.limits$STRATA.x[
+  match(indexspp$Strata, strata.limits$STRATA.y)]
+index <- merge(index[, c("year", "strat")],
+  indexspp[, c("Year", "Strata", "IndexMedian")])
+colnames(index)[NCOL(index)] <- my.spp[sp]
 
 detach(chooseDat)
 setwd(my.dir)
 strata.limits <- strata.all
 }
 
-write.csv(index, file.path(dir.results, file.index), row.names = FALSE)
+#' Write the index data to the disk
+write.csv(index, file.path(dir.results,
+  gsub("\\.csv", "_withdepth\\.csv", file.index)), row.names = FALSE)
+
+temp <- index
+levels(temp$strat) <- rep(LETTERS[1:length(unique(strata.limits$NLat))],
+  each = length(unique(strata.limits$MaxDepth)))
+temp <- aggregate(as.matrix(cbind(temp[, -c(1:2)])) ~ year + strat,
+  data = temp, sum)
+write.csv(temp, file.path(dir.results, file.index), row.names = FALSE)
+
+#' Plot index data by strata and then without depth but still by strata
 index_long <- reshape(data = index, direction = "long", varying = colnames(index)[3:NCOL(index)],
   times = colnames(index)[3:NCOL(index)], timevar = "species",
   v.names = "index")
-
 index_long$species <- factor(index_long$species, levels = unique(index_long$species),
   labels = tolower(gsub("\\.", " ", unique(index_long$species))))
 
@@ -167,3 +185,22 @@ ggplot(index_long, aes(x = year, y = index, group = strat)) +
     panel.border = element_rect(colour = "black"),
     axis.text.x = element_text(angle = 45, hjust = 1))
 dev.off()
+
+png(file.path(dir.results, "index_speciesbystrata_nodepth.png"),
+  width = width, height = height, res = resolution)
+temp <- index_long
+levels(temp$strat) <- rep(LETTERS[1:length(unique(strata.limits$NLat))],
+  each = length(unique(strata.limits$MaxDepth)))
+temp <- aggregate(index ~ year + species + strat, data = temp, sum)
+
+ggplot(temp, aes(x = year, y = index, group = strat)) +
+  geom_line() + geom_point() +
+  facet_grid(species ~ strat, scales = "free") +
+  ylab("relative index of abundance") +
+  theme_bw() +
+  theme(plot.background = element_blank(), panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(), strip.background = element_blank(),
+    panel.border = element_rect(colour = "black"),
+    axis.text.x = element_text(angle = 45, hjust = 1))
+dev.off()
+rm(temp)
