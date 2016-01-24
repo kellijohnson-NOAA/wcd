@@ -36,6 +36,9 @@ verbose <- TRUE
 my.spp <- c("sablefish",
   "bocaccio", "darkblotched.rockfish", "Pacific.ocean.perch", "yelloweye.rockfish")
 my.years <- 2009:2013
+my.portgroups <- c("Washington", "Astoria and Tillamook",
+  "Newport", "Coos Bay", "Brookings and Crescent City", "Eureka",
+  "Forg Bragg", "San Francisco and Bodega Bay")
 
 # Plot
 resolution <- 100
