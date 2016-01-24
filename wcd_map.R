@@ -7,8 +7,12 @@
 small <- 0.10
 
 #### Data
-getstrata <- eval(parse(text = gsub(",$", "",
-  grep("SLat", readLines("wcd_survey.R"), value = TRUE))))
+getstrata <- eval(parse(text =
+  grep("tops <-", readLines("wcd_survey.R"), value = TRUE)))
+getstrata <- unique(c(getstrata, gsub(")", "",
+  strsplit(grep("bottoms <-", readLines("wcd_survey.R"),
+  value = TRUE), ", ")[[1]][2])))
+mode(getstrata) <- "numeric"
 data.yrin <- read.csv(file.path(dir.results, file.index))
 
 data.plot <- data.srvy
@@ -73,11 +77,25 @@ pp <- p +
   geom_path(data = us.states, aes(x = long, y = lat, group = group), size = small) +
   geom_path(data = ca.provinces, aes(x = long, y = lat, group = group), size = small) +
   coord_map() +
-  geom_hline(yintercept = getstrata[-length(getstrata)], lty = 2) +
-  annotate("text", x = -122.2, y = 40.410, label = "Cape Mendocino", size = 3) +
-  annotate("text", x = -122.9, y = 42.833, label = "Cape Blanco", size = 3) +
-  annotate("text", x = -125.5, y = getstrata + 0.5,
-           label = paste0("(", letters[1:9], ")"), size = 3)
+  geom_hline(yintercept = getstrata, lty = 2) +
+  geom_hline(yintercept = 36.0, lty = 1) +
+  annotate("text", x = -126.2, y = 36.000, label = "sablefish N\nsablefish S", size = 3) +
+  annotate("text", x = -126.2, y = 46.100, label = "Astoria\nCanyon", size = 3) +
+  annotate("text", x = -126.2, y = 43.090, label = "Cape\nBlanco", size = 3) +
+  annotate("text", x = -126.2, y = 40.100, label = "Cape\nMendocino", size = 3) +
+  annotate("text", x = -126.2, y = 34.450, label = "Point\nConception", size = 3) +
+  annotate("text", x = -122.7, y = 46.189, label = "Astoria", size = 3) +
+  annotate("text", x = -122.7, y = 45.455, label = "Tillamook", size = 3) +
+  annotate("text", x = -123.0, y = 44.600, label = "Newport", size = 3) +
+  annotate("text", x = -123.0, y = 43.376, label = "Coos Bay", size = 3) +
+  annotate("text", x = -123.0, y = 42.058, label = "Brookings", size = 3) +
+  annotate("text", x = -122.7, y = 41.756, label = "Crescent City", size = 3) +
+  annotate("text", x = -123.0, y = 40.802, label = "Eureka", size = 3) +
+  annotate("text", x = -122.7, y = 39.446, label = "Fort Bragg", size = 3) +
+  annotate("text", x = -121.8, y = 38.324, label = "Bodega Bay", size = 3) +
+  annotate("text", x = -120.8, y = 37.783, label = "San Francisco", size = 3) +
+  annotate("text", x = -120.8, y = 36.600, label = "Monterey", size = 3) +
+  annotate("text", x = -119.8, y = 35.379, label = "Morro Bay", size = 3)
 ggsave(filename = "strata.png", pp, path = dir.results, scale = 1,
   width = par("din")[1], height = par("din")[2], units = "in",
   dpi = 300, limitsize = TRUE)
