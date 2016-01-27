@@ -22,38 +22,44 @@ test$year <- factor(test$year)
 #'   corresponding to more smoothing and weaker base-learners
 df <- 3
 knots <- 20
-stop <- 25
+stop <- 7
 model1 <- gamboostLSS(
   formula = letprop ~
       # bols(INT, intercept = FALSE) +
       # bols(management, portgrp, intercept = FALSE) +
       bols(management, intercept = FALSE) +
       bols(portgrp, intercept = TRUE) +
-      brandom(year, df = 4) +
-      bbs(Crew, df = df, knots = knots) +
-      # bbs(Days, df = df, knots = knots) +
-      bols(Days, intercept = FALSE) +
+      brandom(year, df = df) +
+      bbs(buyercount, df = df, knots = knots) +
       bbs(Fixed.costs, df = df, knots = knots) +
-      bbs(Fuel, df = df, knots = knots) +
-      # bbs(Number.of.vessels.x, df = df, knots = knots) +
-      bols(Number.of.vessels.x, intercept = FALSE) +
-      bbs(Speed, df = df, knots = knots) +
       bbs(Variable.costs, df = df, knots = knots) +
+      bols(Number.of.vessels.x, intercept = FALSE) +
+      # bbs(Number.of.vessels.x, df = df, knots = knots) +
+      # bols(Crew, intercept = FALSE) +
+      bbs(Crew, df = df, knots = knots) +
+      bbs(Fuel, df = df, knots = knots) +
+      bbs(Speed, df = df, knots = knots) +
+      # bols(Days, intercept = FALSE) +
+      bbs(Days, df = df, knots = knots) +
+      bbs(FuelCapacity, df = df, knots = knots) +
+      bbs(HorsePower, df = df, knots = knots) +
+      bbs(Length, df = df, knots = knots) +
       bbs(bocaccio, df = df, knots = knots) +
       bbs(darkblotched.rockfish, df = df, knots = knots) +
       bbs(Pacific.ocean.perch, df = df, knots = knots) +
-      bbs(sablefish, df = df, knots = knots) +
-      # bols(sablefish, intercept = FALSE) +
-      bbs(yelloweye.rockfish, df = df, knots = knots),
+      bbs(sablefish, df = df, knots = knots),
   families = BetaLSS(),
   data = test,
-  control = boost_control(mstop = stop))
+  control = boost_control(mstop = c(mu = stop, phi = stop)))
 
 model1$mu$offset
 model1$phi$offset
 
+ylim <- c(0, 0.3)
 pdf(file.path(dir.results, "model1.pdf"))
 plot(model1)
+plot(predint(model1, pi = c(0.90), which = "Number.of.vessels.x"), ylim = ylim)
+plot(predint(model1, pi = c(0.90), which = "Crew"), ylim = ylim)
 dev.off()
 
 ###############################################################################
@@ -62,7 +68,10 @@ dev.off()
 ###############################################################################
 ###############################################################################
 temp <- data.frame(
-  "port group" = unique(test$portgrp),
+  "port group" = gsub("\\(Intercept\\)",
+    my.portgroups[order(my.portgroups)][1],
+    gsub("portgrp", "",
+    names(coef(model1, which = "portgrp", parameter = "mu")[[1]]))),
   "mu" = coef(model1, which = "portgrp", parameter = "mu")[[1]],
   "phi" = coef(model1, which = "portgrp", parameter = "phi")[[1]])
 temp <- temp[portgrouporder[-length(portgrouporder)] - 1, ]
@@ -76,54 +85,19 @@ system(paste("pandoc", file.path(dir.results, "gam_portgroup.tex"), "-o",
 
 ###############################################################################
 ###############################################################################
-#### year
-###############################################################################
-###############################################################################
-temp <- coef(model1, which = "year", parameter = "mu")$brandom
-temp <- data.frame("year" = gsub("year", "", names(temp)),
-  "random effect" = temp)
-sink(file.path(dir.results, "gam_year.tex"))
-print(xtable(temp, digits = 7), include.rownames = FALSE,
-  sanitize.text.function=function(x){x})
-sink()
-system(paste("pandoc", file.path(dir.results, "gam_year.tex"), "-o",
-  file.path(dir.results, "gam_year.docx")))
-
-#' plot of port group mu and phi
-# par(mfrow = c(2, 1), mar = c(0, 4.5, 7, 1), col.axis = "white",
-#   tck = 0, las = 1, oma = c(0, 0, 0, 0), xpd = NA)
-# plot(model1, which = "portgrp", parameter = "mu",
-#   cex.lab = 0.01, xlab = "")
-# par(mar = c(7, 4.5, 0, 1), col.axis = "black", tck = -0.02)
-# axis(2)
-# par(col.axis = "white", tck = 0, las = 1)
-# plot(model1, which = "portgrp", parameter = "phi", xlab = "")
-# par(col.axis = "black", tck = -0.02, las = 1)
-# axis(1, at = 1:length(levels(test$portgrp)), labels = FALSE,
-#   outer = TRUE)
-# text(x = 1:length(levels(test$portgrp)),
-#   y = par()$usr[3] - 0.1 * (par()$usr[4] - par()$usr[3]),
-#   labels = levels(test$portgrp), srt = 25, adj = 1, xpd = TRUE,
-#   cex = 0.75)
-# axis(2)
-# mtext(side = 1, line = 5.5, "port group", cex = 0.75)
-
-###############################################################################
-###############################################################################
 #### mu
 ###############################################################################
 ###############################################################################
-png(file.path(dir.results, "gam_mu.png"), width = width,
+png(file.path(dir.results, "gam_marginalprediction.png"), width = width,
   height = height * 1.15, res = resolution)
-par(mfrow = c(3, 1), mar = c(2, 3, 0.5, 1), las = 1, oma = c(1, 0, 0, 0))
-plot(model1, which = "Fixed.costs", parameter = "mu", xlab = "",
-  main = "", ylab = "")
-legend("topright", "fixed costs", bty = "n")
-plot(model1, which = "Fuel", parameter = "mu",
-  xlab = "", main = "", ylab = "")
-legend("topright", "fuel", bty = "n")
-plot(model1, which = "darkblotched.rockfish", parameter = "mu",
-  xlab = "", main = "", ylab = "")
-legend("topright", "darkblotched.rockfish", bty = "n")
+par(mfrow = c(2, 1), mar = c(1, 4, 0.2, 0.1), oma = c(1, 1, 0.1, 0.1),
+  xpd = TRUE)
+plot(predint(model1, pi = c(0.90), which = "Number.of.vessels.x"),
+  xlim = c(-2, 3), ylim = c(0, 0.35), yaxs = "i", las = 1,
+  ylab = "attainment", xlab = "", main = "", xaxt = "n")
+legend("topright", "number of vessels", bty = "n")
+plot(predint(model1, pi = c(0.90), which = "Crew"),
+  xlim = c(-2.5, 3), ylim = c(0, 0.35), yaxs = "i",
+  ylab = "attainment", xlab = "", main = "", las = 1)
+legend("topright", "crew size excluding captain", bty = "n")
 dev.off()
-

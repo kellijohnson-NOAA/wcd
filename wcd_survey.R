@@ -196,12 +196,13 @@ temp <- aggregate(index ~ year + species + strat, data = temp, sum)
 
 ggplot(temp, aes(x = year, y = index, group = strat)) +
   geom_line() + geom_point() +
-  facet_grid(species ~ strat, scales = "free") +
+  facet_grid(species ~ strat, scales = "fixed") +
   ylab("relative index of abundance") +
   theme_bw() +
   theme(plot.background = element_blank(), panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(), strip.background = element_blank(),
     panel.border = element_rect(colour = "black"),
-    axis.text.x = element_text(angle = 45, hjust = 1))
+    axis.text.x = element_text(angle = 90,
+      size = 8, face = "plain"))
 dev.off()
 rm(temp)

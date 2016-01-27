@@ -55,3 +55,32 @@ abline(0, 1)
 hist(temp$letprop, main = "", xlab = "prop landings from LE trawl gear")
 dev.off()
 rm(temp)
+
+###############################################################################
+#### Figure: landings_trawl
+####
+###############################################################################
+plotdata <- subset(data.md, GEAR == "Trawl")
+text <- data.frame("year" = 2016,
+  "landings" = unlist(data.acl[data.acl$Year == 2014, c("ACL", "ACL_N", "letrawl")]),
+  "text" = c("(a)", "(b)", "(c)"))
+plotdata$portgrp <- factor(plotdata$portgrp,
+  levels = levels(plotdata$portgrp),
+  labels = levels(plotdata$portgrp)[portgrouporder])
+plotdata$land <- plotdata$land / 2204.62
+
+g <- ggplot(plotdata) + theme +
+  geom_line(aes(x = year, y = land)) +
+  geom_point(aes(x = year, y = land)) +
+  facet_grid(portgrp ~ .) +
+  geom_vline(xintercept = 2011, lty = 2) +
+  geom_text(aes(x = Inf, y = Inf, label = portgrp),
+    hjust = 1, vjust = 1, cex = 4) +
+  geom_text(data = subset(plotdata, portgrp == "Washington"),
+    aes(x = year, y = -Inf, label = letrawl),
+    hjust = 0.5, vjust = 0, cex = 4) +
+  theme(strip.background = element_blank(),
+       strip.text = element_blank()) +
+  ylab("US West Coast LE trawl sablefish landings caught with trawls (mt)")
+ggsave(filename = "landings_trawl.png", g, path = dir.results,
+  dpi = 300, limitsize = TRUE)
