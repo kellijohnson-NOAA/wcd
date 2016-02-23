@@ -4,10 +4,6 @@
 #' Date: 2016-01-12
 #' ----
 
-#' order of port groups
-portgrouporder <- c(9, 1, 7, 3, 2, 4, 5, 8, 6)
-good <- c("portgrp", "year", "GEAR")
-
 #' read in index of abundance data
 data.index <- read.csv(file.path(dir.results, file.index))
 data.indexmatch <- do.call("rbind",

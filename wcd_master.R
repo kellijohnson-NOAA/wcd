@@ -11,9 +11,11 @@
 #' Set variable inputs
 my.dir <- "c:/wcd"
 if (!file.exists(my.dir)) my.dir <- "d:/wcd"
-setwd(my.dir)
+portgrouporder <- c(9, 1, 7, 3, 2, 4, 5, 8, 6)
+good <- c("portgrp", "year", "GEAR")
 
 #' Directories
+setwd(my.dir)
 dir.data <- file.path(my.dir, "data")
 dir.results <- file.path(my.dir, "results")
 
