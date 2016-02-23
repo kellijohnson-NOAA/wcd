@@ -17,7 +17,6 @@ props <- data.frame("year" = catch[, 1],
   prop.table(as.matrix(catch[, -1]), margin = 1))
 
 #' Subset for federal period
-federalyear <- 1982
 props <- props[props$year >= federalyear, ]
 fed <- catch[catch$year >= federalyear, ]
 
