@@ -74,7 +74,6 @@ temp <- data.frame(
     names(coef(model1, which = "portgrp", parameter = "mu")[[1]]))),
   "mu" = coef(model1, which = "portgrp", parameter = "mu")[[1]],
   "phi" = coef(model1, which = "portgrp", parameter = "phi")[[1]])
-temp <- temp[portgrouporder[-length(portgrouporder)] - 1, ]
 colnames(temp) <- c("port group", "$\\mu$", "$\\phi$")
 sink(file.path(dir.results, "gam_portgroup.tex"))
 print(xtable(temp, digits = 2), include.rownames = FALSE,
