@@ -114,6 +114,8 @@ if (!file.exists(filetotest)) {
 data.tac.after <- read.csv(filetotest)
 data.tac.before <- read.csv(file.path(dir.data, file.tac))
 data.acl <- read.csv(file.acl)
+data.aclall <- read.csv(file.path(dir.data, file.aclall), header = TRUE)
+colnames(data.aclall) <- gsub("^X", "", colnames(data.aclall))
 data.landbygear <- read.csv(file.land)
 
 ###############################################################################
