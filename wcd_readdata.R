@@ -78,6 +78,31 @@ colnames(data.rev) <- gsub("^X", "", colnames(data.rev))
 colnames(data.bcount) <- gsub("^X", "", colnames(data.bcount))
 colnames(data.land) <- gsub("^X", "", colnames(data.land))
 
+#' read in index of abundance data
+data.index <- read.csv(file.path(dir.results, file.index))
+data.indexmatch <- do.call("rbind",
+  lapply(1:length(my.years), function(x) {
+  data.frame(
+  "portgrp" = c("Astoria and Tillamook",
+    "Brookings and Crescent City",
+    "Coos Bay", "Eureka", "Fort Bragg", "Newport",
+    "San Francisco and Bodega Bay", "Washington"),
+  "top" = c("A", "B", "B", "C", "C", "A", "C", "A"),
+  "bot" = c("B", "C", "C", "D", "D", "B", "D", "B"),
+  "year" = my.years[x])
+}))
+data.indexmatch <- Reduce(function(...) merge(..., all = TRUE),
+  lapply(3:6, function(x) {
+    a <- merge(data.indexmatch, data.index[, c(1, 2, x)],
+      by.x = c("top", "year"), by.y = c("strat", "year"))
+    a <- a[, -which(colnames(a) %in% c("top", "bot"))]
+    b <- merge(data.indexmatch, data.index[, c(1:x)],
+      by.x = c("bot", "year"), by.y = c("strat", "year"))
+    a[, NCOL(a)] <-
+      a[, which(colnames(a) == colnames(data.index)[x])] +
+      b[, which(colnames(b) == colnames(data.index)[x])]
+    return(a)
+}))
 
 # TAC data
 fp.alloc <- file.path(dir.data, file.alloc)
