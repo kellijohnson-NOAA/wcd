@@ -30,12 +30,6 @@ data.indexmatch <- Reduce(function(...) merge(..., all = TRUE),
     return(a)
 }))
 
-#' Fix "year" column name
-colnames(data.cost)[1] <- tolower(colnames(data.cost))[1]
-colnames(data.days)[1] <- tolower(colnames(data.days))[1]
-colnames(data.netrev)[1] <- tolower(colnames(data.netrev))[1]
-colnames(data.vess)[1] <- tolower(colnames(data.vess))[1]
-
 #' revenue
 data.rev <- data.rev[tolower(data.rev$SPGRP) == my.spp[1], ]
 colnames(data.rev) <- gsub("^X", "", colnames(data.rev))

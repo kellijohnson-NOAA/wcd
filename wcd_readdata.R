@@ -67,6 +67,12 @@ data.netrev <- read.csv(
   gsub(".xlsx", paste0("_", "NetRevenue", ".csv"), file.econ),
   na.strings = nastrings)
 
+#' Fix "year" column name
+colnames(data.cost)[1] <- tolower(colnames(data.cost))[1]
+colnames(data.days)[1] <- tolower(colnames(data.days))[1]
+colnames(data.netrev)[1] <- tolower(colnames(data.netrev))[1]
+colnames(data.vess)[1] <- tolower(colnames(data.vess))[1]
+
 # TAC data
 fp.alloc <- file.path(dir.data, file.alloc)
 filetotest <- gsub(".xlsx", paste0("_", "after", ".csv"), fp.alloc)
