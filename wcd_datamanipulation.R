@@ -22,7 +22,7 @@ data.indexmatch <- Reduce(function(...) merge(..., all = TRUE),
       by.x = c("top", "year"), by.y = c("strat", "year"))
     a <- a[, -which(colnames(a) %in% c("top", "bot"))]
     b <- merge(data.indexmatch, data.index[, c(1:x)],
-      by.x = c("top", "year"), by.y = c("strat", "year"))
+      by.x = c("bot", "year"), by.y = c("strat", "year"))
     a[, NCOL(a)] <-
       a[, which(colnames(a) == colnames(data.index)[x])] +
       b[, which(colnames(b) == colnames(data.index)[x])]
