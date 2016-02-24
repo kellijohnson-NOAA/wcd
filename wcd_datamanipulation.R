@@ -32,7 +32,6 @@ data.indexmatch <- Reduce(function(...) merge(..., all = TRUE),
 
 #' revenue
 data.rev <- data.rev[tolower(data.rev$SPGRP) == my.spp[1], ]
-colnames(data.rev) <- gsub("^X", "", colnames(data.rev))
 data.rev <- reshape(data.rev, direction = "long",
   varying = list(which(colnames(data.rev) %in% my.years)),
   v.names = "revenue",
@@ -42,7 +41,6 @@ rownames(data.rev) <- NULL
 
 #' buyer
 data.bcount <- data.bcount[tolower(data.bcount$SPGRP) == my.spp[1], ]
-colnames(data.bcount) <- gsub("^X", "", colnames(data.bcount))
 data.bcount <- reshape(data.bcount, direction = "long",
   varying = list(which(colnames(data.bcount) %in% my.years)),
   v.names = "buyercount",
@@ -52,7 +50,6 @@ rownames(data.bcount) <- NULL
 
 #' Subset the landings information for sablefish
 data.md <- data.land[tolower(data.land$SPGRP) == my.spp[1], ]
-colnames(data.md) <- gsub("^X", "", colnames(data.md))
 data.md <- reshape(data.md, direction = "long",
   varying = list(which(colnames(data.md) %in% my.years)),
   v.names = "land",

@@ -72,6 +72,12 @@ colnames(data.cost)[1] <- tolower(colnames(data.cost))[1]
 colnames(data.days)[1] <- tolower(colnames(data.days))[1]
 colnames(data.netrev)[1] <- tolower(colnames(data.netrev))[1]
 colnames(data.vess)[1] <- tolower(colnames(data.vess))[1]
+colnames(data.spp)[which(colnames(data.spp) == "YEAR")] <-
+  tolower(colnames(data.spp))[which(colnames(data.spp) == "YEAR")]
+colnames(data.rev) <- gsub("^X", "", colnames(data.rev))
+colnames(data.bcount) <- gsub("^X", "", colnames(data.bcount))
+colnames(data.land) <- gsub("^X", "", colnames(data.land))
+
 
 # TAC data
 fp.alloc <- file.path(dir.data, file.alloc)
