@@ -29,9 +29,7 @@ data.indexmatch <- Reduce(function(...) merge(..., all = TRUE),
     return(a)
 }))
 
-#' Change from -999 to NA and fix "year" column name
-data.cost[data.cost == -999] <- NA
-data.days[data.days == -999] <- NA
+#' Fix "year" column name
 colnames(data.cost)[1] <- tolower(colnames(data.cost))[1]
 colnames(data.days)[1] <- tolower(colnames(data.days))[1]
 colnames(data.netrev)[1] <- tolower(colnames(data.netrev))[1]
@@ -46,7 +44,6 @@ data.rev <- reshape(data.rev, direction = "long",
   times = my.years, timevar = "year", drop = "SPGRP")
 data.rev <- data.rev[, !colnames(data.rev) %in% "id"]
 rownames(data.rev) <- NULL
-data.rev$revenue[data.rev$revenue == -999] <- NA
 
 #' buyer
 data.bcount <- data.bcount[tolower(data.bcount$SPGRP) == my.spp[1], ]
@@ -57,7 +54,6 @@ data.bcount <- reshape(data.bcount, direction = "long",
   times = my.years, timevar = "year", drop = "SPGRP")
 data.bcount <- data.bcount[, !colnames(data.bcount) %in% "id"]
 rownames(data.bcount) <- NULL
-data.bcount$buyercount[data.bcount$buyercount == -999] <- NA
 
 #' Subset the landings information for sablefish
 data.md <- data.land[tolower(data.land$SPGRP) == my.spp[1], ]
@@ -75,7 +71,6 @@ data.md <- merge(data.md,
   unique(data.md$year), unique(data.md$GEAR)),
   c("portgrp", "year", "GEAR")), all.y = TRUE)
 data.md$land[is.na(data.md$land)] <- 0
-data.md$land[data.md$land == -999] <- NA
 
 #' Create the management variable
 data.md$management <- ifelse(as.character(data.md$year) <= 2010,
@@ -101,7 +96,6 @@ data.md$Speed[grepl("^#N", data.md$Speed)|is.na(data.md$Speed)] <- -999
 mode(data.md$Speed) <- "numeric"
 data.md$buyercount <- as.numeric(as.character(data.md$buyercount))
 data.md <- data.md[, -which(colnames(data.md) == "Number.of.vessels.y")]
-data.md[data.md == -999] <- NA
 
 #' add acl data
 data.md <- merge(data.md, data.acl, by.x = "year", by.y = "Year")

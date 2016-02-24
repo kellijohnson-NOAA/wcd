@@ -38,16 +38,34 @@ if (!file.exists(filetotest)) {
     "\" \"", gsub("/", "\\\\", file.econ), "\\"))
 }
 
-data.spp <- read.csv(gsub(".xlsx", paste0("_", "specieslist", ".csv"), file.econ))
-data.vcount <- read.csv(gsub(".xlsx", paste0("_", "vesseldeliverycount", ".csv"), file.econ))
-data.bcount <- read.csv(gsub(".xlsx", paste0("_", "fishbuyercount", ".csv"), file.econ))
-data.rev <- read.csv(gsub(".xlsx", paste0("_", "Revenue", ".csv"), file.econ))
-data.land <- read.csv(gsub(".xlsx", paste0("_", "Landings", ".csv"), file.econ))
-data.vess <- read.csv(gsub(".xlsx", paste0("_", "VesselCharacteristics", ".csv"), file.econ))
-data.days <- read.csv(gsub(".xlsx", paste0("_", "dayscrewfuelspeeddays", ".csv"),
-  file.econ), stringsAsFactors = FALSE)
-data.cost <- read.csv(gsub(".xlsx", paste0("_", "Costs", ".csv"), file.econ))
-data.netrev <- read.csv(gsub(".xlsx", paste0("_", "NetRevenue", ".csv"), file.econ))
+data.spp <- read.csv(
+  gsub(".xlsx", paste0("_", "specieslist", ".csv"), file.econ),
+  na.strings = nastrings)
+data.vcount <- read.csv(
+  gsub(".xlsx", paste0("_", "vesseldeliverycount", ".csv"), file.econ),
+  na.strings = nastrings)
+data.bcount <- read.csv(
+  gsub(".xlsx", paste0("_", "fishbuyercount", ".csv"), file.econ),
+  na.strings = nastrings)
+data.rev <- read.csv(
+  gsub(".xlsx", paste0("_", "Revenue", ".csv"), file.econ),
+  na.strings = nastrings)
+data.land <- read.csv(
+  gsub(".xlsx", paste0("_", "Landings", ".csv"), file.econ),
+  na.strings = nastrings)
+data.vess <- read.csv(
+  gsub(".xlsx", paste0("_", "VesselCharacteristics", ".csv"), file.econ),
+  na.strings = nastrings)
+data.days <- read.csv(
+  gsub(".xlsx", paste0("_", "dayscrewfuelspeeddays", ".csv"),
+  file.econ), stringsAsFactors = FALSE,
+  na.strings = nastrings)
+data.cost <- read.csv(
+  gsub(".xlsx", paste0("_", "Costs", ".csv"), file.econ),
+  na.strings = nastrings)
+data.netrev <- read.csv(
+  gsub(".xlsx", paste0("_", "NetRevenue", ".csv"), file.econ),
+  na.strings = nastrings)
 
 # TAC data
 fp.alloc <- file.path(dir.data, file.alloc)

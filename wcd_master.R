@@ -14,6 +14,7 @@ if (!file.exists(my.dir)) my.dir <- "d:/wcd"
 portgrouporder <- c(9, 1, 7, 3, 2, 4, 5, 8, 6)
 good <- c("portgrp", "year", "GEAR")
 federalyear <- 1982
+nastrings <- c("NA","NaN", " ", -999, "#N/A")
 
 #' Directories
 setwd(my.dir)
