@@ -9,7 +9,8 @@ data.index <- read.csv(file.path(dir.results, file.index))
 data.indexmatch <- do.call("rbind",
   lapply(1:length(my.years), function(x) {
   data.frame(
-  "portgrp" = c("Astoria and Tillamook", "Brookings and Crescent City",
+  "portgrp" = c("Astoria and Tillamook",
+    "Brookings and Crescent City",
     "Coos Bay", "Eureka", "Fort Bragg", "Newport",
     "San Francisco and Bodega Bay", "Washington"),
   "top" = c("A", "B", "B", "C", "C", "A", "C", "A"),
