@@ -24,7 +24,8 @@ mcmc.control <- list(chains = 5, thin = 100, burnin = 5000, iterToSave = 2000)
 parallel <- FALSE
 
 # Set up strata
-tops <- c(49.0, 46.0, 43, 40)
+# 49 is the US Canada border
+tops <- c(49.0, 47.5, 43, 40.5)
 bottoms <- c(tops[-1], 34.5)
 #' in fathoms -> m
 depths <- c(30, 100, 300, 700) * 1.8288
