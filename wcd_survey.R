@@ -82,6 +82,7 @@ oldvariables <- c(ls(), "oldvariables", "sp")
 
 for (sp in seq_along(my.spp)) {
   if (my.spp[sp] == "yelloweye.rockfish") next
+  if (my.spp[sp] == "bocaccio") next
 
   if (max(data.srvy[data.srvy[, my.spp[sp]] > 0, "BEST_DEPTH_M"]) <
     tail(depths, 2)[1]) {
