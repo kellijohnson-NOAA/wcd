@@ -58,7 +58,7 @@ data.keep <- data.svy
 #' Remove tows from 2013 pass 2 because they did not survey the entire area
 #' less than approximately 40.5 degrees latitude due to the government shutdown.
 #+ subset
-remove <- with(data.keep, (YEAR == max(my.years) &
+remove <- with(data.keep, (YEAR == 2013 &
   PASS == 2 & BEST_LAT_DD < 40.5))
 data.keep <- data.keep[!remove, ]
 remove <- with(data.keep, is.na(PASS))
