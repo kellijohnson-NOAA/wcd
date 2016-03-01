@@ -84,8 +84,9 @@ for (sp in seq_along(my.spp)) {
   if (my.spp[sp] == "yelloweye.rockfish") next
   if (my.spp[sp] == "bocaccio") next
 
-  if (max(data.srvy[data.srvy[, my.spp[sp]] > 0, "BEST_DEPTH_M"]) <
-    tail(depths, 2)[1]) {
+  # Check to see if there are greater than 10 observations in the deepest depth
+  if (sum(data.srvy[data.srvy[, my.spp[sp]] > 0, "BEST_DEPTH_M"] >
+      tail(depths, 2)[1]) > 10) {
     strata.limits <-
       strata.limits[strata.limits$MaxDepth != max(strata.limits$MaxDepth), ]
       strata.limits$STRATA <- LETTERS[1:NROW(strata.limits)]
