@@ -150,8 +150,9 @@ indexspp <- subset(indexbyyear, model == bestmod)
 head(strata.limits)
 indexspp$Strata <- strata.limits$STRATA.x[
   match(indexspp$Strata, strata.limits$STRATA.y)]
-index <- merge(index[, c("year", "strat")],
-  indexspp[, c("Year", "Strata", "IndexMedian")])
+index <- merge(index,
+  indexspp[, c("Year", "Strata", "IndexMedian")],
+  by.x = c("year", "strat"), by.y = c("Year", "Strata"))
 colnames(index)[NCOL(index)] <- my.spp[sp]
 
 detach(chooseDat)
