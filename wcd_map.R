@@ -94,10 +94,11 @@ pp <- p +
   coord_map() +
   geom_hline(yintercept = getstrata, lty = 2) +
   geom_hline(yintercept = 36.0, lty = 1) +
+  annotate("text", x = -126.2, y = getstrata[-length(getstrata)] - 1.0,
+    label = LETTERS[1:(length(getstrata) - 1)], size = 3) +
   annotate("text", x = -126.2, y = 36.000, label = "sablefish N\nsablefish S", size = 3) +
-  annotate("text", x = -126.2, y = 46.100, label = "Astoria\nCanyon", size = 3) +
   annotate("text", x = -126.2, y = 43.090, label = "Cape\nBlanco", size = 3) +
-  annotate("text", x = -126.2, y = 40.100, label = "Cape\nMendocino", size = 3) +
+  annotate("text", x = -126.2, y = 40.470, label = "Cape\nMendocino", size = 3) +
   annotate("text", x = -126.2, y = 34.450, label = "Point\nConception", size = 3) +
   annotate("text", x = -122.7, y = 46.189, label = "Astoria", size = 3) +
   annotate("text", x = -122.7, y = 45.455, label = "Tillamook", size = 3) +
