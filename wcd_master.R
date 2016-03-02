@@ -87,6 +87,7 @@ risk <- c("Washington" = 4, "San Francisco and Bodega Bay" = 2,
 #' Source working files
 source("wcd_readdata.R")
 source("wcd_survey.R")
+source("wcd_readindex.R")
 source("wcd_cluster.R")
 source("wcd_map.R")
 source("wcd_datamanipulation.R")
