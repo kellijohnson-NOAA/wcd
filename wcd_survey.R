@@ -69,6 +69,7 @@ strat <- strata.limits$STRATA
 index <- data.frame(
   "year" = rep(years, times = length(strat)),
   "strat" = rep(strat, each = length(years)))
+indexlist <- list()
 
 ###############################################################################
 ###############################################################################
@@ -150,9 +151,11 @@ indexspp <- subset(indexbyyear, model == bestmod)
 head(strata.limits)
 indexspp$Strata <- strata.limits$STRATA.x[
   match(indexspp$Strata, strata.limits$STRATA.y)]
+indexlist[length(indexlist)] <- indexspp
 index <- merge(index,
   indexspp[, c("Year", "Strata", "IndexMedian")],
-  by.x = c("year", "strat"), by.y = c("Year", "Strata"))
+  by.x = c("year", "strat"), by.y = c("Year", "Strata"),
+  all.x = TRUE, all.y = TRUE)
 colnames(index)[NCOL(index)] <- my.spp[sp]
 
 detach(chooseDat)
@@ -172,7 +175,8 @@ temp <- aggregate(as.matrix(cbind(temp[, -c(1:2)])) ~ year + strat,
 write.csv(temp, file.path(dir.results, file.index), row.names = FALSE)
 
 #' Plot index data by strata and then without depth but still by strata
-index_long <- reshape(data = index, direction = "long", varying = colnames(index)[3:NCOL(index)],
+index_long <- reshape(data = index, direction = "long",
+  varying = colnames(index)[3:NCOL(index)],
   times = colnames(index)[3:NCOL(index)], timevar = "species",
   v.names = "index")
 index_long$species <- factor(index_long$species, levels = unique(index_long$species),
@@ -210,3 +214,43 @@ ggplot(temp, aes(x = year, y = index, group = strat)) +
       size = 8, face = "plain"))
 dev.off()
 rm(temp)
+
+#plot index by stratam with confidence intervals
+png(file.path(dir.results, "index_speciesbystrata_ci.png"),
+  width = width, height = height, res = resolution)
+
+temp <- lapply(1:length(indexlist), function(x) {
+  data.frame(indexlist[[x]][, c("Year", "Strata", "Raw", "IndexMedian", "SdLog")],
+  "species" = colnames(index)[x + 2],
+  "lower" = exp(log(indexlist[[x]]$IndexMedian) - 1.96 * indexlist[[x]]$SdLog),
+  "upper" = exp(log(indexlist[[x]]$IndexMedian) + 1.96 * indexlist[[x]]$SdLog))
+  })
+temp <- do.call("rbind", temp)
+levels(temp$Strata) <- rep(LETTERS[1:length(unique(strata.limits$NLat))],
+  each = length(unique(strata.limits$MaxDepth)))
+temp <- aggregate(
+  as.matrix(temp[, c("Raw", "IndexMedian", "SdLog", "lower", "upper")]) ~
+  Year + species + Strata, data = temp, sum, na.rm = TRUE)
+temp$species <- as.character(temp$species)
+temp$species[temp$species == "Pacific.ocean.perch"] <- "POP"
+temp$species[temp$species == "darkblotched.rockfish"] <- "darkblotched"
+
+ggplot(temp) +
+  geom_point(aes(x = Year, y = Raw, group = Strata)) +
+  geom_line(aes(x = Year, y = IndexMedian, group = Strata), lty = 1) +
+  geom_line(aes(x = Year, y = upper, group = Strata), lty = 2) +
+  geom_line(aes(x = Year, y = lower, group = Strata), lty = 2) +
+  facet_grid(species ~ Strata, scales = "fixed") +
+  ylab("relative index of abundance") +
+  scale_x_continuous(breaks = unique(temp$Year)) +
+  # xlim(c(2009, 2014)) +
+  theme_bw() +
+  theme(plot.background = element_blank(), panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(), strip.background = element_blank(),
+    panel.border = element_rect(colour = "black"),
+    axis.text.x = element_text(angle = 90,
+      size = 8, face = "plain"))
+dev.off()
+rm(temp)
+
+#EndOfFile
