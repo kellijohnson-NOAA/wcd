@@ -1,0 +1,9 @@
+sheet,notes
+overall,-999 denotes cases that have been suppressed to protect confidential data. The revenue and landings by species tables are summarized at the port where the fish were landed. For the other tables (vessel specific info) are summarized at the port where the largest revenue was earned by each vessel. NA denotes not applicable (e.g. speed while fishing with fixed gear).
+specieslist,"The SPGRP is the list of species groups I use for all output. For your information, I've tacked on a bunch of species info from PacFIN, for more info, you can go to their website: http://pacfin.psmfc.org/pacfin_pub/data_rpts_pub/code_lists/sp_tree.txt or see table 'sp': http://pacfin.psmfc.org/pacfin_pub/table_cols.php"
+Revenue,Total revenue by landings port and species group ($)
+Landings,Total landings by landings port and species group (lbs)
+VesselCharacteristics,Average vessel characteristics by port. Vessels are assigned to the port where they earned the highest ex-vessel revenue for that year. Vessel fuel capacity is measured in gallons and vessel length.
+dayscrewfuelspeeddays,"Average number of crew (not including captain) per boat, total number of days in fishery, average fuel use per day (gallons) and average speed (knots). Vessels are assigned to the port where they earned the highest ex-vessel revenue for that year."
+Costs,"Average fixed and variable costs by year, gear type and port group. Vessels are assigned to the port where they earned the highest ex-vessel revenue for that year."
+NetRevenue,"Average variable cost net revenue and total cost net revenue by year, gear type and port group. Vessels are assigned to the port where they earned the highest ex-vessel revenue for that year."

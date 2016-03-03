@@ -1,0 +1,85 @@
+YEAR,GEAR,portgrp,Fixed costs,Variable costs,Number of vessels
+2009,Fixed gear,Monterey and Morro Bay,-999,-999,-999
+2009,Trawl,Astoria and Tillamook,77167.26087,153948.4545,22
+2009,Trawl,Brookings and Crescent City,58301.5,120365.0833,12
+2009,Trawl,Coos Bay,67716.33333,111702.4667,15
+2009,Trawl,Eureka,101411,189850.8,10
+2009,Trawl,Fort Bragg,80417.14286,168503.1429,7
+2009,Trawl,Monterey and Morro Bay,201963.3333,71371.33333,3
+2009,Trawl,Newport,57845.31579,107752.8421,19
+2009,Trawl,San Francisco and Bodega Bay,79445.33333,117686,3
+2009,Trawl,Washington,106788.875,142633.25,8
+2010,Fixed gear,Monterey and Morro Bay,28017.8,61438.4,5
+2010,Trawl,Astoria and Tillamook,54171.90476,176082.1,21
+2010,Trawl,Brookings and Crescent City,58092.66667,120323.6667,9
+2010,Trawl,Coos Bay,80631.5,123767,16
+2010,Trawl,Eureka,100455.1,183015.5,10
+2010,Trawl,Fort Bragg,54398.14286,155582.4286,7
+2010,Trawl,Monterey and Morro Bay,-999,-999,-999
+2010,Trawl,Newport,68178.6875,111650.5,16
+2010,Trawl,San Francisco and Bodega Bay,34141.25,81712.5,4
+2010,Trawl,Washington,63395,102399,8
+2011,Fixed gear,Astoria and Tillamook,-999,-999,-999
+2011,Fixed gear,Coos Bay,-999,-999,-999
+2011,Fixed gear,Fort Bragg,-999,-999,-999
+2011,Fixed gear,Monterey and Morro Bay,132665.6,96199.5,10
+2011,Fixed gear,Newport,105985.2,189547.8,5
+2011,Fixed gear,San Francisco and Bodega Bay,-999,-999,-999
+2011,Fixed gear,Washington,280300.75,263306.25,4
+2011,Trawl,Astoria and Tillamook,70661.125,191925.625,16
+2011,Trawl,Brookings and Crescent City,44426,143525.8571,7
+2011,Trawl,Coos Bay,84749.9,149022.6,10
+2011,Trawl,Eureka,91864.75,228942.75,8
+2011,Trawl,Fort Bragg,61783.83333,192494.3333,6
+2011,Trawl,Monterey and Morro Bay,112945.3333,165046.6667,3
+2011,Trawl,Newport,50575.28571,91390,7
+2011,Trawl,San Francisco and Bodega Bay,29311.33333,40842.33333,3
+2011,Trawl,Washington,97539,225227,4
+2012,Fixed gear,Astoria and Tillamook,81595.5,174949.75,4
+2012,Fixed gear,Coos Bay,-999,-999,-999
+2012,Fixed gear,Fort Bragg,-999,-999,-999
+2012,Fixed gear,Monterey and Morro Bay,72924.66667,67956.55556,9
+2012,Fixed gear,Newport,75774.5,137180.75,4
+2012,Fixed gear,San Francisco and Bodega Bay,-999,-999,-999
+2012,Fixed gear,Washington,121898.75,141596.25,4
+2012,Trawl,Astoria and Tillamook,59614.14286,128657,14
+2012,Trawl,Brookings and Crescent City,71819.8,164600,5
+2012,Trawl,Coos Bay,74254.7,134483.2,10
+2012,Trawl,Eureka,100352.7778,193017.1111,9
+2012,Trawl,Fort Bragg,299790.2,156860.8,5
+2012,Trawl,Monterey and Morro Bay,65973.66667,196262,3
+2012,Trawl,Newport,80816.83333,131915.6667,6
+2012,Trawl,San Francisco and Bodega Bay,-999,-999,-999
+2012,Trawl,Washington,88762.2,175571.8,5
+2013,Fixed gear,Astoria and Tillamook,72542,122184,3
+2013,Fixed gear,Coos Bay,-999,-999,-999
+2013,Fixed gear,Fort Bragg,-999,-999,-999
+2013,Fixed gear,Monterey and Morro Bay,44071.25,72737.5,4
+2013,Fixed gear,Newport,50705.33333,157720.6667,3
+2013,Fixed gear,San Francisco and Bodega Bay,-999,-999,-999
+2013,Fixed gear,Washington,-999,-999,-999
+2013,Trawl,Astoria and Tillamook,69032.38462,211069.9231,13
+2013,Trawl,Brookings and Crescent City,96844.4,186164.8,5
+2013,Trawl,Coos Bay,35820.16667,87016.91667,12
+2013,Trawl,Eureka,65951.88889,196267.1111,9
+2013,Trawl,Fort Bragg,49566.66667,163671.6667,6
+2013,Trawl,Monterey and Morro Bay,48302.66667,172248,3
+2013,Trawl,Newport,60198.83333,146055.8333,6
+2013,Trawl,San Francisco and Bodega Bay,-999,-999,-999
+2013,Trawl,Washington,73703.5,116155,4
+2014,Fixed gear,Astoria and Tillamook,-999,-999,-999
+2014,Fixed gear,Brookings and Crescent City,-999,-999,-999
+2014,Fixed gear,Fort Bragg,-999,-999,-999
+2014,Fixed gear,Monterey and Morro Bay,35624,145803.6667,3
+2014,Fixed gear,Newport,-999,-999,-999
+2014,Fixed gear,San Francisco and Bodega Bay,-999,-999,-999
+2014,Fixed gear,Washington,60110.66667,119341.5,6
+2014,Trawl,Astoria and Tillamook,64392.33333,160704.0833,12
+2014,Trawl,Brookings and Crescent City,103036.6,211702.8,5
+2014,Trawl,Coos Bay,22975.875,69384.375,8
+2014,Trawl,Eureka,120161,211962.25,8
+2014,Trawl,Fort Bragg,67461.33333,170520.1667,6
+2014,Trawl,Monterey and Morro Bay,46469,214983,3
+2014,Trawl,Newport,75482.2,223668,5
+2014,Trawl,San Francisco and Bodega Bay,-999,-999,-999
+2014,Trawl,Washington,-999,-999,-999

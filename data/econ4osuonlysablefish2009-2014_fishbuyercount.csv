@@ -1,0 +1,142 @@
+portgrp,SPGRP,GEAR,2009,2010,2011,2012,2013,2014
+Astoria and Tillamook,Dover sole,Fixed gear,4,6,-999,2,2,2
+Astoria and Tillamook,Dover sole,Trawl,4,6,2,2,2,2
+Astoria and Tillamook,Flatfish,Fixed gear,4,5,-999,-999,-999,-999
+Astoria and Tillamook,Flatfish,Trawl,4,5,2,2,2,2
+Astoria and Tillamook,Other groundfish,Fixed gear,-999,3,2,-999,-999,-999
+Astoria and Tillamook,Other groundfish,Trawl,-999,3,2,-999,3,2
+Astoria and Tillamook,Pacific whiting,Trawl,-999,-999,-999,-999,-999,-999
+Astoria and Tillamook,Petrale sole,Fixed gear,-999,3,-999,-999,-999,-999
+Astoria and Tillamook,Petrale sole,Trawl,-999,3,2,2,3,2
+Astoria and Tillamook,Rockfish,Fixed gear,3,6,2,2,3,-999
+Astoria and Tillamook,Rockfish,Trawl,3,6,2,2,3,2
+Astoria and Tillamook,Sablefish,Fixed gear,4,6,2,2,3,2
+Astoria and Tillamook,Sablefish,Trawl,4,6,2,2,3,2
+Astoria and Tillamook,"Sharks, skates and rays",Fixed gear,-999,6,-999,-999,-999,-999
+Astoria and Tillamook,"Sharks, skates and rays",Trawl,-999,6,2,2,-999,-999
+Astoria and Tillamook,Thornyheads,Fixed gear,4,6,2,2,3,2
+Astoria and Tillamook,Thornyheads,Trawl,4,6,2,2,3,2
+Brookings and Crescent City,Dover sole,Fixed gear,5,4,5,4,5,-999
+Brookings and Crescent City,Dover sole,Trawl,5,4,5,4,5,5
+Brookings and Crescent City,Flatfish,Fixed gear,5,4,5,4,5,-999
+Brookings and Crescent City,Flatfish,Trawl,5,4,5,4,5,5
+Brookings and Crescent City,Other groundfish,Fixed gear,5,4,-999,4,3,-999
+Brookings and Crescent City,Other groundfish,Trawl,5,4,-999,4,3,4
+Brookings and Crescent City,Pacific whiting,Trawl,#N/A,#N/A,-999,-999,-999,-999
+Brookings and Crescent City,Petrale sole,Trawl,5,4,3,3,4,5
+Brookings and Crescent City,Rockfish,Fixed gear,5,3,5,4,5,-999
+Brookings and Crescent City,Rockfish,Trawl,5,3,5,4,5,-999
+Brookings and Crescent City,Sablefish,Fixed gear,5,4,5,4,5,-999
+Brookings and Crescent City,Sablefish,Trawl,5,4,5,4,5,5
+Brookings and Crescent City,"Sharks, skates and rays",Trawl,4,4,5,-999,4,5
+Brookings and Crescent City,Thornyheads,Fixed gear,5,4,5,4,5,-999
+Brookings and Crescent City,Thornyheads,Trawl,5,4,5,4,5,5
+Coos Bay,Dover sole,Fixed gear,-999,4,-999,-999,-999,-999
+Coos Bay,Dover sole,Trawl,-999,4,3,3,2,-999
+Coos Bay,Flatfish,Fixed gear,-999,3,-999,-999,-999,-999
+Coos Bay,Flatfish,Trawl,-999,3,3,3,-999,-999
+Coos Bay,Other groundfish,Fixed gear,-999,4,-999,-999,-999,-999
+Coos Bay,Other groundfish,Trawl,-999,4,3,3,-999,-999
+Coos Bay,Pacific whiting,Trawl,#N/A,-999,-999,-999,-999,-999
+Coos Bay,Petrale sole,Fixed gear,-999,3,-999,3,-999,-999
+Coos Bay,Petrale sole,Trawl,-999,3,3,3,-999,-999
+Coos Bay,Rockfish,Fixed gear,-999,-999,-999,-999,-999,-999
+Coos Bay,Rockfish,Trawl,-999,-999,3,3,-999,-999
+Coos Bay,Sablefish,Fixed gear,-999,3,-999,-999,-999,-999
+Coos Bay,Sablefish,Trawl,-999,3,3,3,2,-999
+Coos Bay,"Sharks, skates and rays",Fixed gear,4,4,-999,-999,-999,-999
+Coos Bay,"Sharks, skates and rays",Trawl,4,4,3,3,-999,-999
+Coos Bay,Thornyheads,Fixed gear,-999,3,-999,-999,-999,-999
+Coos Bay,Thornyheads,Trawl,-999,3,3,3,2,-999
+Eureka,Dover sole,Fixed gear,4,3,-999,-999,-999,-999
+Eureka,Dover sole,Trawl,4,3,-999,-999,-999,-999
+Eureka,Flatfish,Trawl,3,-999,-999,-999,-999,-999
+Eureka,Other groundfish,Trawl,-999,-999,-999,-999,-999,-999
+Eureka,Pacific whiting,Trawl,-999,-999,-999,-999,-999,-999
+Eureka,Petrale sole,Trawl,3,-999,-999,-999,-999,-999
+Eureka,Rockfish,Trawl,-999,-999,-999,-999,-999,-999
+Eureka,Sablefish,Trawl,4,3,-999,-999,-999,-999
+Eureka,"Sharks, skates and rays",Trawl,-999,-999,-999,-999,-999,-999
+Eureka,Thornyheads,Trawl,-999,-999,-999,-999,-999,-999
+Fort Bragg,Dover sole,Fixed gear,6,5,3,3,3,-999
+Fort Bragg,Dover sole,Trawl,6,5,3,3,3,3
+Fort Bragg,Flatfish,Fixed gear,6,5,3,3,3,-999
+Fort Bragg,Flatfish,Trawl,6,5,3,3,3,3
+Fort Bragg,Other groundfish,Fixed gear,7,6,-999,4,3,-999
+Fort Bragg,Other groundfish,Trawl,7,6,3,4,3,3
+Fort Bragg,Pacific whiting,Trawl,#N/A,#N/A,-999,-999,-999,-999
+Fort Bragg,Petrale sole,Fixed gear,9,6,3,4,3,-999
+Fort Bragg,Petrale sole,Trawl,9,6,3,4,3,3
+Fort Bragg,Rockfish,Fixed gear,10,7,-999,-999,5,-999
+Fort Bragg,Rockfish,Trawl,10,7,4,3,5,4
+Fort Bragg,Sablefish,Fixed gear,8,6,-999,-999,-999,-999
+Fort Bragg,Sablefish,Trawl,8,6,4,3,3,3
+Fort Bragg,"Sharks, skates and rays",Fixed gear,3,-999,3,3,3,-999
+Fort Bragg,"Sharks, skates and rays",Trawl,3,-999,3,3,3,3
+Fort Bragg,Thornyheads,Fixed gear,7,6,4,3,3,-999
+Fort Bragg,Thornyheads,Trawl,7,6,4,3,3,3
+Monterey and Morro Bay,Dover sole,Fixed gear,4,-999,-999,7,4,5
+Monterey and Morro Bay,Dover sole,Trawl,4,-999,-999,7,4,5
+Monterey and Morro Bay,Flatfish,Fixed gear,5,3,-999,-999,-999,5
+Monterey and Morro Bay,Flatfish,Trawl,5,-999,4,5,4,5
+Monterey and Morro Bay,Other groundfish,Fixed gear,-999,-999,-999,-999,4,5
+Monterey and Morro Bay,Other groundfish,Trawl,-999,-999,-999,-999,4,5
+Monterey and Morro Bay,Pacific whiting,Trawl,#N/A,#N/A,#N/A,-999,-999,3
+Monterey and Morro Bay,Petrale sole,Fixed gear,5,-999,4,-999,-999,-999
+Monterey and Morro Bay,Petrale sole,Trawl,5,-999,4,5,4,5
+Monterey and Morro Bay,Rockfish,Fixed gear,5,9,10,8,5,-999
+Monterey and Morro Bay,Rockfish,Trawl,5,-999,10,8,5,5
+Monterey and Morro Bay,Sablefish,Fixed gear,5,13,11,9,5,5
+Monterey and Morro Bay,Sablefish,Trawl,5,-999,11,9,5,5
+Monterey and Morro Bay,"Sharks, skates and rays",Fixed gear,3,-999,-999,-999,-999,-999
+Monterey and Morro Bay,"Sharks, skates and rays",Trawl,-999,-999,5,4,4,5
+Monterey and Morro Bay,Thornyheads,Fixed gear,4,10,10,8,6,5
+Monterey and Morro Bay,Thornyheads,Trawl,4,-999,10,8,6,5
+Newport,Dover sole,Fixed gear,-999,-999,-999,-999,-999,-999
+Newport,Dover sole,Trawl,-999,-999,-999,-999,3,3
+Newport,Flatfish,Fixed gear,-999,-999,3,3,-999,-999
+Newport,Flatfish,Trawl,-999,-999,3,3,3,-999
+Newport,Other groundfish,Fixed gear,3,-999,3,3,-999,3
+Newport,Other groundfish,Trawl,3,-999,3,3,-999,3
+Newport,Pacific whiting,Trawl,#N/A,-999,-999,-999,-999,-999
+Newport,Petrale sole,Fixed gear,-999,-999,-999,-999,-999,-999
+Newport,Petrale sole,Trawl,-999,-999,-999,3,-999,3
+Newport,Rockfish,Fixed gear,-999,-999,3,3,-999,-999
+Newport,Rockfish,Trawl,-999,-999,3,3,4,3
+Newport,Sablefish,Fixed gear,-999,-999,3,-999,3,-999
+Newport,Sablefish,Trawl,-999,-999,3,-999,3,3
+Newport,"Sharks, skates and rays",Fixed gear,5,-999,-999,-999,-999,3
+Newport,"Sharks, skates and rays",Trawl,5,-999,-999,-999,2,3
+Newport,Thornyheads,Fixed gear,-999,-999,-999,-999,2,-999
+Newport,Thornyheads,Trawl,-999,-999,-999,-999,2,3
+San Francisco and Bodega Bay,Dover sole,Fixed gear,4,5,-999,-999,-999,-999
+San Francisco and Bodega Bay,Dover sole,Trawl,4,5,4,-999,-999,-999
+San Francisco and Bodega Bay,Flatfish,Trawl,4,5,3,#N/A,-999,-999
+San Francisco and Bodega Bay,Other groundfish,Trawl,3,-999,-999,#N/A,-999,-999
+San Francisco and Bodega Bay,Pacific whiting,Trawl,#N/A,#N/A,#N/A,#N/A,-999,-999
+San Francisco and Bodega Bay,Petrale sole,Fixed gear,4,5,-999,-999,-999,-999
+San Francisco and Bodega Bay,Petrale sole,Trawl,4,5,-999,-999,-999,-999
+San Francisco and Bodega Bay,Rockfish,Fixed gear,4,5,-999,-999,-999,-999
+San Francisco and Bodega Bay,Rockfish,Trawl,4,5,4,-999,-999,-999
+San Francisco and Bodega Bay,Sablefish,Fixed gear,4,6,5,-999,-999,-999
+San Francisco and Bodega Bay,Sablefish,Trawl,4,6,5,-999,-999,-999
+San Francisco and Bodega Bay,"Sharks, skates and rays",Trawl,-999,4,3,-999,-999,-999
+San Francisco and Bodega Bay,Thornyheads,Fixed gear,4,6,-999,-999,-999,-999
+San Francisco and Bodega Bay,Thornyheads,Trawl,4,6,4,-999,-999,-999
+Washington,Dover sole,Fixed gear,3,3,3,-999,-999,-999
+Washington,Dover sole,Trawl,3,3,3,3,3,-999
+Washington,Flatfish,Fixed gear,3,3,3,-999,-999,-999
+Washington,Flatfish,Trawl,3,3,3,3,3,-999
+Washington,Other groundfish,Fixed gear,4,-999,-999,3,-999,-999
+Washington,Other groundfish,Trawl,4,-999,-999,3,3,-999
+Washington,Pacific whiting,Trawl,-999,-999,-999,-999,-999,-999
+Washington,Petrale sole,Fixed gear,4,3,-999,-999,-999,-999
+Washington,Petrale sole,Trawl,4,3,3,3,3,-999
+Washington,Rockfish,Fixed gear,4,3,4,4,-999,-999
+Washington,Rockfish,Trawl,4,3,4,4,4,-999
+Washington,Sablefish,Fixed gear,3,3,4,4,-999,3
+Washington,Sablefish,Trawl,3,3,4,4,4,-999
+Washington,"Sharks, skates and rays",Fixed gear,3,3,-999,-999,-999,-999
+Washington,"Sharks, skates and rays",Trawl,3,3,3,3,3,-999
+Washington,Thornyheads,Fixed gear,4,3,-999,4,-999,-999
+Washington,Thornyheads,Trawl,4,3,-999,4,4,-999
