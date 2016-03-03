@@ -71,6 +71,13 @@ nona$management <- factor(nona$management, levels = c("before", "after"))
 
 initialcol <- grep("management", colnames(nona))
 finalcol <- grep("letrawl", colnames(nona)) - 1
-nona[, (initialcol + 1):finalcol] <-
-  apply(nona[, (initialcol + 1):finalcol], 2,
+
+trawl <- droplevels(subset(nona, GEAR == "Trawl"))
+fixed <- droplevels(subset(nona, GEAR == "Fixed gear"))
+
+trawl[, (initialcol + 1):finalcol] <-
+  apply(trawl[, (initialcol + 1):finalcol], 2,
+  function(x) (x - mean(x)) / sd(x))
+fixed[, (initialcol + 1):finalcol] <-
+  apply(fixed[, (initialcol + 1):finalcol], 2,
   function(x) (x - mean(x)) / sd(x))
