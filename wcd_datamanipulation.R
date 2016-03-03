@@ -42,14 +42,6 @@ data.md$land[is.na(data.md$land)] <- 0
 data.md$management <- ifelse(as.character(data.md$year) <= 2010,
   "before", "after")
 
-#' Calculate the proportion of landings from the trawl fishery as compared
-#' to fixed gear from the landings data supplied by EDC
-#' Trawl is the second entry b/c alphabetically it comes after Fixed gear
-data.md <- merge(data.md, data.frame(setNames(
-  aggregate(land ~ year + portgrp, data = data.md, function(x) {
-  x[2] / sum(x) }), c("year", "portgrp", "proportion")),
-  "GEAR" = "Trawl"), all.x = TRUE)
-
 #' bring in the other data
 data.md <- merge(data.md, data.indexmatch, all = TRUE)
 data.md <- merge(data.md, data.rev,    all.x = TRUE)
@@ -79,8 +71,8 @@ nona <- droplevels(subset(data.md, !is.na(land) &
   GEAR == "Trawl"))
 nona$management <- factor(nona$management, levels = c("before", "after"))
 
-initialcol <- grep("proportion", colnames(nona))
-finalcol <- grep("OFL", colnames(nona)) - 1
+initialcol <- grep("management", colnames(nona))
+finalcol <- grep("letrawl", colnames(nona)) - 1
 nona[, (initialcol + 1):finalcol] <-
   apply(nona[, (initialcol + 1):finalcol], 2,
   function(x) (x - mean(x)) / sd(x))
