@@ -31,7 +31,7 @@ data.indexmatch <- do.call("rbind",
   "year" = my.years[x])
 }))
 data.indexmatch <- Reduce(function(...) merge(..., all = TRUE),
-  lapply(3:6, function(x) {
+  lapply(3:NCOL(data.index), function(x) {
     a <- merge(data.indexmatch, data.index[, c(1, 2, x)],
       by.x = c("top", "year"), by.y = c("strat", "year"))
     a <- a[, -which(colnames(a) %in% c("top", "bot"))]
