@@ -50,13 +50,12 @@ data.md <- merge(data.md, data.cost,   by = good, all.x = TRUE)
 data.md <- merge(data.md, data.days,   by = good, all.x = TRUE)
 data.md <- merge(data.md, data.netrev, by = good, all.x = TRUE)
 data.md <- merge(data.md, data.vess,   by = good, all.x = TRUE)
-data.md$Speed[grepl("^#N", data.md$Speed)|is.na(data.md$Speed)] <- -999
-mode(data.md$Speed) <- "numeric"
-data.md$buyercount <- as.numeric(as.character(data.md$buyercount))
-data.md <- data.md[, -which(colnames(data.md) == "Number.of.vessels.y")]
+data.md <- data.md[, -which(colnames(data.md) %in%
+  c("Number.of.vessels.x", "Number.of.vessels.y"))]
 
 #' add acl data
-data.md <- merge(data.md, data.acl, by.x = "year", by.y = "Year")
+data.md <- merge(data.md, data.acl[, c("Year", "letrawl")],
+  by.x = "year", by.y = "Year")
 data.md$letprop <- data.md$land / (data.md$letrawl * 2204.62)
 
 ###############################################################################
@@ -66,9 +65,8 @@ data.md$letprop <- data.md$land / (data.md$letrawl * 2204.62)
 #' -3 to 3.
 ###############################################################################
 ###############################################################################
-nona <- droplevels(subset(data.md, !is.na(land) &
-  portgrp != "Monterey and Morro Bay" &
-  GEAR == "Trawl"))
+nona <- droplevels(subset(data.md, !is.na(Length) &
+  portgrp != "Monterey and Morro Bay"))
 nona$management <- factor(nona$management, levels = c("before", "after"))
 
 initialcol <- grep("management", colnames(nona))
