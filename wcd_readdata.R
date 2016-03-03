@@ -4,7 +4,7 @@
 ##             Read in the raw data
 ## Author:     Kelli Faye Johnson
 ## Contact:    kellifayejohnson@gmail.com
-## Date:       2014-08-26
+## Date:       2016-03-03
 ## Comments:
 ###############################################################################
 ###############################################################################
@@ -94,9 +94,8 @@ colnames(data.aclall) <- gsub("^X", "", colnames(data.aclall))
 data.landbygear <- read.csv(file.land)
 
 ###############################################################################
-#### Save data in data dir and return to old working directory upon exit
+#### Return to old working directory upon exit
 ###############################################################################
-save(list = ls(pattern = "data"), file = "wcd_data_raw.RData")
 setwd(dir.curr)
 
 #endOfFile
