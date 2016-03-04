@@ -118,32 +118,4 @@ ggsave(filename = "strata.png", pp, path = dir.results, scale = 1,
 dev.off()
 ###############################################################################
 
-###############################################################################
-###############################################################################
-#### Plot of relative index of abundance by species for each year included
-#### in the driver model. Species are summed across depth within a latitudinal
-#### strata.
-#### Todo: Add confidence intervals and raw fits
-###############################################################################
-###############################################################################
-temp <- my.spp[my.spp %in% colnames(data.yrin)[-c(1:2)]]
-indexlong <- reshape(data.yrin,
-  direction = "long", varying = temp, v.name = "weight",
-  timevar = "species", times = temp)
-rownames(indexlong) <- NULL
-indexlong$species <- sapply(strsplit(indexlong$species, "\\."), "[", 1)
-indexlong$species[indexlong$species == "Pacific"] <- "POP"
-
-pp <- ggplot() + theme +
-  geom_line(data = subset(indexlong, year %in% 2009:2013 &
-    strat != "I"),
-    aes(x = year, y = weight)) +
-  ylab("relative index of abundance") +
-  facet_grid(species ~ strat, scales = "fixed") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.2))
-ggsave(filename = "indexlines.png", pp, path = dir.results, scale = 1,
-  dpi = 300, limitsize = TRUE)
-dev.off()
-###############################################################################
-
-#### endoffile
+#### EndOfFile
