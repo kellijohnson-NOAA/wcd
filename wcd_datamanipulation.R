@@ -36,7 +36,6 @@ data.md <- merge(data.md,
   setNames(expand.grid(unique(data.md$portgrp),
   unique(data.md$year), unique(data.md$GEAR)),
   c("portgrp", "year", "GEAR")), all.y = TRUE)
-data.md$land[is.na(data.md$land)] <- 0
 
 #' Create the management variable
 data.md$management <- ifelse(as.character(data.md$year) <= 2010,
@@ -65,8 +64,10 @@ data.md$letprop <- data.md$land / (data.md$letrawl * 2204.62)
 #' -3 to 3.
 ###############################################################################
 ###############################################################################
-nona <- droplevels(subset(data.md, !is.na(Length) &
-  portgrp != "Monterey and Morro Bay"))
+nona <- droplevels(subset(data.md, portgrp != "Monterey and Morro Bay"))
+nona <- droplevels(subset(nona, !is.na(land)))
+nona <- droplevels(subset(nona, !is.na(Length)))
+
 nona$management <- factor(nona$management, levels = c("before", "after"))
 
 initialcol <- grep("management", colnames(nona))
