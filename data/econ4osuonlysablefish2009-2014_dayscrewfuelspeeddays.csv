@@ -67,6 +67,13 @@ YEAR,GEAR,portgrp,Crew,Fuel,Speed,Days,Number of vessels
 2013,Trawl,Newport,2,427,2.7,41.66666667,6
 2013,Trawl,San Francisco and Bodega Bay,-999,-999,-999,-999,-999
 2013,Trawl,Washington,2.25,371.25,4.325,67.5,4
+2014,Fixed gear,Astoria and Tillamook,-999,-999,#N/A,-999,-999
+2014,Fixed gear,Brookings and Crescent City,-999,-999,#N/A,-999,-999
+2014,Fixed gear,Fort Bragg,-999,-999,#N/A,-999,-999
+2014,Fixed gear,Monterey and Morro Bay,2,133.3333333,#N/A,53,3
+2014,Fixed gear,Newport,-999,-999,#N/A,-999,-999
+2014,Fixed gear,San Francisco and Bodega Bay,-999,-999,#N/A,-999,-999
+2014,Fixed gear,Washington,3.75,169,#N/A,41,6
 2014,Trawl,Astoria and Tillamook,1.916666667,259,4.241666667,86.66666667,12
 2014,Trawl,Brookings and Crescent City,2,314,2.02,42.2,5
 2014,Trawl,Coos Bay,2.25,297.875,2.075,28.875,8
