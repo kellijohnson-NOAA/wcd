@@ -7,15 +7,14 @@
 #### Table: econ
 ####
 ###############################################################################
-econstuff <- aggregate(
-  cbind(Fixed.costs, Variable.costs, Crew, Fuel, Speed) ~ portgrp,
-  data = subset(data.md, portgrp != "Monterey and Morro Bay"), mean)
-econstuff <- cbind(aggregate(proportion ~ portgrp, nona, length),
-  econstuff[, -1])
-econstuff <- econstuff[portgrouporder, ]
-colnames(econstuff) <- gsub("proportion", "n", colnames(econstuff))
-colnames(econstuff) <- gsub("\\.", " ", colnames(econstuff))
-colnames(econstuff) <- gsub("grp", " group", colnames(econstuff))
+econstuff <- stats::aggregate(
+  letrawl ~ portgrp + GEAR,
+  data = rbind(trawl, fixed), length)
+econstuff <- reshape(econstuff, direction = "wide",
+  timevar = "GEAR", idvar = "portgrp")
+colnames(econstuff) <- c("port group", "trawl", "fixed gear")
+levels(econstuff$"port group") <- levels(data.md$portgrp)[portgrouporder]
+econstuff <- econstuff[order(econstuff$"port group"), ]
 
 sink(file.path(dir.results, "econ.tex"))
 print(xtable(econstuff, digits = 2), include.rownames = FALSE)
