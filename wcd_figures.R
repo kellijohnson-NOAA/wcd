@@ -32,9 +32,8 @@ ggsave(filename = "sablefishlandings.png", g, path = dir.results,
 #### Figure: distribution
 ####
 ###############################################################################
-temp <- data.md[data.md$portgrp != "Monterey and Morro Bay", ]
-betafit <- MASS::fitdistr(temp$letprop[!is.na(temp$letprop)], "beta",
-  start = list(shape1 = 0.5, shape2 = 0.5))
+betafit <- MASS::fitdistr(trawl$letprop, "beta",
+  start = list(shape1 = 2, shape2 = 2), lower = 0.000001)
 betapars <- c(
   "mean" = sum(betafit$estimate[1]) / sum(betafit$estimate),
   "precision" = prod(betafit$estimate)/
@@ -46,21 +45,21 @@ png(file.path(dir.results, "distribution.png"),
 layout <- matrix(c(1, 2, 1, 2, 3, 3), ncol = 3)
 layout(layout)
 par(mar = c(4, 4, 1, 1), las = 1)
-qqplot(rnorm(NROW(temp)), temp$letprop, main = "",
+qqplot(rnorm(NROW(trawl)), trawl$letprop, main = "",
    ylab = "Sample Quantiles", xlab = "Normal quantiles")
-qqline(temp$letprop)
-qqplot(rbeta(NROW(temp), betafit$estimate[1], betafit$estimate[2]),
-  temp$letprop, xlab = "Beta quantiles", ylab = "Sample Quantiles")
+qqline(trawl$letprop)
+qqplot(rbeta(NROW(trawl), betafit$estimate[1], betafit$estimate[2]),
+  trawl$letprop, xlab = "Beta quantiles", ylab = "Sample Quantiles")
 abline(0, 1)
-hist(temp$letprop, main = "", xlab = "prop landings from LE trawl gear")
+hist(trawl$letprop, main = "", xlab = "trawl gear attainment")
 dev.off()
-rm(temp)
 
 ###############################################################################
 #### Figure: landings_trawl
 ####
 ###############################################################################
-plotdata <- subset(data.md, GEAR == "Trawl")
+plotdata <- data.md
+plotdata[plotdata$year < 2011 & plotdata$GEAR == "Fixed gear", "land"] <- NA
 text <- data.frame("year" = 2016,
   "landings" = unlist(data.acl[data.acl$Year == 2014, c("ACL", "ACL_N", "letrawl")]),
   "text" = c("(a)", "(b)", "(c)"))
@@ -70,8 +69,7 @@ plotdata$portgrp <- factor(plotdata$portgrp,
 plotdata$land <- plotdata$land / 2204.62
 
 g <- ggplot(plotdata) + theme +
-  geom_line(aes(x = year, y = land)) +
-  geom_point(aes(x = year, y = land)) +
+  geom_point(aes(x = year, y = land, group = GEAR, pch = GEAR)) +
   facet_grid(portgrp ~ .) +
   geom_vline(xintercept = 2011, lty = 2) +
   geom_text(aes(x = Inf, y = Inf, label = portgrp),
@@ -79,8 +77,13 @@ g <- ggplot(plotdata) + theme +
   geom_text(data = subset(plotdata, portgrp == "Washington"),
     aes(x = year, y = -Inf, label = letrawl),
     hjust = 0.5, vjust = 0, cex = 4) +
-  theme(strip.background = element_blank(),
-       strip.text = element_blank()) +
-  ylab("US West Coast LE trawl sablefish landings caught with trawls (mt)")
+  theme(legend.position = c(0.2, 0.07),
+    legend.direction = "horizontal",
+    strip.background = element_blank(),
+    strip.text = element_blank()) +
+  ylab("US West Coast LE trawl sablefish landings (mt)")
 ggsave(filename = "landings_trawl.png", g, path = dir.results,
   dpi = 300, limitsize = TRUE)
+dev.off()
+
+#EndOfFile
