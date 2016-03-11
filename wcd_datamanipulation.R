@@ -59,6 +59,26 @@ data.md$letprop <- data.md$land / (data.md$letrawl * 2204.62)
 
 ###############################################################################
 ###############################################################################
+#' Create a subset with only port groups that have both trawl and fixed gear
+#' information in a given year.
+#' Results in a very small data set.
+###############################################################################
+###############################################################################
+
+data.match <- data.md[!is.na(data.md$Fixed.costs), ]
+data.match$name <- with(data.match, paste0(year, portgrp))
+data.match <- subset(data.match, data.match$name %in% data.match$name[data.match$GEAR == "Fixed gear"])
+data.match <- subset(data.match, data.match$name %in% data.match$name[data.match$GEAR == "Trawl"])
+data.match <- data.match[!is.na(data.match$land), ]
+data.match$fyear <- factor(data.match$year)
+
+for(ii in data.match$name[data.match$GEAR == "Fixed gear"]) {
+    temp <- data.match[data.match$name == ii, ]
+    data.match[data.match$name == ii, "proportion"] <- temp$land / sum(temp$land)
+}
+
+###############################################################################
+###############################################################################
 #' Remove NAs and standardize each column using the z transformation so that
 #' the mean of the new variable is zero and the range will be roughly from
 #' -3 to 3.
@@ -82,3 +102,6 @@ trawl[, (initialcol + 1):finalcol] <-
 fixed[, (initialcol + 1):finalcol] <-
   apply(fixed[, (initialcol + 1):finalcol], 2,
   function(x) (x - mean(x)) / sd(x))
+
+# EndOfFile
+
