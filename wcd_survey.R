@@ -25,10 +25,11 @@ parallel <- FALSE
 
 # Set up strata
 # 49 is the US Canada border
-tops <- c(49.0, 47.5, 43, 40.5)
-bottoms <- c(tops[-1], 34.5)
+tops <- c(48.5, 45, 40.5, 34.5)
+bottoms <- c(tops[-1], 32.0)
 #' in fathoms -> m
-depths <- c(30, 100, 300, 700) * 1.8288
+# depths <- c(30, 100, 300, 492.126, 700) * 1.8288
+depths <- c(54.864, 183, 549, 900, 1280)
 
 strata.limits <- data.frame(
   STRATA = LETTERS[1:(length(tops) * (length(depths) - 1))],
@@ -37,6 +38,11 @@ strata.limits <- data.frame(
   MinDepth = rep(depths[-length(depths)], length(tops)),
   MaxDepth = rep(depths[-1], length(tops))
   )
+strata.limits[strata.limits$STRATA == "I", "SLat"] <- 34
+strata.limits[strata.limits$STRATA %in% c("A", "B"), "NLat"] <- 49
+strata.limits <- strata.limits[!strata.limits$STRATA == "M", ]
+strata.limits$STRATA <- LETTERS[1:NROW(strata.limits)]
+rownames(strata.limits) <- 1:NROW(strata.limits)
 
 nX.pos <- nX.binomial <- 1
 Covariates = list(positive = TRUE, binomial = TRUE)
@@ -82,8 +88,7 @@ strata.all <- strata.limits
 oldvariables <- c(ls(), "oldvariables", "sp")
 
 for (sp in seq_along(my.spp)) {
-  if (my.spp[sp] == "yelloweye.rockfish") next
-  if (my.spp[sp] == "bocaccio") next
+  if (my.spp[sp] != "sablefish") next
 
   # Check to see if there are greater than 10 observations in the deepest depth
   if (sum(data.srvy[data.srvy[, my.spp[sp]] > 0, "BEST_DEPTH_M"] >
@@ -147,11 +152,11 @@ indexbyyear <- do.call("rbind", lapply(files2get, function(x) {
   results$model <- substr(strsplit(x, "=")[[1]][[2]], 1, 1)
   return(results)
 }))
+
 indexspp <- subset(indexbyyear, model == bestmod)
-head(strata.limits)
-indexspp$Strata <- strata.limits$STRATA.x[
+indexspp$Strata <- strata.limits$STRATA.x[ls()
   match(indexspp$Strata, strata.limits$STRATA.y)]
-indexlist[length(indexlist)] <- indexspp
+indexlist[[length(indexlist) + 1]] <- indexspp
 index <- merge(index,
   indexspp[, c("Year", "Strata", "IndexMedian")],
   by.x = c("year", "strat"), by.y = c("Year", "Strata"),
@@ -172,7 +177,9 @@ levels(temp$strat) <- rep(LETTERS[1:length(unique(strata.limits$NLat))],
   each = length(unique(strata.limits$MaxDepth)))
 temp <- aggregate(as.matrix(cbind(temp[, -c(1:2)])) ~ year + strat,
   data = temp, sum)
+colnames(temp) <- colnames(index)
 write.csv(temp, file.path(dir.results, file.index), row.names = FALSE)
+rm(temp)
 
 #' Plot index data by strata and then without depth but still by strata
 index_long <- reshape(data = index, direction = "long",
@@ -181,19 +188,6 @@ index_long <- reshape(data = index, direction = "long",
   v.names = "index")
 index_long$species <- factor(index_long$species, levels = unique(index_long$species),
   labels = tolower(gsub("\\.", " ", unique(index_long$species))))
-
-png(file.path(dir.results, "index_speciesbystrata.png"),
-  width = width * 2, height = height, res = resolution)
-ggplot(index_long, aes(x = year, y = index, group = strat)) +
-  geom_line() + geom_point() +
-  facet_grid(species ~ strat, scales = "free") +
-  ylab("relative index of abundance") +
-  theme_bw() +
-  theme(plot.background = element_blank(), panel.grid.major = element_blank(),
-    panel.grid.minor = element_blank(), strip.background = element_blank(),
-    panel.border = element_rect(colour = "black"),
-    axis.text.x = element_text(angle = 45, hjust = 1))
-dev.off()
 
 png(file.path(dir.results, "index_speciesbystrata_nodepth.png"),
   width = width, height = height, res = resolution)
@@ -226,6 +220,7 @@ temp <- lapply(1:length(indexlist), function(x) {
   "upper" = exp(log(indexlist[[x]]$IndexMedian) + 1.96 * indexlist[[x]]$SdLog))
   })
 temp <- do.call("rbind", temp)
+temp$Strata <- factor(temp$Strata)
 levels(temp$Strata) <- rep(LETTERS[1:length(unique(strata.limits$NLat))],
   each = length(unique(strata.limits$MaxDepth)))
 temp <- aggregate(
@@ -242,6 +237,7 @@ ggplot(temp) +
   geom_line(aes(x = Year, y = lower, group = Strata), lty = 2) +
   facet_grid(species ~ Strata, scales = "fixed") +
   ylab("relative index of abundance") +
+  xlab("year") +
   scale_x_continuous(breaks = unique(temp$Year)) +
   # xlim(c(2009, 2014)) +
   theme_bw() +
