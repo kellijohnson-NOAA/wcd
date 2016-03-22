@@ -76,6 +76,9 @@ for(ii in data.match$name[data.match$GEAR == "Fixed gear"]) {
     temp <- data.match[data.match$name == ii, ]
     data.match[data.match$name == ii, "proportion"] <- temp$land / sum(temp$land)
 }
+data.match.trawl <- subset(data.match, GEAR == "Trawl")
+data.match.fixed <- subset(data.match, GEAR == "Fixed gear")
+data.match.fixed <- data.match.fixed[, -which(colnames(data.match.fixed) == "Speed")]
 
 ###############################################################################
 ###############################################################################
@@ -101,6 +104,15 @@ trawl[, (initialcol + 1):finalcol] <-
   function(x) (x - mean(x)) / sd(x))
 fixed[, (initialcol + 1):finalcol] <-
   apply(fixed[, (initialcol + 1):finalcol], 2,
+  function(x) (x - mean(x)) / sd(x))
+
+initialcol <- grep("management", colnames(data.match.fixed))
+finalcol <- grep("letrawl", colnames(data.match.fixed)) - 1
+data.match.fixed[, (initialcol + 1):finalcol] <-
+  apply(data.match.fixed[, (initialcol + 1):finalcol], 2,
+  function(x) (x - mean(x)) / sd(x))
+data.match.trawl[, (initialcol + 1):finalcol] <-
+  apply(data.match.trawl[, (initialcol + 1):finalcol], 2,
   function(x) (x - mean(x)) / sd(x))
 
 # EndOfFile
