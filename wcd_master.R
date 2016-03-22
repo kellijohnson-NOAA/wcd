@@ -43,7 +43,8 @@ my.spp <- c("sablefish",
 my.years <- 2009:2014
 my.portgroups <- c("Washington", "Astoria and Tillamook",
   "Newport", "Coos Bay", "Brookings and Crescent City", "Eureka",
-  "Fort Bragg", "San Francisco and Bodega Bay")
+  "Fort Bragg", "San Francisco and Bodega Bay",
+  "Monterey and Morro Bay")
 
 # Plot
 resolution <- 100
