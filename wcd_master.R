@@ -54,7 +54,7 @@ height <- width
 #' Packages
 #' Set the CRAN mirror and install packages that are not currently installed
 options("repos" = "http://R-Forge.R-project.org")
-pckg.need <- c("devtools", "factoextra", "gamboostLSS", "gamlss",
+pckg.need <- c("betareg", "devtools", "factoextra", "gamboostLSS", "gamlss",
   "ggdendro", "ggmap", "ggplot2", "grid",
   "knitr", "nwfscDeltaGLM", "raster", "vegan", "xtable")
 for (pckg in pckg.need[!pckg.need %in% installed.packages()[, "Package"]]){
