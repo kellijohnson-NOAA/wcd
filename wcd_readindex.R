@@ -30,7 +30,9 @@ data.area <- tail(list.files(dir.results, full.names = TRUE,
   pattern = "ByYearAndStrata\\.csv", recursive = TRUE), 1)
 data.area <- read.csv(data.area)
 data.area <- data.area[data.area$Year == my.years[1], c("Strata", "Area")]
-data.area$SLat <- strata.limits$SLat[match(strata.limits$STRATA, data.area$Strata)]
+data.area$SLat <- strata.limits$SLat[
+  match(strata.limits[, grep("STRATA", colnames(strata.limits))[1]],
+  data.area$Strata)]
 data.area$SLat <- round(data.area$SLat, 0)
 data.area <- aggregate(Area ~ SLat, data = data.area, sum)
 data.area$Strata <- LETTERS[NROW(data.area):1]
