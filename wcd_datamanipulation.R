@@ -87,8 +87,7 @@ data.match.fixed <- data.match.fixed[, -which(colnames(data.match.fixed) == "Spe
 #' -3 to 3.
 ###############################################################################
 ###############################################################################
-nona <- droplevels(subset(data.md, portgrp != "Monterey and Morro Bay"))
-nona <- droplevels(subset(nona, !is.na(land)))
+nona <- droplevels(subset(data.md, !is.na(land)))
 nona <- droplevels(subset(nona, !is.na(Length)))
 
 nona$management <- factor(nona$management, levels = c("before", "after"))
