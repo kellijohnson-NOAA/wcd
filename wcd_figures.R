@@ -32,7 +32,7 @@ ggsave(filename = "sablefishlandings.png", g, path = dir.results,
 #### Figure: distribution
 ####
 ###############################################################################
-betafit <- MASS::fitdistr(trawl$letprop, "beta",
+betafit <- MASS::fitdistr(data.match.fixed$proportion, "beta",
   start = list(shape1 = 2, shape2 = 2), lower = 0.000001)
 betapars <- c(
   "mean" = sum(betafit$estimate[1]) / sum(betafit$estimate),
@@ -45,13 +45,14 @@ png(file.path(dir.results, "distribution.png"),
 layout <- matrix(c(1, 2, 1, 2, 3, 3), ncol = 3)
 layout(layout)
 par(mar = c(4, 4, 1, 1), las = 1)
-qqplot(rnorm(NROW(trawl)), trawl$letprop, main = "",
+qqplot(rnorm(NROW(trawl)), data.match.fixed$proportion, main = "",
    ylab = "Sample Quantiles", xlab = "Normal quantiles")
-qqline(trawl$letprop)
-qqplot(rbeta(NROW(trawl), betafit$estimate[1], betafit$estimate[2]),
-  trawl$letprop, xlab = "Beta quantiles", ylab = "Sample Quantiles")
+qqline(data.match.fixed$proportion)
+qqplot(rbeta(NROW(data.match.fixed), betafit$estimate[1], betafit$estimate[2]),
+  data.match.fixed$proportion, xlab = "Beta quantiles",
+  ylab = "Sample Quantiles")
 abline(0, 1)
-hist(trawl$letprop, main = "", xlab = "trawl gear attainment")
+hist(data.match.fixed$proportion, main = "", xlab = "trawl gear attainment")
 dev.off()
 
 ###############################################################################
