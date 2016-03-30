@@ -110,6 +110,7 @@ finalcol <- grep("letrawl", colnames(data.match.fixed)) - 1
 data.match.fixed[, (initialcol + 1):finalcol] <-
   apply(data.match.fixed[, (initialcol + 1):finalcol], 2,
   function(x) (x - mean(x)) / sd(x))
+finalcol <- finalcol + 1
 data.match.trawl[, (initialcol + 1):finalcol] <-
   apply(data.match.trawl[, (initialcol + 1):finalcol], 2,
   function(x) (x - mean(x)) / sd(x))
