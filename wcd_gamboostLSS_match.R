@@ -24,12 +24,12 @@ test <- gamboostLSS(
       bols(Length, intercept = FALSE) +
       bols(Fixed.costs, intercept = FALSE) +
       bols(Variable.costs, intercept = FALSE) +
-      bols(buyercount, intercept = FALSE) +
       bols(sablefish, intercept = FALSE),
   "phi" = proportion ~ bols(INT, intercept = FALSE)),
   families = BetaLSS(),
   control = boost_control(mstop = c(mu = stop, phi = stop)),
   data = droplevels(data.frame(data.match.fixed, "INT" = 1)))
+  par(mfrow = c(3, 3)); plot(test)
 
 ###############################################################################
 ###############################################################################
@@ -43,6 +43,8 @@ mod1 <- betareg(proportion ~ Number.of.vessels + portgrp,
 mod2 <- betareg(proportion ~ sablefish + portgrp,
   data = data.match.fixed)
 mod3 <- betareg(proportion ~ portgrp + sablefish + Number.of.vessels,
+  data = data.match.fixed)
+linear <- lm(proportion ~ portgrp + sablefish + Number.of.vessels,
   data = data.match.fixed)
 
 ###############################################################################
