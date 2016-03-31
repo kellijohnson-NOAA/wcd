@@ -44,15 +44,25 @@ png(file.path(dir.results, "distribution.png"),
   res = resolution, width = width, height = height)
 layout <- matrix(c(1, 2, 1, 2, 3, 3), ncol = 3)
 layout(layout)
-par(mar = c(4, 4, 1, 1), las = 1)
-qqplot(rnorm(NROW(trawl)), data.match.fixed$proportion, main = "",
-   ylab = "Sample Quantiles", xlab = "Normal quantiles")
-qqline(data.match.fixed$proportion)
-qqplot(rbeta(NROW(data.match.fixed), betafit$estimate[1], betafit$estimate[2]),
-  data.match.fixed$proportion, xlab = "Beta quantiles",
-  ylab = "Sample Quantiles")
+limits <- c(0.2, 1.2)
+par(mar = c(0, 4, 1, 1), las = 1)
+qqplot(data.match.fixed$proportion,
+  rnorm(1000, mean = mean(data.match.fixed$proportion),
+  sd = sd(data.match.fixed$proportion)),
+  main = "", xlim = limits, ylim = limits,
+  ylab = "Normal quantiles", xlab = "", xaxt = "n")
+abline(a = 0, b = 1)
+par(mar = c(4, 4, 0, 1), las = 1)
+qqplot(data.match.fixed$proportion,
+  rbeta(1000, betafit$estimate[1], betafit$estimate[2]),
+  xlab = "Sample Quantiles",
+  ylab = "Beta quantiles", xlim = limits, ylim = limits)
 abline(0, 1)
-hist(data.match.fixed$proportion, main = "", xlab = "trawl gear attainment")
+par(mar = c(4, 0.5, 1, 3), las = 1)
+hist(data.match.fixed$proportion, main = "", yaxt = "n",
+  xlab = "proportion fixed-gear landings", ylab = "")
+axis(side = 4, at = 0:3, labels = 0:3)
+mtext(side = 4, line = 1, "Frequency", las = 3, cex = 0.75)
 dev.off()
 
 ###############################################################################
