@@ -93,22 +93,21 @@ plotdata$portgrp <- factor(plotdata$portgrp,
   labels = levels(plotdata$portgrp)[portgrouporder])
 plotdata$land <- plotdata$land / 2204.62
 
-g <- ggplot(plotdata) + theme +
+png(file.path(dir.results, "landings_trawl.png"),
+  res = resolution, width = width / 2, height = height)
+ggplot(plotdata) + theme +
   geom_point(aes(x = year, y = land, group = GEAR, pch = GEAR)) +
   facet_grid(portgrp ~ .) +
-  geom_vline(xintercept = 2011, lty = 2) +
   geom_text(aes(x = Inf, y = Inf, label = portgrp),
-    hjust = 1, vjust = 1, cex = 4) +
-  geom_text(data = subset(plotdata, portgrp == "Washington"),
-    aes(x = year, y = -Inf, label = letrawl),
-    hjust = 0.5, vjust = 0, cex = 4) +
-  theme(legend.position = c(0.2, 0.07),
-    legend.direction = "horizontal",
+    hjust = 1, vjust = 1, cex = 2.5) +
+  theme(legend.position = c(0.17, 0.95),
+    legend.title = element_blank(),
     strip.background = element_blank(),
-    strip.text = element_blank()) +
+    strip.text = element_blank(),
+    legend.key.height = unit(0.5, "mm"),
+    legend.key.width = unit(0.5, "cm")) +
+  geom_vline(xintercept = 2011, lty = 2) +
   ylab("US West Coast LE trawl sablefish landings (mt)")
-ggsave(filename = "landings_trawl.png", g, path = dir.results,
-  dpi = 300, limitsize = TRUE)
 dev.off()
 
 #EndOfFile
