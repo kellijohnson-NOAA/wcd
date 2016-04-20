@@ -3,19 +3,6 @@
 #' Author: Kelli Faye Johnson
 #' ----
 
-#' Read in the catch data as provided for the stock assessment
-#' Catches are grouped according to gear that was used while fishing
-#' not permit type held while fishing.
-catch <- read.csv(file.path(dir.data, file.land))
-catch <- aggregate(catch ~ year + fleet, data = catch, sum)
-catch <- reshape(catch, direction = "wide", timevar = "fleet", idvar = "year")
-colnames(catch) <- gsub("catch\\.", "", colnames(catch))
-rownames(catch) <- catch$year
-
-#' Change absolute catches into proportion of the total catch for each gear
-props <- data.frame("year" = catch[, 1],
-  prop.table(as.matrix(catch[, -1]), margin = 1))
-
 #' Subset for federal period
 props <- props[props$year >= federalyear, ]
 fed <- catch[catch$year >= federalyear, ]
