@@ -64,15 +64,15 @@ p <- ggplot() +
 ###############################################################################
 ###############################################################################
 pp <- p +
-  geom_point(data = data.plot,
-    aes(x = X, y = Y, size = weight / 10), pch = 1, alpha = 0.5) +
+  geom_point(data = data.plot[data.plot$species == "sablefish", ],
+    aes(x = X, y = Y, size = weight / 8), pch = 1, alpha = 0.2) +
   theme(legend.position = "none",
         axis.text = element_text(size = 6)) +
   geom_path(data = us.states, aes(x = long, y = lat, group = group), size = small) +
   geom_path(data = ca.provinces, aes(x = long, y = lat, group = group), size = small) +
   coord_map() +
   facet_wrap( ~ species) +
-  theme(strip.text = element_text(vjust = -1.25),
+  theme(strip.text = element_text(vjust = 5.25),
         panel.margin = unit(c(-0.5, 0, -0.5, 0), "lines"))
 ggsave(filename = "abundance.png", pp, path = dir.results,
   dpi = 300, limitsize = TRUE)
