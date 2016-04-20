@@ -10,23 +10,37 @@
 line <- 0.75
 plotdata <- aggregate(catch ~ year + fleet, data = data.landbygear, sum)
 colnames(plotdata) <- c("year", "Gear", "landings")
-plotdata$gear <- factor(plotdata$Gear, levels = unique(plotdata$Gear),
-  labels = c("hook and line", "pot", "trawl"))
-text <- data.frame("year" = 2016,
-  "landings" = unlist(data.acl[data.acl$Year == 2014, c("ACL", "ACL_N", "letrawl")]),
-  "text" = c("(a)", "(b)", "(c)"))
+plotdata <- reshape(plotdata, direction = "wide",
+  idvar = "Gear", timevar = "year")
+colnames(plotdata) <- gsub("landings\\.", "", colnames(plotdata))
 
-g <- ggplot() + theme +
-  geom_bar(data = plotdata,
-  aes(x = year, y = landings, fill = Gear), stat = "identity") +
-  geom_line(data = data.acl, aes(x = Year, y = ACL),     lty = 1, lwd = line) +
-  # geom_line(data = data.acl, aes(x = Year, y = ACL_N),   lty = 1, lwd = line) +
-  # geom_line(data = data.acl, aes(x = Year, y = letrawl), lty = 1, lwd = line) +
-  # geom_text(data = text, aes(x = year, y = landings, label = text)) +
-  scale_fill_grey(start = 0.5, end = 0.9) +
-  theme(legend.justification = c(0, 1), legend.position = c(0, 1))
-ggsave(filename = "sablefishlandings.png", g, path = dir.results,
-  dpi = 300, limitsize = TRUE)
+png(file.path(dir.results, "sablefishlandings.png"),
+  res = resolution, width = width, height = height)
+colors <- grey.colors(3, start = 0.1, end = 0.7)
+layout <- matrix(c(1, 1, 2, 1, 1, 2), ncol = 2)
+layout(layout)
+limits <- c(0.2, 1.2)
+par(mar = c(0, 4.5, 1, 1), las = 1)
+mp <- barplot(as.matrix(plotdata[, -1]), xaxt = "n",
+  ylab = "landings (mt)", , col = colors)
+legend(x = 0, y = max(plotdata[, -1])/2, legend = c("hook and line", "pot", "trawl"),
+  bty = "n", pch = 15:17, col = colors, cex = 1.5)
+select <- seq(0, (floor(dim(plotdata)/5)*5)[2], 10) + 1
+xlim <- par("usr")[1:2]
+lines(mp[match(data.acl$Year, colnames(plotdata)[-1])], data.acl$ACL,
+  lwd = line)
+par(mar = c(4.5, 4.5, 0.5, 1))
+mp <- barplot(as.matrix(plotdata[, -1]), xaxt = "n",
+  col = "white", ylim = c(0, 1), border = NA,
+  xlab = "year", ylab = "proportion")
+axis(1, at = mp[select], labels = colnames(plotdata)[select + 1])
+lines(mp[match(props$year, colnames(plotdata))], props$HKL,
+ type = "o", pch = 15, lwd = 0.5, col = colors[1])
+lines(mp[match(props$year, colnames(plotdata))], props$POT,
+ type = "o", pch = 16, lwd = 0.5, col = colors[2])
+lines(mp[match(props$year, colnames(plotdata))], props$TWL,
+ type = "o", pch = 17, lwd = 0.5, col = colors[3])
+dev.off()
 
 ###############################################################################
 #### Figure: distribution
