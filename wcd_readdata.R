@@ -109,6 +109,11 @@ props <- data.frame("year" = catch[, 1],
   prop.table(as.matrix(catch[, -1]), margin = 1))
 
 ###############################################################################
+#### Read in the price data for all pacfin species
+###############################################################################
+data.price <- read.csv(file.path(dir.data, file.price))
+
+###############################################################################
 #### Return to old working directory upon exit
 ###############################################################################
 setwd(dir.curr)
