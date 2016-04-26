@@ -21,3 +21,5 @@ print(xtable(econstuff, digits = 2), include.rownames = FALSE)
 sink()
 system(paste("pandoc", file.path(dir.results, "econ.tex"), "-o",
   file.path(dir.results, "econ.docx")))
+
+# EndOfFile
