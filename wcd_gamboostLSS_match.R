@@ -13,7 +13,6 @@ knots <- 2; df <- 2; stop <- 20;
 test <- gamboostLSS(
   formula = list(
     "mu" = proportion ~
-      # brandom(fyear, df = df) +
       bols(portgrp, intercept = TRUE) +
       bols(Number.of.vessels, intercept = FALSE) +
       # bols(Days, intercept = FALSE) +

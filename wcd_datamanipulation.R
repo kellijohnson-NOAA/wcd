@@ -61,7 +61,6 @@ data.match$name <- with(data.match, paste0(year, portgrp))
 data.match <- subset(data.match, data.match$name %in% data.match$name[data.match$GEAR == "Fixed gear"])
 data.match <- subset(data.match, data.match$name %in% data.match$name[data.match$GEAR == "Trawl"])
 data.match <- data.match[!is.na(data.match$land), ]
-data.match$fyear <- factor(data.match$year)
 
 for(ii in data.match$name[data.match$GEAR == "Fixed gear"]) {
     temp <- data.match[data.match$name == ii, ]
