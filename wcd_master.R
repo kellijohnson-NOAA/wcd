@@ -41,6 +41,10 @@ my.portgroups <- c("Washington", "Astoria and Tillamook",
   "Fort Bragg", "San Francisco and Bodega Bay",
   "Monterey and Morro Bay")
 portgrouporder <- c(9, 1, 7, 3, 2, 4, 5, 8, 6)
+my.columns <- c(my.spp, "revenue", "buyercount",
+  "Fixed.costs", "Variable.costs",
+  "Crew", "Fuel", "Days", "TotRev", "VarCostNetRev", "TotCostNetRev",
+  "FuelCapacity", "HorsePower", "Length")
 
 # Plot
 resolution <- 100
@@ -49,7 +53,7 @@ width <- 700
 #' Packages
 #' Set the CRAN mirror and install packages that are not currently installed
 options("repos" = "http://R-Forge.R-project.org")
-pckg.need <- c("betareg", "devtools", "factoextra", "gamboostLSS", "gamlss",
+pckg.need <- c("betareg", "devtools", "factoextra",
   "ggdendro", "ggmap", "ggplot2", "grid",
   "knitr", "nwfscDeltaGLM", "raster", "vegan", "xtable")
 for (pckg in pckg.need[!pckg.need %in% installed.packages()[, "Package"]]){
