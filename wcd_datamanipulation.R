@@ -48,11 +48,6 @@ data.md <- merge(data.md, data.vess,   by = good, all.x = TRUE)
 data.md <- data.md[, -which(colnames(data.md) %in%
   c("Number.of.vessels.x", "Number.of.vessels.y"))]
 
-#' add acl data
-data.md <- merge(data.md, data.acl[, c("Year", "letrawl")],
-  by.x = "year", by.y = "Year")
-data.md$letprop <- data.md$land / (data.md$letrawl * 2204.62)
-
 ###############################################################################
 ###############################################################################
 #' Create a subset with only port groups that have both trawl and fixed gear
@@ -83,14 +78,14 @@ data.match.fixed <- data.match.fixed[, -which(colnames(data.match.fixed) == "Spe
 #' -3 to 3.
 ###############################################################################
 ###############################################################################
-nona <- droplevels(subset(data.md, !is.na(land)))
-nona <- droplevels(subset(nona, !is.na(Length)))
+fixed <- droplevels(subset(data.md, !is.na(land)))
+fixed <- droplevels(subset(fixed, !is.na(Length)))
 
-initialcol <- grep("land", colnames(nona))
-finalcol <- grep("letrawl", colnames(nona)) - 1
+initialcol <- grep("land", colnames(fixed))
+finalcol <- grep("letrawl", colnames(fixed)) - 1
 
-trawl <- droplevels(subset(nona, GEAR == "Trawl"))
-fixed <- droplevels(subset(nona, GEAR == "Fixed gear"))
+trawl <- droplevels(subset(fixed, GEAR == "Trawl"))
+fixed <- droplevels(subset(fixed, GEAR == "Fixed gear"))
 
 trawl[, (initialcol + 1):finalcol] <-
   apply(trawl[, (initialcol + 1):finalcol], 2,
