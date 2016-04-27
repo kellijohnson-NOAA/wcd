@@ -11,7 +11,6 @@
 #' Set variable inputs
 my.dir <- "c:/wcd"
 if (!file.exists(my.dir)) my.dir <- "d:/wcd"
-portgrouporder <- c(9, 1, 7, 3, 2, 4, 5, 8, 6)
 good <- c("portgrp", "year", "GEAR")
 federalyear <- 1982
 nastrings <- c("NA","NaN", " ", -999, "#N/A")
@@ -38,14 +37,13 @@ ignore <- mapply(source, list.files("R", full.names = TRUE))
 
 #' Inputs
 verbose <- TRUE
-# Species of interest
-# could add overfished or DTS species
-my.spp <- c("sablefish")
+my.spp <- c("sablefish") #could add overfished or DTS species
 my.years <- 2009:2014
 my.portgroups <- c("Washington", "Astoria and Tillamook",
   "Newport", "Coos Bay", "Brookings and Crescent City", "Eureka",
   "Fort Bragg", "San Francisco and Bodega Bay",
   "Monterey and Morro Bay")
+portgrouporder <- c(9, 1, 7, 3, 2, 4, 5, 8, 6)
 
 # Plot
 resolution <- 100
