@@ -50,6 +50,21 @@ data.md <- data.md[, -which(colnames(data.md) %in%
 
 ###############################################################################
 ###############################################################################
+#' Create the binomial data
+###############################################################################
+###############################################################################
+data.binom <- data.md
+# todo: change to using the actual number of days, need to get this from ES.
+data.binom$fullday <- ceiling(with(data.binom, Days * Number.of.vessels))
+data.binom <- merge(data.binom,
+  aggregate(fullday ~ year + portgrp, data = data.binom, sum),
+  by = c("year", "portgrp"))
+data.binom <- data.binom[!is.na(data.binom$fullday.x), ]
+data.binom <- data.binom[data.binom$GEAR == "Fixed gear", ]
+data.binom$y <- with(data.binom, cbind(fullday.x, fullday.y - fullday.x))
+
+###############################################################################
+###############################################################################
 #' Create a subset with only port groups that have both trawl and fixed gear
 #' information in a given year.
 #' Results in a very small data set.
@@ -77,31 +92,9 @@ data.match.fixed <- data.match.fixed[, -which(colnames(data.match.fixed) == "Spe
 #' -3 to 3.
 ###############################################################################
 ###############################################################################
-fixed <- droplevels(subset(data.md, !is.na(land)))
-fixed <- droplevels(subset(fixed, !is.na(Length)))
-
-initialcol <- grep("land", colnames(fixed))
-finalcol <- grep("letrawl", colnames(fixed)) - 1
-
-trawl <- droplevels(subset(fixed, GEAR == "Trawl"))
-fixed <- droplevels(subset(fixed, GEAR == "Fixed gear"))
-
-trawl[, (initialcol + 1):finalcol] <-
-  apply(trawl[, (initialcol + 1):finalcol], 2,
+data.match.fixed[, my.columns] <- apply(data.match.fixed[, my.columns], 2,
   function(x) (x - mean(x)) / sd(x))
-fixed[, (initialcol + 1):finalcol] <-
-  apply(fixed[, (initialcol + 1):finalcol], 2,
-  function(x) (x - mean(x)) / sd(x))
-
-initialcol <- grep("land", colnames(data.match.fixed))
-finalcol <- grep("letrawl", colnames(data.match.fixed)) - 1
-data.match.fixed[, (initialcol + 1):finalcol] <-
-  apply(data.match.fixed[, (initialcol + 1):finalcol], 2,
-  function(x) (x - mean(x)) / sd(x))
-finalcol <- finalcol + 1
-data.match.trawl[, (initialcol + 1):finalcol] <-
-  apply(data.match.trawl[, (initialcol + 1):finalcol], 2,
+data.binom[, my.columns] <- apply(data.binom[, my.columns], 2,
   function(x) (x - mean(x)) / sd(x))
 
 # EndOfFile
-
