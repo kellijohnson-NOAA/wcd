@@ -37,10 +37,6 @@ data.md <- merge(data.md,
   unique(data.md$year), unique(data.md$GEAR)),
   c("portgrp", "year", "GEAR")), all.y = TRUE)
 
-#' Create the management variable
-data.md$management <- ifelse(as.character(data.md$year) <= 2010,
-  "before", "after")
-
 #' bring in the other data
 data.md <- merge(data.md, data.indexmatch, all = TRUE)
 data.md <- merge(data.md, data.rev,    all.x = TRUE)
@@ -90,9 +86,7 @@ data.match.fixed <- data.match.fixed[, -which(colnames(data.match.fixed) == "Spe
 nona <- droplevels(subset(data.md, !is.na(land)))
 nona <- droplevels(subset(nona, !is.na(Length)))
 
-nona$management <- factor(nona$management, levels = c("before", "after"))
-
-initialcol <- grep("management", colnames(nona))
+initialcol <- grep("land", colnames(nona))
 finalcol <- grep("letrawl", colnames(nona)) - 1
 
 trawl <- droplevels(subset(nona, GEAR == "Trawl"))
@@ -105,7 +99,7 @@ fixed[, (initialcol + 1):finalcol] <-
   apply(fixed[, (initialcol + 1):finalcol], 2,
   function(x) (x - mean(x)) / sd(x))
 
-initialcol <- grep("management", colnames(data.match.fixed))
+initialcol <- grep("land", colnames(data.match.fixed))
 finalcol <- grep("letrawl", colnames(data.match.fixed)) - 1
 data.match.fixed[, (initialcol + 1):finalcol] <-
   apply(data.match.fixed[, (initialcol + 1):finalcol], 2,
