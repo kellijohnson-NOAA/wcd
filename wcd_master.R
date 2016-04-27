@@ -38,10 +38,9 @@ ignore <- mapply(source, list.files("R", full.names = TRUE))
 
 #' Inputs
 verbose <- TRUE
-# Species of interest and four overfished species.
-# exclude cowcod bc RCAs are successful in eliminating bycatch
-my.spp <- c("sablefish",
-  "bocaccio", "darkblotched.rockfish", "Pacific.ocean.perch", "yelloweye.rockfish")
+# Species of interest
+# could add overfished or DTS species
+my.spp <- c("sablefish")
 my.years <- 2009:2014
 my.portgroups <- c("Washington", "Astoria and Tillamook",
   "Newport", "Coos Bay", "Brookings and Crescent City", "Eureka",
