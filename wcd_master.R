@@ -22,12 +22,9 @@ dir.results <- file.path(my.dir, "results")
 
 #' Files
 file.surveyspp <- "JohnsonK_BocSablPopCowYeye_2003To2014.xlsx"
-file.surveydata <- "FisheryIndices2015_Sablefish_V7.xlsx"
 file.index <- "index.csv"
 file.econ <- "econ4osuonlysablefish2009-2014.xlsx"
-file.alloc <- "wcd_allocation.xlsx"
 file.tac <- "wc_tac_v3.csv"
-file.aclall <- "pfmc_ACL_2003-2016_Sheet1.csv"
 file.acl <- "pfmc_ACL_Sablefish.csv"
 file.land <- "catchbyyearfleet.csv"
 file.price <- "pacfin_LandingsByGear.csv"

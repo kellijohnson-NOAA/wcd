@@ -28,8 +28,6 @@ if (!file.exists(filetotest)) {
 
 data.srvy <- read.csv(filetotest, skip = 9)
 
-data.bio <- read.csv("trawl_surveys2.csv")
-
 ## Econ data
 fp.econ <- file.path(dir.data, file.econ)
 # Partition out the csv file if it does not already exist.
@@ -39,9 +37,6 @@ if (!file.exists(filetotest)) {
     "\" \"", gsub("/", "\\\\", file.econ), "\\"))
 }
 
-data.spp <- read.csv(
-  gsub(".xlsx", paste0("_", "specieslist", ".csv"), file.econ),
-  na.strings = nastrings)
 data.vcount <- read.csv(
   gsub(".xlsx", paste0("_", "vesseldeliverycount", ".csv"), file.econ),
   na.strings = nastrings)
@@ -73,34 +68,20 @@ colnames(data.cost)[1] <- tolower(colnames(data.cost))[1]
 colnames(data.days)[1] <- tolower(colnames(data.days))[1]
 colnames(data.netrev)[1] <- tolower(colnames(data.netrev))[1]
 colnames(data.vess)[1] <- tolower(colnames(data.vess))[1]
-colnames(data.spp)[which(colnames(data.spp) == "YEAR")] <-
-  tolower(colnames(data.spp))[which(colnames(data.spp) == "YEAR")]
 colnames(data.rev) <- gsub("^X", "", colnames(data.rev))
 colnames(data.bcount) <- gsub("^X", "", colnames(data.bcount))
 colnames(data.land) <- gsub("^X", "", colnames(data.land))
 
-
 # TAC data
-fp.alloc <- file.path(dir.data, file.alloc)
-filetotest <- gsub(".xlsx", paste0("_", "after", ".csv"), fp.alloc)
-if (!file.exists(filetotest)) {
-  system(paste0("cscript \"", gsub("/", "\\\\", fp.script),
-    "\" \"", gsub("/", "\\\\", fp.alloc), "\\"))
-}
-data.tac.after <- read.csv(filetotest)
-data.tac.before <- read.csv(file.path(dir.data, file.tac))
 data.acl <- read.csv(file.acl)
-data.aclall <- read.csv(file.path(dir.data, file.aclall), header = TRUE)
-colnames(data.aclall) <- gsub("^X", "", colnames(data.aclall))
-data.landbygear <- read.csv(file.land)
 
 ###############################################################################
 #### Read in the catch data as provided for the stock assessment
 #### Catches are grouped according to gear that was used while fishing
 #### not permit type held while fishing.
 ###############################################################################
-catch <- read.csv(file.path(dir.data, file.land))
-catch <- aggregate(catch ~ year + fleet, data = catch, sum)
+data.landbygear <- read.csv(file.land)
+catch <- aggregate(catch ~ year + fleet, data = data.landbygear, sum)
 catch <- reshape(catch, direction = "wide", timevar = "fleet", idvar = "year")
 colnames(catch) <- gsub("catch\\.", "", colnames(catch))
 rownames(catch) <- catch$year

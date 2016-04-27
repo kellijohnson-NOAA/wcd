@@ -4,17 +4,10 @@
 #' Date: 2015-09-08
 #' ----
 
-# Sheets
-sheet.surveyspp  <- "CatchData2009To2012"
-sheet.surveydata <- "HaulCatchWt&Effort"
-
 #' The Northwest Fisheries Science Center (NWFSC) Shelf/Slope bottom trawl
 #' survey data are collected to inform management of United States (U.S.)
 #' West Coast groundfish fisheries. Standardized survey data is available
 #' from 2003 to 2014.
-#' The data, {{file.surveydata}} was provided by the NWFSC during the 2015
-#' assessment cycle. Within the data, the information used was stored in the
-#' {{sheet.surveydata}}
 
 #' All output is stored in {{dir.results}}.
 #' The general setup is as follows:
