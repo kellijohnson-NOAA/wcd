@@ -50,7 +50,6 @@ my.portgroups <- c("Washington", "Astoria and Tillamook",
 # Plot
 resolution <- 100
 width <- 700
-height <- width
 
 #' Packages
 #' Set the CRAN mirror and install packages that are not currently installed

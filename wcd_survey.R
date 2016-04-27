@@ -190,7 +190,7 @@ index_long$species <- factor(index_long$species, levels = unique(index_long$spec
   labels = tolower(gsub("\\.", " ", unique(index_long$species))))
 
 png(file.path(dir.results, "index_speciesbystrata_nodepth.png"),
-  width = width, height = height, res = resolution)
+  width = width, height = width, res = resolution)
 temp <- index_long
 levels(temp$strat) <- rep(LETTERS[1:length(unique(strata.limits$NLat))],
   each = length(unique(strata.limits$MaxDepth)))
@@ -211,7 +211,7 @@ rm(temp)
 
 #plot index by stratam with confidence intervals
 png(file.path(dir.results, "index_speciesbystrata_ci.png"),
-  width = width, height = height, res = resolution)
+  width = width, height = width, res = resolution)
 
 temp <- lapply(1:length(indexlist), function(x) {
   data.frame(indexlist[[x]][, c("Year", "Strata", "Raw", "IndexMedian", "SdLog")],

@@ -104,7 +104,7 @@ model1$phi$offset
 ###############################################################################
 xlim <- c(-3, 3)
 png(file.path(dir.results, "gam_marginalprediction.png"), width = width,
-  height = height * 1.15, res = resolution)
+  height = width * 1.15, res = resolution)
 par(mfrow = c(2, 2), mar = c(0.4, 0.2, 0.2, 0.1), oma = c(2, 4, 0.2, 0.1),
   xpd = TRUE)
 plot(predint(model1, pi = c(0.90), which = "Number.of.vessels"),
@@ -156,7 +156,7 @@ dev.off()
 ###############################################################################
 ###############################################################################
 png(file.path(dir.results, "gam_marginalprediction.png"),
-  res = resolution, width = width, height = height)
+  res = resolution, width = width, height = width)
 par(mfrow = c(2, 2), mar = c(0, 0, 0, 0), oma = c(3, 3, 1, 3))
 for (ii in 1:3) {
 preds <- predict(goodgam, type = "terms", se.fit = TRUE)

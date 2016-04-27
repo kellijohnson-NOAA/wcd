@@ -15,7 +15,7 @@ plotdata <- reshape(plotdata, direction = "wide",
 colnames(plotdata) <- gsub("landings\\.", "", colnames(plotdata))
 
 png(file.path(dir.results, "sablefishlandings.png"),
-  res = resolution, width = width, height = height)
+  res = resolution, width = width, height = width)
 colors <- grey.colors(3, start = 0.1, end = 0.7)
 points <- 15:17
 layout <- matrix(c(1, 1, 2, 1, 1, 2), ncol = 2)
@@ -56,7 +56,7 @@ betapars <- c(
   )
 
 png(file.path(dir.results, "distribution.png"),
-  res = resolution, width = width, height = height)
+  res = resolution, width = width, height = width)
 layout <- matrix(c(1, 2, 1, 2, 3, 3), ncol = 3)
 layout(layout)
 limits <- c(0.2, 1.2)
@@ -95,7 +95,7 @@ plotdata$portgrp <- factor(plotdata$portgrp,
 plotdata$land <- plotdata$land / 2204.62
 
 png(file.path(dir.results, "landings_trawl.png"),
-  res = resolution, width = width / 2, height = height)
+  res = resolution, width = width / 2, height = width)
 ggplot(plotdata) + theme +
   geom_point(aes(x = year, y = land, group = GEAR, pch = GEAR)) +
   facet_grid(portgrp ~ .) +
@@ -116,7 +116,7 @@ dev.off()
 ####
 ###############################################################################
 png(file.path(dir.results, "priceperpound.png"),
-  res = resolution, width = width, height = height / 2)
+  res = resolution, width = width, height = width / 2)
 priceperpound <- data.price[data.price$PACFIN_SPECIES_COMMON_NAME == "SABLEFISH", ]
 priceperpound <- priceperpound[,
   c("LANDING_YEAR", "TRAWL_PPP", "HOOK_LINE_PPP", "POT_TRAP_PPP")]

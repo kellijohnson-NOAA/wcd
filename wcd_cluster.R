@@ -29,7 +29,7 @@ ymax <- mean(mod$height[length(mod$height) - ((k - 2):(k - 1))])
 
 #' Create the figure used in the publication
 png(file.path(dir.results, "dendrogram.png"),
-  res = resolution, width = width, height = height / 1.2)
+  res = resolution, width = width, height = width / 1.2)
 layout <- matrix(c(1, 1, 1, 2, 1, 1, 2, 1,  1), ncol = 3)
 plots <- c(list(
   ggplot(segment(dendro_data(as.dendrogram(mod), type = "rectangle"))) +
@@ -78,7 +78,7 @@ simp <- diversity(catch[, c("HKL", "POT", "TWL")],
   index = "simpson", MARGIN = 1)
 
 png(file.path(dir.results, "simpsonsdiversity.png"),
-  res = resolution, width = width, height = height / 1.2)
+  res = resolution, width = width, height = width / 1.2)
 plot(simp, xaxt = "n", xlab = "year", ylab = "evenness", las = 1,
   yaxs = "i", xaxs = "i", type = "b")
 abline(h = mean(simp), lty = 2)
@@ -100,7 +100,7 @@ nmds <- metaMDS(props[, c("HKL", "POT", "TWL")], k = 2,
   wascores = TRUE, autotransform = FALSE)
 
 png(file.path(dir.results, "nmds.png"),
-  res = resolution, width = width, height = height)
+  res = resolution, width = width, height = width)
 ordiplot(nmds, type = "n", las = 1)
 orditorp(nmds, display = "species", col = "black", air = 0.01, cex = 1.5)
 orditorp(nmds, display = "sites", col = "black", air = 0.01)
