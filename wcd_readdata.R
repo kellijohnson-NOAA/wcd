@@ -18,10 +18,11 @@ setwd(dir.data)
 
 ## Survey data
 fp.srvy <- file.path(dir.data, file.surveyspp)
+fp.script <- file.path(dir.data, file.script)
 # Partition out the csv file if it does not already exist.
 filetotest <- gsub(".xlsx", paste0("_", "HaulWeight&Effort", ".csv"), fp.srvy)
 if (!file.exists(filetotest)) {
-  system(paste0("cscript \"", gsub("/", "\\\\", file.script),
+  system(paste0("cscript \"", gsub("/", "\\\\", fp.script),
     "\" \"", gsub("/", "\\\\", file.surveyspp), "\\"))
 }
 
@@ -34,7 +35,7 @@ fp.econ <- file.path(dir.data, file.econ)
 # Partition out the csv file if it does not already exist.
 filetotest <- gsub(".xlsx", paste0("_", "specieslist", ".csv"), file.econ)
 if (!file.exists(filetotest)) {
-  system(paste0("cscript \"", gsub("/", "\\\\", file.script),
+  system(paste0("cscript \"", gsub("/", "\\\\", fp.script),
     "\" \"", gsub("/", "\\\\", file.econ), "\\"))
 }
 
@@ -83,7 +84,7 @@ colnames(data.land) <- gsub("^X", "", colnames(data.land))
 fp.alloc <- file.path(dir.data, file.alloc)
 filetotest <- gsub(".xlsx", paste0("_", "after", ".csv"), fp.alloc)
 if (!file.exists(filetotest)) {
-  system(paste0("cscript \"", gsub("/", "\\\\", file.script),
+  system(paste0("cscript \"", gsub("/", "\\\\", fp.script),
     "\" \"", gsub("/", "\\\\", fp.alloc), "\\"))
 }
 data.tac.after <- read.csv(filetotest)

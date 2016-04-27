@@ -32,7 +32,8 @@ file.aclall <- "pfmc_ACL_2003-2016_Sheet1.csv"
 file.acl <- "pfmc_ACL_Sablefish.csv"
 file.land <- "catchbyyearfleet.csv"
 file.price <- "pacfin_LandingsByGear.csv"
-file.script <- file.path(dir.data, "saveAllTabsAsCSV.vbs")
+file.script <- "saveAllTabsAsCSV.vbs"
+
 ignore <- mapply(source, list.files("R", full.names = TRUE))
 
 #' Inputs
